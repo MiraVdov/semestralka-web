@@ -1,0 +1,19 @@
+/*style*/
+#title{
+    margin: 2% 0%;
+}
+
+#home{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.navbar{
+    background-color: aqua;
+    color: red;
+}
+
+#home:hover{
+    color: orange;
+}
