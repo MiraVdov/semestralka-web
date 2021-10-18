@@ -47,25 +47,25 @@
   <!--Body-->
   <div class="container" id="form">
     <form action="" method="POST" >
-    <label for="exampleInputEmail1" class="form-label">Jméno:</label>
+    <label for="exampleInputEmail1" class="form-label">Uživatelská přezdívka:</label>
       <div class="input-group mb-3">     
         <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>      
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>      
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="přezdívka" required>      
       </div> 
-      <label for="exampleInputEmail1" class="form-label">Příjmení:</label>
+      <label for="exampleInputEmail1" class="form-label">Celé jméno:</label>
       <div class="input-group mb-3">     
         <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>      
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>      
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="celé jméno" required>      
       </div> 
     <label for="exampleInputEmail1" class="form-label">Telefonní číslo:</label>
       <div class="input-group mb-3">     
         <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i></span>      
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>      
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="telefonní číslo" required>      
       </div>   
       <label for="exampleInputEmail1" class="form-label">Emailová adresa:</label>
       <div class="input-group mb-3">     
         <span class="input-group-text" id="basic-addon1">@</span>      
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">      
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="e-mail" requried>      
       </div> 
       <label for="password" class="form-label">Heslo:</label>
       <div class="input-group mb-3">            
@@ -75,7 +75,12 @@
             <i class="fa fa-eye-slash" id="show_eye"></i>
             <i class="fa fa-eye d-none" id="hide_eye"></i>
           </span>           
-      </div>        
+      </div>    
+      <label for="exampleInputEmail1" class="form-label">Zopakujte heslo:</label>
+      <div class="input-group mb-3">     
+        <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>      
+        <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="password" required>      
+      </div>     
       <button type="submit" class="btn btn-success">Submit</button>
   </form>
   </div>
