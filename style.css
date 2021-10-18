@@ -17,3 +17,12 @@
 #home:hover{
     color: orange;
 }
+
+.nav-link{
+    color:red !important;
+}
+
+#form{
+    width: 40%;
+    margin-top: 3%;
+}
