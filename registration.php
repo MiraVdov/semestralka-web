@@ -32,10 +32,10 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Informace</a>
+            <a class="nav-link active" aria-current="page" href="index.html">Informace</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Program konference</a>
+            <a class="nav-link" href="program.html">Program konference</a>
           </li>
         </ul>
         <form class="d-flex">
@@ -96,7 +96,8 @@
         </div>
       </div>
       <div class="row">
-       <p>Už jste zaregistrován/a? <a href="">Přihlásit se</a><p>
+        <p>Už jste zaregistrován/a? <a href="">Přihlásit se</a>
+        <p>
       </div>
       <div class="row mx-auto" id="formSubmit">
         <!--Submit-->
@@ -107,12 +108,16 @@
 
 
   <div class="alert alert-dark" role="alert" id="footer">
-  &copyMiroslav Vdoviak
-</div>
+    &copyMiroslav Vdoviak
+  </div>
 
+  <!--arrow-->
+  <a href="#"><span class="fa fa-arrow-circle-up fa-4x" id="arrow"></span></a>
 
-
-
+  <!--Footer-->
+  <div class="alert alert-dark" role="alert" id="footer">
+    &copyMiroslav Vdoviak
+  </div>
 
   <!--Javascript import-->
   <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>

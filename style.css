@@ -15,6 +15,7 @@
 body{
     margin: 0px;
     height: 100%;
+    background-color: whitesmoke;
 }
 
 .navbar{
@@ -30,11 +31,16 @@ body{
 }
 
 #form{
-    width: 60%;
-    margin-top: 3%;
-    border: solid 1px silver;   
-    padding: 2%;
+    width: 60%;  
     margin-bottom: 5%;
+}
+
+.container{
+    background-color: white;
+    margin-top: 3%;
+    border: solid 2px silver;
+    border-radius: 15px; 
+    padding: 1.5%;
 }
 
 #phoneHelp{
@@ -61,6 +67,36 @@ footer{
     text-align: center; 
     margin-left: -2px;
     margin-bottom: 0px;
-    margin-top: 11%;
+    margin-top: 12%;
 }
 
+.alert1{
+    width: 80%;
+    margin:auto;
+    margin-top: 1%;
+}
+
+h3{
+    text-align: center;
+}
+
+#arrow{
+    position: fixed;   
+    float: right;
+    bottom: 5%;
+    right: 2%;
+    opacity: 0.3;
+    transition-duration: 0.5s;
+    color: rgb(63, 62, 62);
+}
+
+#arrow:hover{
+    opacity: 1;
+    transition-duration: 0.5s;
+}
+
+.moveMenuButton{
+    margin-right: 10px;
+    background-color: rgb(134, 110, 78);
+    border: none;
+}
