@@ -9,7 +9,7 @@
   <!--Imports-->
   <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="style.css?version=1.3">
+  <link rel="stylesheet" href="style.css?version=1.2">
 
   <!--Logo and title-->
   <title>Internet věcí</title>
@@ -45,7 +45,7 @@
       </div>
     </div>
   </nav>
-
+  <h2>Registrace</h2>
   <!--Body-->
   <div class="container" id="form">
     <form action="" method="POST">
@@ -104,11 +104,6 @@
         <button type="submit" class="btn btn-primary" value="registration">Registrovat</button>
       </div>
     </form>
-  </div>
-
-
-  <div class="alert alert-dark" role="alert" id="footer">
-    &copyMiroslav Vdoviak
   </div>
 
   <!--arrow-->

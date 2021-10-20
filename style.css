@@ -67,7 +67,7 @@ footer{
     text-align: center; 
     margin-left: -2px;
     margin-bottom: 0px;
-    margin-top: 12%;
+    margin-top: 10%;
 }
 
 .alert1{
@@ -99,4 +99,10 @@ h3{
     margin-right: 10px;
     background-color: rgb(134, 110, 78);
     border: none;
+}
+
+h2{
+    text-align: center;
+    margin-top: 1%;
+    margin-bottom: -1%;
 }
