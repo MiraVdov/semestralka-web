@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--Imports-->
-    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
+  <!--Imports-->
+  <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css?version=1.3">
 
-    <!--Logo and title-->
-    <title>Internet věcí</title>
-    <link rel="shortcut icon" href="favicon.png">
+  <!--Logo and title-->
+  <title>Internet věcí</title>
+  <link rel="shortcut icon" href="favicon.png">
 </head>
+
 <body>
-    <!--Title-->
-    <div class="container-fluid text-center align-self-center" id="title">
-        <h1                                                                                                                               >Konference internet věcí</h1>
-    </div>
-   
-    <!--Menu-->
-   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <!--Title-->
+  <div class="container-fluid text-center align-self-center" id="title">
+    <h1>Konference internet věcí</h1>
+  </div>
+
+  <!--Menu-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="fa fa-home fa-3x" id="home" href="index.html"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,59 +39,87 @@
           </li>
         </ul>
         <form class="d-flex">
-            <button class="btn btn-primary" type="button">Search</button>
-            <button class="btn btn-primary" type="button">Search</button>
-        </form>      
+          <button class="btn btn-primary" type="button">Search</button>
+          <button class="btn btn-primary" type="button">Search</button>
+        </form>
       </div>
     </div>
   </nav>
 
   <!--Body-->
   <div class="container" id="form">
-    <form action="" method="POST" >
-    <label for="exampleInputEmail1" class="form-label">Uživatelská přezdívka:</label>
-      <div class="input-group mb-3">     
-        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>      
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="přezdívka" required>      
-      </div> 
-      <label for="exampleInputEmail1" class="form-label">Celé jméno:</label>
-      <div class="input-group mb-3">     
-        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>      
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="celé jméno" required>      
-      </div> 
-    <label for="exampleInputEmail1" class="form-label">Telefonní číslo:</label>
-      <div class="input-group mb-3">     
-        <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i></span>      
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="telefonní číslo" required>      
-      </div>   
-      <label for="exampleInputEmail1" class="form-label">Emailová adresa:</label>
-      <div class="input-group mb-3">     
-        <span class="input-group-text" id="basic-addon1">@</span>      
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="e-mail" requried>      
-      </div> 
-      <label for="password" class="form-label">Heslo:</label>
-      <div class="input-group mb-3">            
-        <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>             
-        <input name="password" type="password" value="" class="input form-control" id="password" placeholder="password" required="true" aria-label="password" aria-describedby="basic-addon1" />             
-          <span class="input-group-text" onclick="password_show_hide();">
-            <i class="fa fa-eye-slash" id="show_eye"></i>
-            <i class="fa fa-eye d-none" id="hide_eye"></i>
-          </span>           
-      </div>    
-      <label for="exampleInputEmail1" class="form-label">Zopakujte heslo:</label>
-      <div class="input-group mb-3">     
-        <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>      
-        <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="password" required>      
-      </div>     
-      <button type="submit" class="btn btn-success">Submit</button>
-  </form>
+    <form action="" method="POST">
+      <!--Username-->
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <label for="username" class="form-label">Uživatelská přezdívka:</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-username"><i class="fa fa-user"></i></span>
+            <input type="text" class="form-control" id="username" aria-describedby="username" placeholder="přezdívka" required>
+          </div>
+          <!--Full name-->
+          <label for="fullName" class="form-label">Celé jméno:</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-fullName"><i class="fa fa-user"></i></span>
+            <input type="text" class="form-control" id="fullName" aria-describedby="fullName" placeholder="celé jméno" required>
+          </div>
+          <!--telephone number-->
+          <label for="telephone" class="form-label">Telefonní číslo:</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-telephone"><i class="fa fa-phone"></i></span>
+            <input type="tel" class="form-control" id="telephone" aria-describedby="telephone" placeholder="123 456 789" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" required>
+          </div>
+          <p id="phoneHelp">Formát: 123 456 789</p>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <!--Email-->
+          <label for="email" class="form-label">Emailová adresa:</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-email">@</span>
+            <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="e-mail" requried>
+          </div>
+          <!--password-->
+          <label for="password" class="form-label">Heslo:</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-password"><i class="fa fa-lock"></i></span>
+            <input name="password" type="password" value="" class="input form-control" id="password" placeholder="password" required="true" aria-label="password" aria-describedby="basic-addon1" />
+            <span class="input-group-text" onmousedown="password_show_hide();" onmouseup="password_show_hide();">
+              <i class="fa fa-eye-slash" id="show_eye"></i>
+              <i class="fa fa-eye d-none" id="hide_eye"></i>
+            </span>
+          </div>
+          <label for="password2" class="form-label">Zopakujte heslo:</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-password2"><i class="fa fa-lock"></i></span>
+            <input type="password" class="form-control" id="password2" aria-describedby="password2" placeholder="password" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+       <p>Už jste zaregistrován/a? <a href="">Přihlásit se</a><p>
+      </div>
+      <div class="row mx-auto" id="formSubmit">
+        <!--Submit-->
+        <button type="submit" class="btn btn-success" value="registration">Registrovat</button>
+      </div>
+    </form>
   </div>
-  <!--Javascript import-->
-    <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
 
-    <!--Scripts-->
-    <script>
-      function password_show_hide() {
+
+  <div class="alert alert-dark" role="alert" id="footer">
+  &copyMiroslav Vdoviak
+</div>
+
+
+
+
+
+  <!--Javascript import-->
+  <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+
+  <!--Scripts-->
+  <script>
+    function password_show_hide() {
       var x = document.getElementById("password");
       var show_eye = document.getElementById("show_eye");
       var hide_eye = document.getElementById("hide_eye");
@@ -104,6 +134,7 @@
         hide_eye.style.display = "none";
       }
     }
-</script>
+  </script>
 </body>
+
 </html>

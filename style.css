@@ -1,6 +1,9 @@
 /*style*/
 #title{
-    margin: 2% 0%;
+    padding: 2% 0%;
+    background-color: rgba(51, 36, 36, 0.774);
+    color: orange;
+    height: 10%;
 }
 
 #home{
@@ -9,9 +12,13 @@
     cursor: pointer;
 }
 
+body{
+    margin: 0px;
+    height: 100%;
+}
+
 .navbar{
-    background-color: aqua;
-    color: red;
+    background-color: rgb(30, 190, 164) !important;
 }
 
 #home:hover{
@@ -19,10 +26,41 @@
 }
 
 .nav-link{
-    color:red !important;
+    color:white !important;
 }
 
 #form{
-    width: 40%;
+    width: 60%;
     margin-top: 3%;
+    border: solid 1px silver;   
+    padding: 2%;
+    margin-bottom: 5%;
 }
+
+#phoneHelp{
+    font-size: 80%;
+    color: grey;
+    padding-top: -50px;
+}
+
+#formSubmit{
+    width: 40%;
+}
+
+footer{
+    background-color: black;
+    color: white;
+    padding: 0.5% 0px;
+}
+
+#footer{
+    position: relative;
+    background-color: rgba(51, 36, 36, 0.774);
+    color: orange;
+    width: 100%;
+    text-align: center; 
+    margin-left: -2px;
+    margin-bottom: 0px;
+    margin-top: 11%;
+}
+
