@@ -1,8 +1,8 @@
 /*style*/
 #title{
     padding: 2% 0%;
-    background-color: rgba(51, 36, 36, 0.774);
-    color: orange;
+    background-color: rgba(20, 48, 173, 0.774);
+    color: rgb(234, 183, 247);
     height: 10%;
 }
 
@@ -18,7 +18,7 @@ body{
 }
 
 .navbar{
-    background-color: rgb(30, 190, 164) !important;
+    background-color: rgb(48, 33, 189) !important;
 }
 
 #home:hover{
@@ -55,8 +55,8 @@ footer{
 
 #footer{
     position: relative;
-    background-color: rgba(51, 36, 36, 0.774);
-    color: orange;
+    background-color: rgba(20, 48, 173, 0.774);
+    color: rgb(234, 183, 247);
     width: 100%;
     text-align: center; 
     margin-left: -2px;

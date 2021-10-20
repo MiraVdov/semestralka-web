@@ -100,7 +100,7 @@
       </div>
       <div class="row mx-auto" id="formSubmit">
         <!--Submit-->
-        <button type="submit" class="btn btn-success" value="registration">Registrovat</button>
+        <button type="submit" class="btn btn-primary" value="registration">Registrovat</button>
       </div>
     </form>
   </div>
