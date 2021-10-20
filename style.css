@@ -10,6 +10,7 @@
     text-decoration: none;
     color: black;
     cursor: pointer;
+    transition-duration: 0.2s;
 }
 
 body{
@@ -23,11 +24,18 @@ body{
 }
 
 #home:hover{
-    color: orange;
+    color: rgb(194, 151, 223);
+    transition-duration: 0.2s;
 }
 
 .nav-link{
     color:white !important;
+    transition-duration: 0.2s;
+}
+
+.nav-link:hover{
+    color:rgb(194, 151, 223) !important;
+    transition-duration: 0.2s;
 }
 
 #form{
@@ -78,6 +86,7 @@ footer{
 
 h3{
     text-align: center;
+    margin-bottom: 2%;
 }
 
 #arrow{
@@ -106,3 +115,21 @@ h2{
     margin-top: 1%;
     margin-bottom: -1%;
 }
+
+.underline{position:relative;
+    text-decoration:none;
+    display:inline-block;
+    } 
+    
+.underline:after{
+    display:block;
+    content: '';
+    border-bottom: solid 3px rgb(187, 226, 15);  
+    transform: scaleX(0);  
+    transition: transform 400ms ease-in-out;
+    transform-origin:100% 50%;
+  }
+.underline:hover:after { 
+    transform: scaleX(1);
+    transform-origin:0 50%;
+  }

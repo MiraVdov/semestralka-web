@@ -32,15 +32,17 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.html">Informace</a>
+            <a class="nav-link active underline" aria-current="page" href="index.html">Informace</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="program.html">Program konference</a>
+            <a class="nav-link underline" href="program.html">Program konference</a>
           </li>
         </ul>
         <form class="d-flex">
-          <button class="btn btn-primary" type="button">Search</button>
-          <button class="btn btn-primary" type="button">Search</button>
+          <button class="btn btn-primary moveMenuButton" type="button"><span class="fa fa-sign-in"></span>
+            Přihlášení</button>
+          <button class="btn btn-primary moveMenuButton" type="button"
+            onclick="location.href='registration.php'">Registrace</button>
         </form>
       </div>
     </div>
