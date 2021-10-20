@@ -119,7 +119,7 @@ h2{
 .underline{position:relative;
     text-decoration:none;
     display:inline-block;
-    } 
+} 
     
 .underline:after{
     display:block;
@@ -128,8 +128,26 @@ h2{
     transform: scaleX(0);  
     transition: transform 400ms ease-in-out;
     transform-origin:100% 50%;
-  }
+}
 .underline:hover:after { 
     transform: scaleX(1);
     transform-origin:0 50%;
-  }
+}
+
+#loginForm{
+    border: solid 2px silver;
+    width: 25%;
+    position: fixed;
+    background-color: white;
+    padding: 2%;
+    border-radius: 15px;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, 10%) ;
+    display: none;
+}
+
+#closeButton{
+    float:right;
+    margin-top: -5%;
+}
