@@ -9,7 +9,7 @@
   <!--Imports-->
   <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="style.css?version=1.2">
+  <link rel="stylesheet" href="web/style.css?version=1.2">
 
   <!--Logo and title-->
   <title>Internet věcí</title>
