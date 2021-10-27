@@ -12,6 +12,7 @@
         {
             $basicTemplate = new BasicTemplate();
             $basicTemplate->getHeader("hello");
+            $basicTemplate->getAlertBoxes();
             $basicTemplate->getInformationLorem();
             $basicTemplate->getFooter();
         }

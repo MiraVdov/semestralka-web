@@ -25,7 +25,7 @@
          * Metoda vrací jedinou instanci databazoveho modelu
          * @return DatabaseModel - databazovy model
          */
-        public static function getDatabaseModel(){
+        public static function getDatabaseModel():DatabaseModel{
             if (empty(self::$database)) self::$database = new DatabaseModel();
             return self::$database;
         }
@@ -55,7 +55,7 @@
                 .(($orderBy == "") ? "" : " ORDER BY $orderBy");
 
             $data = $this->exectuteQuery($query);
-            if (data == null) return [];
+            if ($data == null) return [];
             return $data->fetchAll();
         }
 

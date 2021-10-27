@@ -6,7 +6,7 @@
     /**Adresa serveru*/
     const DB_SERVER = "localhost";
     /**Nazev databaze*/
-    const DB_NAME = "web-semestralka";
+    const DB_NAME = "miravdov_semestralka_web";
     /**Uzivatel databaze*/
     const DB_USER = "root";
     /**Heslo uzivatele databaze*/
@@ -25,14 +25,6 @@
     /**Klic defaultni webove stranky*/
     const DEFAULT_WEB_PAGE = "information";
 
-
-    ////////konstanty
-    /**Nazev*/
-    const TITLE = "title";
-    /**klic pro nazev tridy sablony*/
-    const VIEW_CLASS_NAME = "view_class_name";
-    /**klic pro nazev tridy kontroleru*/
-    const CONTROLLER_CLASS_NAME = "controller_class_name";
 
     ///Dostupné webové stránky
     const WEB_PAGES = array(

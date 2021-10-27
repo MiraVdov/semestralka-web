@@ -2,14 +2,14 @@
 
 namespace app\Controllers;
 
-use app\Models\DatabaseModel;
+use app\Models\DatabaseModel as DB;
 
 /**
  * Trida zajistujici vypsani stranky se spravou uzivatelu
  */
-class UserManagerController implements IController
+class UserManagementController implements IController
 {
-    /**@var DatabaseModel - instance modelu databaze*/
+    /**@var DB $db - instance modelu databaze*/
     private $db;
 
     /**
@@ -17,7 +17,7 @@ class UserManagerController implements IController
      */
     public function __construct()
     {
-        $this->db::getDatabaseModel();
+        $this->db = DB::getDatabaseModel();
     }
 
     /**
