@@ -145,6 +145,7 @@ h2{
     right: 50%;
     transform: translate(-50%, 0%) ;
     display: none;
+    z-index: 1;
 }
 
 #closeButton{

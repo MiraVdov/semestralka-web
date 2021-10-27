@@ -1,11 +1,17 @@
 <?php
 
-    namespace app\Views;
+namespace app\Views;
 
-
-    class BasicTemplate
+/**
+ * Trida obsahujici zakladni sablony
+ */
+class BasicTemplate
     {
-        public static function getHeader(string $pageTitle){
+        /**
+         * Sablona pro hlavicku
+         * @param string $pageTitle
+         */
+        public function getHeader(string $pageTitle){
             ?>
             <!DOCTYPE html>
             <html lang="en">
@@ -16,10 +22,10 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
                 <!--Imports-->
-                <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-                <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+                <link rel="stylesheet" href="libraries/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+                <link rel="stylesheet" href="libraries/font-awesome-4.7.0/css/font-awesome.min.css">
 
-                <link rel="stylesheet" href="../../libraries/style.css">
+                <link rel="stylesheet" href="libraries/style.css">
 
                 <!--Logo and title-->
                 <title>Internet věcí</title>
@@ -35,7 +41,7 @@
             <!--Menu-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                    <a class="fa fa-home fa-3x" id="home" href="index.html"></a>
+                    <a class="fa fa-home fa-3x" id="home" href="index.php?page=information"></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNavDropdown"
                             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,10 +50,10 @@
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                <a class="nav-link active underline" aria-current="page" href="index.html">Informace</a>
+                                <a class="nav-link active underline" aria-current="page" href="index.php?page=information">Informace</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link underline" href="program.html">Program konference</a>
+                                <a class="nav-link underline" href="index.php?page=program">Program konference</a>
                             </li>
                         </ul>
                         <form class="d-flex">
@@ -56,7 +62,7 @@
                                 Přihlášení
                             </button>
                             <button class="btn btn-primary moveMenuButton" type="button"
-                                    onclick="location.href='registration.php'">Registrace
+                                    onclick="location.href='index.php?page=registration'">Registrace
                             </button>
                         </form>
                     </div>
@@ -91,13 +97,16 @@
                     <p>Zapomněli jste své heslo? <a href="#">Obnovte si ho zde</a></p>
                     <button type="submit" class="btn btn-primary">Přihlásit se</button>
                     <br><br>
-                    Nemáte ještě účet? <a href="registration.php">Zaregistrujte se zde</a>
+                    Nemáte ještě účet? <a href="index.php?page=registration">Zaregistrujte se zde</a>
                 </form>
             </div>
             <?php
 }
 
-        public static function getFooter(){
+        /**
+         * Sablona pro telo
+         */
+        public function getFooter(){
             ?>
             <!--arrow-->
             <a href="#"><span class="fa fa-arrow-circle-up fa-4x" id="arrow"></span></a>
@@ -108,9 +117,9 @@
             </div>
 
             <!--Javascript import-->
-            <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+            <script src="libraries/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
             <!--jquery import-->
-            <script src="jquery/jquery-3.5.1.min.js"></script>
+            <script src="libraries/jquery/jquery-3.5.1.min.js"></script>
 
             <!--scripts-->
             <script>
@@ -144,6 +153,116 @@
             </script>
             </body>
             </html>
+            <?php
+        }
+
+        /**
+         * Metoda vraci lorep ipsum informaci
+         */
+        public function getInformationLorem(){
+            ?>
+            <div class="container">
+                <h3>Program</h3>
+            <?php $this->getLoremText();?>
+            </div>
+            <?php
+        }
+
+        /**
+         * Metoda vraci lorem ipsum programu
+         */
+        public function getProgramLorem(){
+            ?>
+            <div class="container">
+                <h3>Program</h3>
+
+                <ul>
+                    <li><strong>6:00 - 8:00</strong> - Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam erat
+                        volutpat. Morbi sceleri.</li>
+                    <li><strong>8:00 - 12:00</strong> - Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam erat
+                        volutpat. Morbi sceleri.</li>
+                    <li><strong>12:00 - 14:00</strong> - Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam erat
+                        volutpat. Morbi sceleri.</li>
+                    <li><strong>14:00 - 20:00</strong> - Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam erat
+                        volutpat. Morbi sceleri.</li>
+                    <li><strong>20:00 - 00:00</strong> - Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam erat
+                        volutpat. Morbi sceleri.</li>
+                </ul>
+                <?php $this->getLoremText();?>
+            </div>
+            <?php
+        }
+
+        /**
+         * Lorem ipsum sablona
+         */
+        private function getLoremText(){
+            ?>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam erat volutpat. Morbi scelerisque luctus
+                velit.
+                Maecenas fermentum, sem in pharetra pellentesque, velit turpis volutpat ante, in pharetra metus odio a
+                lectus. Sed
+                ac dolor sit amet purus malesuada congue. Phasellus et lorem id felis nonummy placerat. Aenean fermentum
+                risus id
+                tortor. Aliquam erat volutpat. Mauris elementum mauris vitae tortor. Aliquam ornare wisi eu metus.
+                Curabitur
+                bibendum justo non orci. Nulla non arcu lacinia neque faucibus fringilla. Nam sed tellus id magna
+                elementum
+                tincidunt. Duis pulvinar. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip
+                ex ea
+                commodo consequat. Curabitur vitae diam non enim vestibulum interdum. Cras elementum. Etiam ligula pede,
+                sagittis
+                quis, interdum ultricies, scelerisque eu. Vivamus porttitor turpis ac leo.</p>
+
+            <p>Aenean fermentum risus id tortor. Curabitur vitae diam non enim vestibulum interdum. Class aptent taciti
+                sociosqu
+                ad litora torquent per conubia nostra, per inceptos hymenaeos. Proin mattis lacinia justo. Integer
+                malesuada. Cras
+                elementum. Duis condimentum augue id magna semper rutrum. Et harum quidem rerum facilis est et expedita
+                distinctio. Suspendisse sagittis ultrices augue. Cras pede libero, dapibus nec, pretium sit amet, tempor
+                quis.
+                Quisque tincidunt scelerisque libero. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Sed
+                elit
+                dui,
+                pellentesque a, faucibus vel, interdum nec, diam. Nam sed tellus id magna elementum tincidunt. Quisque
+                porta.
+                Integer malesuada. Vivamus luctus egestas leo. Etiam commodo dui eget wisi.</p>
+
+            <p>Nam quis nulla. Fusce suscipit libero eget elit. Duis viverra diam non justo. Proin mattis lacinia justo.
+                Aliquam
+                erat volutpat. Donec quis nibh at felis congue commodo. Praesent dapibus. Et harum quidem rerum facilis
+                est
+                et
+                expedita distinctio. Vivamus porttitor turpis ac leo. Proin mattis lacinia justo. Aenean fermentum risus
+                id
+                tortor. Maecenas libero. Vivamus luctus egestas leo. Fusce consectetuer risus a nunc. Sed ac dolor sit
+                amet
+                purus
+                malesuada congue. Fusce tellus.</p>
+
+            <p>Aliquam erat volutpat. Maecenas ipsum velit, consectetuer eu lobortis ut, dictum at dui. Cum sociis
+                natoque
+                penatibus et magnis dis parturient montes, nascetur ridiculus mus. Itaque earum rerum hic tenetur a
+                sapiente
+                delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores
+                repellat.
+                Mauris tincidunt sem sed arcu. Nullam feugiat, turpis at pulvinar vulputate, erat libero tristique
+                tellus,
+                nec
+                bibendum odio risus sit amet ante. Nam sed tellus id magna elementum tincidunt. Etiam sapien elit,
+                consequat
+                eget,
+                tristique non, venenatis quis, ante. Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam.
+                Nam
+                libero
+                tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat
+                facere
+                possimus, omnis voluptas assumenda est, omnis dolor repellendus. Aliquam ante. Aliquam erat volutpat.
+                Aenean
+                placerat. Etiam posuere lacus quis dolor.</p>
+
+            </div>
             <?php
         }
     }

@@ -5,10 +5,14 @@
     class InformationTemplate implements IView
     {
         /**
-         * @param array $data - Metoda vypíše
+         * Metoda vypise sablonu
+         * @param array $data - data stranky
          */
         public function printOut(array $data)
         {
-            BasicTemplate::getHeader("a");
+            $basicTemplate = new BasicTemplate();
+            $basicTemplate->getHeader("hello");
+            $basicTemplate->getInformationLorem();
+            $basicTemplate->getFooter();
         }
     }

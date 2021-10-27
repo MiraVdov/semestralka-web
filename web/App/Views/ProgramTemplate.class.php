@@ -2,7 +2,20 @@
 
     namespace app\Views;
 
-    class ProgramTemplate
+    /**
+     * Sablona pro program
+     */
+    class ProgramTemplate implements IView
     {
-
+        /**
+         * Metoda vypise sablonu pro program
+         * @param array $data - data stranky
+         */
+        public function printOut(array $data)
+        {
+            $basicTemplate = new BasicTemplate();
+            $basicTemplate->getHeader("hello");
+            $basicTemplate->getProgramLorem();
+            $basicTemplate->getFooter();
+        }
     }
