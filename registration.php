@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!--Imports-->
-  <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="web/style.css?version=1.2">
+  <link rel="stylesheet" href="web/libraries/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="web/libraries/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="web/libraries/style.css?version=1.2">
 
   <!--Logo and title-->
   <title>Internet věcí</title>
@@ -117,7 +117,7 @@
   </div>
 
   <!--Javascript import-->
-  <script src="bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+  <script src="web/libraries/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
 
   <!--Scripts-->
   <script>

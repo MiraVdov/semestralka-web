@@ -7,4 +7,5 @@
     require_once("settings.inc.php");
 
     $app = new \app\ApplicationStart();
+
     $app->appStart();
