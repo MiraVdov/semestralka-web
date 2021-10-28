@@ -26,7 +26,7 @@ class BasicTemplate
             <link rel="stylesheet" href="libraries/bootstrap-5.0.2-dist/css/bootstrap.min.css">
             <link rel="stylesheet" href="libraries/font-awesome-4.7.0/css/font-awesome.min.css">
 
-            <link rel="stylesheet" href="libraries/style.css?version=1.4">
+            <link rel="stylesheet" href="libraries/style.css?version=1.5">
 
             <!--Logo and title-->
             <title>Internet věcí</title>
@@ -56,20 +56,35 @@ class BasicTemplate
                         <li class="nav-item">
                             <a class="nav-link underline" href="index.php?page=program">Program konference</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link underline" href="index.php?page=clanky">Články</a>
+                        </li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-primary moveMenuButton" type="button" id="btnLogin"><span
-                                    class="fa fa-sign-in"></span>
-                            Přihlášení
-                        </button>
-                        <button class="btn btn-primary moveMenuButton" type="button"
-                                onclick="location.href='index.php?page=registration'">Registrace
-                        </button>
-                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <!-- </ul>
+                         <form class="d-flex">
+                             <button class="btn btn-primary moveMenuButton" type="button" id="btnLogin"><span
+                                         class="fa fa-sign-in"></span>
+                                 Přihlášení
+                             </button>
+                             <button class="btn btn-primary moveMenuButton" type="button"
+                                     onclick="location.href='index.php?page=registration'">Registrace
+                             </button>
+                         </form>
                 </div>
             </div>
-        </nav>
+        </nav><--->
 
+
+        <?php
+    }
+
+    /**
+    *   metoda vraci prihlasovaci formular
+    */
+    public function getLoginForm(){
+        ?>
         <!--Login form-->
         <div id="loginForm">
             <form method="post">

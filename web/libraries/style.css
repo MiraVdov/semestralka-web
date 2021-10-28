@@ -163,3 +163,18 @@ h2{
     cursor: pointer;
     color: #88029a;
 }
+
+.loggedUserWhiteText{
+    color: #e86eb1;
+    margin-left: 10px;
+}
+
+.log-out-toRight{
+    float:right;
+    margin-top: 5px;
+}
+
+.log-out-toRight:hover{
+    cursor: pointer;
+    color:yellow;
+}

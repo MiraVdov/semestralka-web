@@ -17,7 +17,7 @@
     /**Tabulka s uživateli*/
     const TABLE_USER = "miravdov_uzivatel";
     /**Tabulka s právama*/
-    const TABLE_RIGHTS = "miravdov_prava";
+    const TABLE_RIGHTS = "miravdov_pravo";
 
     ///////////
     const ID_UZIVATEL = "id_uzivatel";

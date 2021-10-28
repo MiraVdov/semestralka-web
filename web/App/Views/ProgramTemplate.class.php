@@ -15,6 +15,8 @@
         {
             $basicTemplate = new BasicTemplate();
             $basicTemplate->getHeader("hello");
+            echo $data["links"];
+            $basicTemplate->getLoginForm();
             $basicTemplate->getProgramLorem();
             $basicTemplate->getFooter();
         }

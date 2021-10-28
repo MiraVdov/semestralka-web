@@ -15,6 +15,8 @@ class UserManagementTemplate implements IView
     {
         $basicTemplate = new BasicTemplate();
         $basicTemplate->getHeader("a");
+        echo $data["links"];
+        $basicTemplate->getLoginForm();
         $this->createTable($data);
         $basicTemplate->getFooter();
     }

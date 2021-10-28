@@ -172,4 +172,45 @@
             }
             return null;
         }
+
+        /**
+         * Metoda vraci jmeno uzivatele nebo null
+         */
+        public function getUserName(){
+            $userData = $this->getUserInfo();
+            return ($userData == null) ?  null: $userData[2];
+        }
+
+        /**
+         * Metoda vraci pravo uzivatele nebo null
+         */
+        public function getUserRight(){
+            $userData = $this->getUserInfo();
+            return ($userData == null) ?  null: $userData[1];
+        }
+
+        /**
+         * Metoda vraci data prav
+         * nebo null
+         */
+        public function getRightInfo(){
+           $right = $this->getUserRight();
+           $this->selectFromTable(TABLE_RIGHTS);
+            return null;
+        }
+
+        /**
+         * Metoda vraci jmeno prava nebo null
+         */
+        public function getUserRightInfo(){
+            $right = $this->getUserRight();
+            if ($right != null) return $this->selectFromTable(TABLE_RIGHTS,"id_pravo='$right'");
+            else return null;
+        }
+
+        public function getUserRightName(){
+            $userRight = $this->getUserRightInfo();
+            // beru prvni pozici v poli
+            return $userRight[0]["nazev"];
+        }
     }

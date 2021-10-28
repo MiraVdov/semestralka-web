@@ -3,7 +3,7 @@
 namespace app\Controllers;
 
 use app\Models\DatabaseModel as DB;
-use app\Utils\LoginHelper;
+use app\Utils\Helper;
 
 /**
  * Trida zajistujici vypsani stranky s programem
@@ -21,9 +21,15 @@ class ProgramController implements IController
         $this->db = DB::getDatabaseModel();
     }
 
+    /**
+     * Metoda vraci data stranky programu
+     * @param string $pageTitle - nazev stranky
+     * @return array - data stranky
+     */
     public function show(string $pageTitle): array
     {
-        LoginHelper::loginHelp($this->db);
-        return array();
+        Helper::loginHelp($this->db);
+        $tplData["links"] = Helper::linkHelp($this->db);
+        return $tplData;
     }
 }

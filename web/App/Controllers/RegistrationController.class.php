@@ -3,7 +3,7 @@
 namespace app\Controllers;
 
 use app\Models\DatabaseModel as DB;
-use app\Utils\LoginHelper;
+use app\Utils\Helper;
 
 /**
  * Trida zajistujici vypsani stranky s registraci
@@ -31,7 +31,8 @@ class RegistrationController implements IController
         $tplData = [];
         $tplData["title"] = $pageTitle;
 
-        LoginHelper::loginHelp($this->db);
+        Helper::loginHelp($this->db);
+        $tplData["links"] = Helper::linkHelp($this->db);
 
         // bylo zmáčknuté tlačítko
         if (isset($_POST["action"]) && $_POST["action"] == "registration"){
@@ -52,6 +53,6 @@ class RegistrationController implements IController
             }
         }
 
-        return array();
+        return $tplData;
     }
 }

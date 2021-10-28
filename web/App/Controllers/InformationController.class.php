@@ -3,7 +3,7 @@
 namespace app\Controllers;
 
 use app\Models\DatabaseModel as DB;
-use app\Utils\LoginHelper;
+use app\Utils\Helper;
 
 /**
  * Trida zajistujici vypsani stranky s informacemi
@@ -21,9 +21,15 @@ class InformationController implements IController
         $this->db = DB::getDatabaseModel();
     }
 
+    /**
+     * Metoda vraci text stranky informace
+     * @param string $pageTitle - nazev stranky
+     * @return array -text stranky
+     */
     public function show(string $pageTitle): array
     {
-        LoginHelper::loginHelp($this->db);
-        return array();
+        Helper::loginHelp($this->db);
+        $tplData["links"] = Helper::linkHelp($this->db);
+        return $tplData;
     }
 }
