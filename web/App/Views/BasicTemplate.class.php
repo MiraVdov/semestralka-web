@@ -145,15 +145,15 @@ class BasicTemplate
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-email">@</span>
                             <input type="email" class="form-control" name="email" id="email" aria-describedby="email"
-                                   placeholder="e-mail" requried>
+                                   placeholder="e-mail">
                         </div>
                         <!--password-->
                         <label for="password" class="form-label">Heslo:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-password"><i class="fa fa-lock"></i></span>
                             <input name="password" type="password" value="" class="input form-control" id="password"
-                                   placeholder="password" required="true" aria-label="password"
-                                   aria-describedby="basic-addon1"/>
+                                   placeholder="password" aria-label="password"
+                                   aria-describedby="basic-addon1" required/>
                             <span class="input-group-text" onmousedown="password_show_hide();" onmouseup="password_show_hide();">
                               <i class="fa fa-eye-slash" id="show_eye"></i>
                               <i class="fa fa-eye d-none" id="hide_eye"></i>

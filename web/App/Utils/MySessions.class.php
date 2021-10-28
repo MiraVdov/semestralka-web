@@ -1,5 +1,5 @@
 <?php
-
+namespace app\Utils;
 /**
  * Trida slouzici k praci se session
  */

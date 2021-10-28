@@ -3,6 +3,7 @@
 namespace app\Controllers;
 
 use app\Models\DatabaseModel as DB;
+use app\Utils\LoginHelper;
 
 /**
  * Trida zajistujici vypsani stranky se spravou uzivatelu
@@ -29,6 +30,8 @@ class UserManagementController implements IController
         $tplData = [];
         $tplData["title"] = $pageTitle;
         $tplData["users"] = $this->db->getAllUsers();
+
+        LoginHelper::loginHelp($this->db);
 
         return $tplData;
     }

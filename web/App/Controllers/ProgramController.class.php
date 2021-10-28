@@ -2,12 +2,28 @@
 
 namespace app\Controllers;
 
+use app\Models\DatabaseModel as DB;
+use app\Utils\LoginHelper;
+
+/**
+ * Trida zajistujici vypsani stranky s programem
+ */
 class ProgramController implements IController
 {
+    /**@var DB $db - instance modelu databaze*/
+    private $db;
+
+    /**
+     * Vytvoreni instance pro komunikaci s databazi
+     */
+    public function __construct()
+    {
+        $this->db = DB::getDatabaseModel();
+    }
 
     public function show(string $pageTitle): array
     {
-        // TODO: Implement show() method.
+        LoginHelper::loginHelp($this->db);
         return array();
     }
 }

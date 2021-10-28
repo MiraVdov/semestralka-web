@@ -2,6 +2,7 @@
 
     namespace app\Models;
     use PDOStatement;
+    use app\Utils\MySessions;
     /**
      * Třída spravující databazi
      */
@@ -12,6 +13,9 @@
         /** @var \PDO $pdo  Objekt pracujici s databazi prostrednictvim PDO. */
         private $pdo;
 
+        /**@var MySessions $session - session*/
+        private $session;
+
         /**Připojení k databázi*/
         private function __construct()
         {
@@ -19,6 +23,8 @@
             $this->pdo = new \PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
             //nastavení utf8
             $this->pdo->exec("set names utf8");
+
+            $this->session = new MySessions();
         }
 
         /**
@@ -117,5 +123,53 @@
             $insertValues = "'$pravo', '$fullName', '$login', '$password', '$email', '$phoneNumber'";
 
             return $this->insertIntoTable(TABLE_USER, $insertStatement, $insertValues);
+        }
+
+        /**
+         * Metoda vraci zda je uzivatel prihlasen
+         * @return bool - true prihlasen, false - neprihlasen
+         */
+        public function isUserLogged():bool{
+            return $this->session->isSessionSet();
+        }
+
+        /**
+         * Metoda prihlasi uzivatele
+         * @param string $login - login uzivatele
+         * @param string $password - heslo uzivatele
+         * @return bool - true - uzivatel uspesne prihlasen, false - uziatel neexistuje
+         */
+        public function loginUser(string $login, string $password):bool{
+            $where = "login='$login' AND heslo='$password'";
+            $user = $this->selectFromTable(TABLE_USER,$where);
+
+            if (count($user) > 0){
+                $this->session->setSession($user[0]);
+                return true;
+            }
+            else return false;
+        }
+
+        /**
+         * Metoda slouzi k odhlaseni uzivatele
+         */
+        public function logoutUser(){
+            $this->session->removeSession();
+        }
+
+        /**
+         * Metoda vraci data uzivatele
+         * nebo null
+         */
+        public function getUserInfo(){
+            if ($this->isUserLogged()){
+                $userData = $this->session->readSession();
+                if ($userData == null){
+                    $this->logoutUser();
+                    return null;
+                }
+                else return $userData;
+            }
+            return null;
         }
     }
