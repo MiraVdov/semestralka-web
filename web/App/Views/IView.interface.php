@@ -1,16 +1,17 @@
 <?php
 
-    namespace app\Views;
+namespace app\Views;
+
+/**
+ * Metoda pro sablony
+ */
+interface IView
+{
 
     /**
-     * Metoda pro sablony
+     * Metoda vypise html stranky
+     * @param array $data - data stranky
      */
-    interface IView{
-
-        /**
-         * Metoda vypise html stranky
-         * @param array $data - data stranky
-         */
-        public function printOut(array $data);
-    }
+    public function printOut(array $data);
+}
 

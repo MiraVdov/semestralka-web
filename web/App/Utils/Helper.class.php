@@ -28,7 +28,9 @@ class Helper
 
                     }
                     else{
-                        echo "Nepodařilo se uživatele přihlásit";
+                        echo "<script>setTimeout(() => {alert('Zadány špatné přihlašovací údaje!') }, 100)</script>";
+                        // refresh stranky
+                        header('Refresh: 0.5');
                     }
                 }
             }
@@ -60,21 +62,21 @@ class Helper
                 case 1:
                     $linkOutput .= "<li class='nav-item' xmlns=\"http://www.w3.org/1999/html\"><a class='nav-link underline' href='index.php?page=clanky'>Recenze</a></li>
                            <li class='nav-item'><a class='nav-link underline' href='index.php?page=user-management'>Uživatelé</a></li>
-                           <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong>$userRightName</strong>)<br>
+                           <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong class='boldRight'>$userRightName</strong>)<br>
                            <form method='post'><button type='submit' class='log-out-toRight' name='action' value='logout'><span><i class='fa fa-sign-out'> Odhlásit se</i></span></button></div></form></li>
                         </ul></div></div></nav>";
                     break;
                 // Recenzant
                 case 3:
                     $linkOutput .= "<li class='nav-item'><a class='nav-link underline' href='index.php?page=clanky'>Moje recenze</a></li>
-                            <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong>$userRightName</strong>)<br>
+                            <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong class='boldRight'>$userRightName</strong>)<br>
                             <form method='post'><button class='log-out-toRight' name='action' value='logout'><span><i class='fa fa-sign-out'> Odhlásit se</i></span></button></div></form></li>
                         </ul></div></div></nav>";
                     break;
                 // Autor
                 case 4:
-                    $linkOutput .= "<li class='nav-item'><a class='nav-link underline' href='index.php?page=clanky'>Moje články</a></li>
-                           <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong>$userRightName</strong>)<br>
+                    $linkOutput .= "<li class='nav-item'><a class='nav-link underline' href='index.php?page=my-articles'>Moje články</a></li>
+                           <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong class='boldRight'>$userRightName</strong>)<br>
                            <form method='post'><button class='log-out-toRight' name='action' value='logout'><span><i class='fa fa-sign-out'> Odhlásit se</i></span></button></div></form></li>
                         </ul></div></div></nav>";
                     break;

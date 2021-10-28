@@ -26,11 +26,11 @@ class BasicTemplate
             <link rel="stylesheet" href="libraries/bootstrap-5.0.2-dist/css/bootstrap.min.css">
             <link rel="stylesheet" href="libraries/font-awesome-4.7.0/css/font-awesome.min.css">
 
-            <link rel="stylesheet" href="libraries/style.css?version=1.5">
+            <link rel="stylesheet" href="style/style.css?version=1.6">
 
             <!--Logo and title-->
             <title>Internet věcí</title>
-            <link rel="shortcut icon" href="favicon.png">
+            <link rel="shortcut icon" href="images/favicon.png">
         </head>
 
         <body>

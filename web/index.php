@@ -1,11 +1,9 @@
 <?php
+// pripojeni autoloaderu
+require_once("myAutoloader.inc.php");
+// pripojeni nastaveni webu
+require_once("settings.inc.php");
 
-    // pripojeni autoloaderu
+$app = new \app\ApplicationStart();
 
-    require_once("myAutoloader.inc.php");
-    // pripojeni nastaveni webu
-    require_once("settings.inc.php");
-
-    $app = new \app\ApplicationStart();
-
-    $app->appStart();
+$app->appStart();

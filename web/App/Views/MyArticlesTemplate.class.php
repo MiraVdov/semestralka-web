@@ -1,23 +1,22 @@
 <?php
 
 namespace app\Views;
+
 /**
- * Sablona pro stranku s informacemi
+ * Sablona pro vlastni clanky
  */
-class InformationTemplate implements IView
+class MyArticlesTemplate implements IView
 {
     /**
-     * Metoda vypise sablonu
+     * Metoda slouzi k vypsani sablony pro vlastni clanky
      * @param array $data - data stranky
      */
     public function printOut(array $data)
     {
         $basicTemplate = new BasicTemplate();
-        $basicTemplate->getHeader("hello");
+        $basicTemplate->getHeader("a");
         echo $data["links"];
         $basicTemplate->getLoginForm();
-        $basicTemplate->getAlertBoxes();
-        $basicTemplate->getInformationLorem();
         $basicTemplate->getFooter();
     }
 }
