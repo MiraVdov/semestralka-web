@@ -124,7 +124,6 @@ class BasicTemplate
      */
     public function getRegistrationForm(){
         ?>
-
         <!--Body-->
         <div class="container" id="form">
             <h3>Registrace</h3>

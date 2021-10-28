@@ -170,11 +170,15 @@ h2{
 }
 
 .log-out-toRight{
+    border: none;
+    background-color: rgb(48, 33, 189) !important;
     float:right;
     margin-top: 5px;
+    color: #e86eb1;
 }
 
 .log-out-toRight:hover{
     cursor: pointer;
     color:yellow;
 }
+

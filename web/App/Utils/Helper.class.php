@@ -19,15 +19,22 @@ class Helper
             // je vyplněen login a heslo
             if (isset($_POST["login"]) && trim($_POST["login"]) != "" &&
                 isset($_POST["password"]) && trim($_POST["password"]) != ""){
-                if ($db->isUserLogged()){
+                if (!$db->isUserLogged()){
                     if($db->loginUser($_POST["login"], $_POST["password"])){
-                        echo "Prihlasen " . $_SESSION["name"][2];
+                        //vypsání alertu
+                        echo "<script>setTimeout(() => { alert('Uživatel úspěšně přihlášen!') }, 100)</script>";
                     }
                     else{
-                        echo "neprihlasen";
+                        echo "Nepodařilo se uživatele přihlásit";
                     }
                 }
             }
+        }
+        //// bylo zmacknuto tlacitko odhlaseni
+        else if(isset($_POST["action"]) && $_POST["action"] == "logout"){
+            $db->logoutUser();
+            // vypsání alertu
+            echo "<script>setTimeout(() => { alert('Uživatel úspěšně odhlášen!') }, 100)</script>";
         }
     }
 
@@ -46,32 +53,32 @@ class Helper
                 // superAdministrator a administrator
                 case 2:
                 case 1:
-                    $linkOutput .= "<li class='nav-item'><a class='nav-link underline' href='index.php?page=clanky'>Recenze</a></li>
+                    $linkOutput .= "<li class='nav-item' xmlns=\"http://www.w3.org/1999/html\"><a class='nav-link underline' href='index.php?page=clanky'>Recenze</a></li>
                            <li class='nav-item'><a class='nav-link underline' href='index.php?page=clanky'>Uživatelé</a></li>
                            <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong>$userRightName</strong>)<br>
-                           <span><i class='fa fa-sign-out log-out-toRight'> Odhlásit se</i></span></div></li>
-                        </li></ul></div></div></nav>";
+                           <form method='post'><button type='submit' class='log-out-toRight' name='action' value='logout'><span><i class='fa fa-sign-out'> Odhlásit se</i></span></button></div></form></li>
+                        </ul></div></div></nav>";
                     break;
                 // Recenzant
                 case 3:
                     $linkOutput .= "<li class='nav-item'><a class='nav-link underline' href='index.php?page=clanky'>Moje recenze</a></li>
-                            <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong>$userRightName</strong>)<br>aa</div></li>
-                        </li></ul></div></div></nav>";
+                            <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong>$userRightName</strong>)<br>
+                            <form method='post'><button class='log-out-toRight' name='action' value='logout'><span><i class='fa fa-sign-out'> Odhlásit se</i></span></button></div></form></li>
+                        </ul></div></div></nav>";
                     break;
                 // Autor
                 case 4:
                     $linkOutput .= "<li class='nav-item'><a class='nav-link underline' href='index.php?page=clanky'>Moje články</a></li>
-                           <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong>$userRightName</strong>)<br>aa</div></li>
-                        </li></ul></div></div></nav>";
+                           <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong>$userRightName</strong>)<br>
+                           <form method='post'><button class='log-out-toRight' name='action' value='logout'><span><i class='fa fa-sign-out'> Odhlásit se</i></span></button></div></form></li>
+                        </ul></div></div></nav>";
                     break;
                 // neprihlaseny
                 default:
-                    $linkOutput .= "</ul><form class='d-flex'>
+                    $linkOutput .= "</ul><form class='d-flex' method='post' action='index.php?page=registration'>
                         <button class='btn btn-primary moveMenuButton' type='button' id='btnLogin'><span
                                     class='fa fa-sign-in'></span>Přihlášení</button>           
-                        <button class='btn btn-primary moveMenuButton' type='button'
-                                onclick='location.href='index.php?page=registration''>Registrace
-                        </button>
+                        <button class='btn btn-primary moveMenuButton' type='submit'>Registrace</button>
                     </form></div></div></nav>";
                     break;
 
@@ -79,12 +86,10 @@ class Helper
         }
         else{
             // neprihlaseny
-            $linkOutput .= "</ul><form class='d-flex'>
+            $linkOutput .= "</ul><form class='d-flex' method='POST' action='index.php?page=registration'>
                         <button class='btn btn-primary moveMenuButton' type='button' id='btnLogin'><span
                                     class='fa fa-sign-in'></span> Přihlášení</button>           
-                        <button class='btn btn-primary moveMenuButton' type='button'
-                                onclick='location.href='index.php?page=registration''>Registrace
-                        </button>
+                        <button class='btn btn-primary moveMenuButton' type='submit'>Registrace</button>
                     </form></div></div></nav>";
         }
         return $linkOutput;
