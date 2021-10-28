@@ -61,22 +61,6 @@ class BasicTemplate
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-
-                        <!-- </ul>
-                         <form class="d-flex">
-                             <button class="btn btn-primary moveMenuButton" type="button" id="btnLogin"><span
-                                         class="fa fa-sign-in"></span>
-                                 Přihlášení
-                             </button>
-                             <button class="btn btn-primary moveMenuButton" type="button"
-                                     onclick="location.href='index.php?page=registration'">Registrace
-                             </button>
-                         </form>
-                </div>
-            </div>
-        </nav><--->
-
-
         <?php
     }
 

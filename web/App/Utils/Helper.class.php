@@ -22,7 +22,10 @@ class Helper
                 if (!$db->isUserLogged()){
                     if($db->loginUser($_POST["login"], $_POST["password"])){
                         //vypsání alertu
-                        echo "<script>setTimeout(() => { alert('Uživatel úspěšně přihlášen!') }, 100)</script>";
+                        echo "<script>setTimeout(() => {alert('Uživatel úspěšně přihlášen!') }, 100)</script>";
+                        // refresh stranky
+                        header('Refresh: 0.5');
+
                     }
                     else{
                         echo "Nepodařilo se uživatele přihlásit";
@@ -34,7 +37,9 @@ class Helper
         else if(isset($_POST["action"]) && $_POST["action"] == "logout"){
             $db->logoutUser();
             // vypsání alertu
-            echo "<script>setTimeout(() => { alert('Uživatel úspěšně odhlášen!') }, 100)</script>";
+            echo "<script>setTimeout(() => {alert('Uživatel úspěšně odhlášen!') }, 100)</script>";
+            // refresh stranky
+            header('Refresh: 0.5');
         }
     }
 
@@ -54,7 +59,7 @@ class Helper
                 case 2:
                 case 1:
                     $linkOutput .= "<li class='nav-item' xmlns=\"http://www.w3.org/1999/html\"><a class='nav-link underline' href='index.php?page=clanky'>Recenze</a></li>
-                           <li class='nav-item'><a class='nav-link underline' href='index.php?page=clanky'>Uživatelé</a></li>
+                           <li class='nav-item'><a class='nav-link underline' href='index.php?page=user-management'>Uživatelé</a></li>
                            <li class='nav-item'><div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> $userName (<strong>$userRightName</strong>)<br>
                            <form method='post'><button type='submit' class='log-out-toRight' name='action' value='logout'><span><i class='fa fa-sign-out'> Odhlásit se</i></span></button></div></form></li>
                         </ul></div></div></nav>";

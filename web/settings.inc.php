@@ -49,7 +49,7 @@
             "controller_class_name" => \app\Controllers\ProgramController::class,
         ),
 
-        "user_management" => array(
+        "user-management" => array(
             "title" => "sprava-uzivatelu",
             "view_class_name" => \app\Views\UserManagementTemplate::class,
             "controller_class_name" => \app\Controllers\UserManagementController::class,
