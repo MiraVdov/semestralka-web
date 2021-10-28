@@ -53,6 +53,7 @@ class RegistrationController implements IController
             }
         }
 
+        if ($this->db->isUserLogged())$tplData["registrationVisible"] = "<h2 style='font-weight: bold'>Pokud se chcete zaregistrovat s jiným účtem tak se nejprve odhlašte!</h2>";
         return $tplData;
     }
 }

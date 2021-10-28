@@ -17,7 +17,8 @@
             $basicTemplate->getHeader("a");
             echo $data["links"];
             $basicTemplate->getLoginForm();
-            $basicTemplate->getRegistrationForm();
+            if (array_key_exists("registrationVisible", $data)) echo $data["registrationVisible"];
+            else $basicTemplate->getRegistrationForm();
             $basicTemplate->getFooter();
         }
     }
