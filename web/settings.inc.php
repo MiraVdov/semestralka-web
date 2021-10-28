@@ -51,7 +51,7 @@
 
         "user_management" => array(
             "title" => "sprava-uzivatelu",
-            "view_class_name" => \app\Views\UserManagement::class,
+            "view_class_name" => \app\Views\UserManagementTemplate::class,
             "controller_class_name" => \app\Controllers\UserManagementController::class,
         ),
     );

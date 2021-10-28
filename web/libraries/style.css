@@ -153,3 +153,13 @@ h2{
     float:right;
     margin-top: -5%;
 }
+
+#loginFade{
+    color: blue;
+    text-decoration: underline;
+}
+
+#loginFade:hover{
+    cursor: pointer;
+    color: #88029a;
+}

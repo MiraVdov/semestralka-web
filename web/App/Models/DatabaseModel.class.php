@@ -59,8 +59,63 @@
             return $data->fetchAll();
         }
 
+        /**
+         * Metoda prida novy zaznam do tabulky
+         * @param string $table - nazev tabulky
+         * @param string $insertStatement - nazev sloupcu
+         * @param string $insertValues - hodnoty do sloupcu
+         * @return bool - true dotaz se povedl - false - nepovedl se
+         */
+        public function insertIntoTable(string $table, string $insertStatement, string $insertValues):bool{
+            $query = "INSERT INTO $table ($insertStatement) VALUES ($insertValues)";
+            $data = $this->exectuteQuery($query);
+            return ($data != null);
+        }
 
+        /**
+         * @param string $table - nazev tabulky
+         * @param string $whereStatement - dotaz na urcite vlastnosti
+         * @return bool - true dotaz se povedl - false - nepovedl se
+         */
+        public function deleteFromTable(string $table, string $whereStatement):bool{
+            $query = "DELETE FROM $table WHERE $whereStatement";
+            $data =  $this->exectuteQuery($query);
+            return (data != null);
+        }
+
+        /**
+         * @param string $table - nazev tabulky
+         * @param string $updateValues - sloupce s novymi hodnotami
+         * @param string $whereStatement - dotaz na urcitou vlasnost
+         * @return bool true dotaz se povedl - false - nepovedl se
+         */
+        public function updateInTable(string $table, string $updateValues, string $whereStatement):bool{
+            $query = "UPDATE $table SET $updateValues WHERE $whereStatement";
+            $data = $this->$this->exectuteQuery($query);
+            return (data != null);
+        }
+
+        /**
+         * Metoda vraci vsechny hledane uzivatele serazene podle id
+         * @return array - pole uzivatelu
+         */
         public function getAllUsers():array{
            return $this->selectFromTable(TABLE_USER, "",ID_UZIVATEL);
+        }
+
+        /**
+         * Metoda prida noveho uzivatele do databaze
+         * @param string $login - login uzivatele
+         * @param string $fullName - cele jmeno uzivatele
+         * @param string $phoneNumber - cislo uzivatele
+         * @param string $email - emial uzivatele
+         * @param string $password - heslo uzivatele
+         * @return bool - podarilo se uzivatele pridat do databaze
+         */
+        public function registerNewUser(string $login, string $fullName, string $phoneNumber, string $email, string $password, int $pravo = 4):bool{
+            $insertStatement = "id_pravo, jmeno, login, heslo, email, cislo";
+            $insertValues = "'$pravo', '$fullName', '$login', '$password', '$email', '$phoneNumber'";
+
+            return $this->insertIntoTable(TABLE_USER, $insertStatement, $insertValues);
         }
     }

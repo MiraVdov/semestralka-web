@@ -15,6 +15,7 @@
         {
             $basicTemplate = new BasicTemplate();
             $basicTemplate->getHeader("a");
+            $basicTemplate->getRegistrationForm();
             $basicTemplate->getFooter();
         }
     }

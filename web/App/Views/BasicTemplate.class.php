@@ -26,7 +26,7 @@ class BasicTemplate
             <link rel="stylesheet" href="libraries/bootstrap-5.0.2-dist/css/bootstrap.min.css">
             <link rel="stylesheet" href="libraries/font-awesome-4.7.0/css/font-awesome.min.css">
 
-            <link rel="stylesheet" href="libraries/style.css?version=1.6">
+            <link rel="stylesheet" href="libraries/style.css?version=1.4">
 
             <!--Logo and title-->
             <title>Internet věcí</title>
@@ -72,21 +72,21 @@ class BasicTemplate
 
         <!--Login form-->
         <div id="loginForm">
-            <form>
+            <form method="post">
                 <button type="button" class="btn-close" aria-label="Close" id="closeButton"></button>
                 <!--Username-->
                 <h3>Přihlášení</h3>
                 <label for="username" class="form-label">Uživatelská přezdívka:</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-username"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control" id="username" aria-describedby="username"
+                    <input type="text" class="form-control" name="login" id="username" aria-describedby="username"
                            placeholder="přezdívka" required>
                 </div>
                 <!--password-->
                 <label for="password" class="form-label">Heslo:</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-password"><i class="fa fa-lock"></i></span>
-                    <input name="password" type="password" value="" class="input form-control" id="password"
+                    <input name="password" type="password" name="password" class="input form-control" id="password"
                            placeholder="password" required="true" aria-label="password"
                            aria-describedby="basic-addon1"/>
                     <span class="input-group-text" onmousedown="password_show_hide();"
@@ -96,9 +96,85 @@ class BasicTemplate
                 </span>
                 </div>
                 <p>Zapomněli jste své heslo? <a href="#">Obnovte si ho zde</a></p>
-                <button type="submit" class="btn btn-primary">Přihlásit se</button>
+                <button type="submit" name="action" value="login" class="btn btn-primary">Přihlásit se</button>
                 <br><br>
                 Nemáte ještě účet? <a href="index.php?page=registration">Zaregistrujte se zde</a>
+            </form>
+        </div>
+        <?php
+    }
+
+    /**
+     * Sablona pro registracni formular
+     */
+    public function getRegistrationForm(){
+        ?>
+
+        <!--Body-->
+        <div class="container" id="form">
+            <h3>Registrace</h3>
+            <form action="" method="POST">
+                <!--Username-->
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <label for="username" class="form-label">Uživatelská přezdívka:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-username"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" name="username" id="username" aria-describedby="username"
+                                   placeholder="přezdívka" required>
+                        </div>
+                        <!--Full name-->
+                        <label for="fullName" class="form-label">Celé jméno:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-fullName"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" name="fullName" id="fullName" aria-describedby="fullName"
+                                   placeholder="celé jméno" required>
+                        </div>
+                        <!--telephone number-->
+                        <label for="telephone" class="form-label">Telefonní číslo:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-telephone"><i class="fa fa-phone"></i></span>
+                            <input type="tel" class="form-control" name="telephone" id="telephone" aria-describedby="telephone"
+                                   placeholder="123 456 789" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" required>
+                        </div>
+                        <p id="phoneHelp">Formát: 123 456 789</p>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <!--Email-->
+                        <label for="email" class="form-label">Emailová adresa:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-email">@</span>
+                            <input type="email" class="form-control" name="email" id="email" aria-describedby="email"
+                                   placeholder="e-mail" requried>
+                        </div>
+                        <!--password-->
+                        <label for="password" class="form-label">Heslo:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-password"><i class="fa fa-lock"></i></span>
+                            <input name="password" type="password" value="" class="input form-control" id="password"
+                                   placeholder="password" required="true" aria-label="password"
+                                   aria-describedby="basic-addon1"/>
+                            <span class="input-group-text" onmousedown="password_show_hide();" onmouseup="password_show_hide();">
+                              <i class="fa fa-eye-slash" id="show_eye"></i>
+                              <i class="fa fa-eye d-none" id="hide_eye"></i>
+                            </span>
+                        </div>
+                        <label for="password2" class="form-label">Zopakujte heslo:</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-password2"><i class="fa fa-lock"></i></span>
+                            <input type="password" name="password2" class="form-control" id="password2" aria-describedby="password2"
+                                   placeholder="password" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <p>Už jste zaregistrován/a? <a id="loginFade">Přihlásit se</a>
+                    <p>
+                </div>
+                <div class="row mx-auto" id="formSubmit">
+                    <!--Submit-->
+                    <button type="submit" class="btn btn-primary" name="action" value="registration">Registrovat</button>
+                </div>
             </form>
         </div>
         <?php
@@ -126,7 +202,7 @@ class BasicTemplate
         <!--scripts-->
         <script>
             $(document).ready(function () {
-                $("#btnLogin").click(function () {
+                $("#btnLogin, #loginFade").click(function () {
                     $("#loginForm").fadeIn();
                 });
             });
