@@ -55,8 +55,8 @@
          * @param string $orderBy - poradi
          * @return array - vraci pole vysledku hledani
          */
-        public function selectFromTable(string $table, string $whereStatement = "", string $orderBy = ""):array{
-            $query = "SELECT * FROM ".$table
+        public function selectFromTable(string $table, string $whereStatement = "", string $orderBy = "", string $column = "*"):array{
+            $query = "SELECT $column FROM ".$table
                 .(($whereStatement == "") ? "" : " Where $whereStatement")
                 .(($orderBy == "") ? "" : " ORDER BY $orderBy");
 
@@ -99,14 +99,6 @@
             $query = "UPDATE $table SET $updateValues WHERE $whereStatement";
             $data = $this->$this->exectuteQuery($query);
             return (data != null);
-        }
-
-        /**
-         * Metoda vraci vsechny hledane uzivatele serazene podle id
-         * @return array - pole uzivatelu
-         */
-        public function getAllUsers():array{
-           return $this->selectFromTable(TABLE_USER, "",ID_UZIVATEL);
         }
 
         /**
@@ -175,41 +167,32 @@
         }
 
         /**
-         * Metoda vraci jmeno uzivatele nebo null
-         */
-        public function getUserName(){
-            $userData = $this->getUserInfo();
-            return ($userData == null) ?  null: $userData[2];
-        }
-
-        /**
-         * Metoda vraci pravo uzivatele nebo null
-         */
-        public function getUserRight(){
-            $userData = $this->getUserInfo();
-            return ($userData == null) ?  null: $userData[1];
-        }
-
-        /**
-         * Metoda vraci jmeno prava nebo null
+         * Metoda vraci informace o pravu uzivatele nebo null
          */
         public function getUserRightInfo(){
-            $right = $this->getUserRight();
-            if ($right != null) {
-                $rightData =  $this->selectFromTable(TABLE_RIGHTS,"id_pravo='$right'");
-                // return the first one
-                return ($rightData == null) ? null : $rightData[0];
-            }
+            $userInfo = $this->getUserInfo();
+            $right = 0;
+            if ($userInfo != null)$right = $userInfo[1];
             else return null;
+
+            $rightData = $this->selectFromTable(TABLE_RIGHTS,"id_pravo='$right'");
+            // return the first one
+            return ($rightData == null) ? null : $rightData[0];
         }
 
         /**
-         * Metoda vraci jmeno uzivatelovo prava nebo null
-         * @return mixed
+         * Metoda vraci vsechny hledane uzivatele serazene podle id
+         * @return array - pole uzivatelu
          */
-        public function getUserRightName(){
-            $userRight = $this->getUserRightInfo();
-            // beru prvni pozici v poli
-            return ($userRight == null) ? null : $userRight["nazev"];
+        public function getAllUsers():array{
+            return $this->selectFromTable(TABLE_USER, "",ID_UZIVATEL);
+        }
+
+        /**
+         * Metoda vraci vsechny hledane uzivatele serazene podle id
+         * @return array - pole uzivatelu
+         */
+        public function getAllRights():array{
+            return $this->selectFromTable(TABLE_RIGHTS, "",ID_RIGHT);
         }
     }

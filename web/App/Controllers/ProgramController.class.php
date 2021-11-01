@@ -29,6 +29,8 @@ class ProgramController implements IController
     public function show(string $pageTitle): array
     {
         $tplData["title"] = $pageTitle;
+        $tplData["user"] = $this->db->getUserInfo();
+        $tplData["userRight"] = $this->db->getUserRightInfo();
 
         Helper::loginHelp($this->db);
 

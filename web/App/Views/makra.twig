@@ -3,19 +3,85 @@
     <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" {{ other|default("") }} />
 {% endmacro %}
 
+{# 1 - superAdmin
+   2 - admin
+   3 - recenzent
+   4 - auto
+#}
+
 {# row in table #}
-{% macro tableRow(user) %}
+{% macro tableRow(user, loggedUser, allRights) %}
     <tr>
+        {# user id #}
         <td>{{ user.id_uzivatel }}</td>
         <td>{{ user.id_uzivatel }}</td>
+        {# user login #}
         <td>{{ user.login }}</td>
+        {# user name #}
         <td>{{ user.jmeno }}</td>
-        <td>{{ user.jmeno }}</td>
-        <td>
-            <form method="post">
-                <input type="hidden" name="id_user" value="$u[id_uzivatel]">
-                <button type="submit" name="action" value="delete">Smazat</button>
-            </form>
-        </td>
+
+        {# logged user is superadmin #}
+        {% if loggedUser.id_pravo == 1 %}
+            {# superadmin cant change his role and cant delete himself#}
+            {% if loggedUser.id_uzivatel != user.id_uzivatel %}
+                <td style="width: 20%;">
+                    <select class="form-select form-select-sm" aria-label="Default select example">
+                        <option value="2" selected>Admin</option>
+                        <option value="3">Recenzent</option>
+                        <option value="4">Autor</option>
+                    </select>
+                </td>
+                <td style="text-align: center">
+                    <form method="post" >
+                        <input type="hidden" name="id_user" value="{{ user.id_uzivatel }}">
+                        <button type="submit" class="btn btn-danger" name="action" value="delete">Smazat</button>
+                    </form>
+                </td>
+            {% else %}
+                <td>SuperAdmin</td>
+                <td></td>
+            {% endif %}
+        {# logged user is admin #}
+        {% else %}
+            {# show Superadmin #}
+            {% if user.id_pravo == 1 %}
+                <td>Superadmin</td>
+                <td></td>
+            {# show Admin#}
+            {% elseif user.id_pravo == 2 %}
+                <td>Admin</td>
+                <td></td>
+            {# user isnt admin or superadmin so u can change his role or delete him #}
+            {% else %}
+                <td style="width: 20%;">
+                    <select class="form-select form-select-sm" aria-label="Default select example">
+                    {# going through all rights#}
+                    {% for right in allRights %}
+                        {# if right is SuperAdmin dont show it #}
+                        {% if right.nazev == "SuperAdmin" %}
+                        {# else show name of right#}
+                        {% else %}
+                            <option value="{{ right.id_pravo }}"
+                            {# if user right is is same as right id -> selected#}
+                            {% if user.id_pravo == right.id_pravo%}
+                                selected
+                            {% endif %}
+                            >{{ right.nazev }}</option>
+                        {% endif%}
+                    {% endfor %}
+                    </select>
+                </td>
+                <td style="text-align: center">
+                    {# dont show delete button if id of user is same as logged or if user id of right is 1 or 2 #}
+                    {% if user.id_uzivatel != loggedUser.id_uzivatel and user.id_pravo != 2 and user.id_pravo != 1 %}
+                        <form method="post" >
+                            <input type="hidden" name="id_user" value="{{ user.id_uzivatel }}">
+                            <button type="submit" class="btn btn-danger" name="action" value="delete">Smazat</button>
+                        </form>
+
+                    {%  endif %}
+                </td>
+            {% endif%}
+        {% endif %}
     </tr>
 {% endmacro %}

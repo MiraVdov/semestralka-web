@@ -21,6 +21,7 @@ const TABLE_RIGHTS = "miravdov_pravo";
 
 ///////////
 const ID_UZIVATEL = "id_uzivatel";
+const ID_RIGHT = "id_pravo";
 //////////
 /**Klic defaultni webove stranky*/
 const DEFAULT_WEB_PAGE = "information";

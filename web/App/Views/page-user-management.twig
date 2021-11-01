@@ -9,7 +9,7 @@
     {% if user != null or userRight != null %}
         {# user is admin or superadmin #}
         {% if user.id_pravo == 1 or user.id_pravo == 2 %}
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered">
                     <thead>
                         <tr class="table-dark">
                             <th>ID</th>
@@ -22,8 +22,8 @@
                     </thead>
                     <tbody>
                         {# going throught all users #}
-                        {% for useri in users %}
-                            {{ makra.tableRow(useri) }}
+                        {% for useri in allUsers %}
+                            {{ makra.tableRow(useri, user, allRights) }}
                         {% endfor %}
                     </tbody>
                 </table>

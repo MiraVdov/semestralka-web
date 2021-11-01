@@ -28,9 +28,12 @@ class UserManagementController implements IController
     public function show(string $pageTitle): array
     {
         $tplData["title"] = $pageTitle;
-        $tplData["users"] = $this->db->getAllUsers();
+        $tplData["allUsers"] = $this->db->getAllUsers();
         $tplData["user"] = $this->db->getUserInfo();
         $tplData["userRight"] = $this->db->getUserRightInfo();
+        $tplData["allRights"] = $this->db->getAllRights();
+
+
 
         Helper::loginHelp($this->db);
 
