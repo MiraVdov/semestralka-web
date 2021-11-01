@@ -33,8 +33,6 @@ class UserManagementController implements IController
         $tplData["userRight"] = $this->db->getUserRightInfo();
         $tplData["allRights"] = $this->db->getAllRights();
 
-
-
         Helper::loginHelp($this->db);
 
         return $tplData;

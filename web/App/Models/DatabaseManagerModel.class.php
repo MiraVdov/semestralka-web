@@ -55,8 +55,8 @@
          * @param string $orderBy - poradi
          * @return array - vraci pole vysledku hledani
          */
-        public function selectFromTable(string $table, string $whereStatement = "", string $orderBy = "", string $column = "*"):array{
-            $query = "SELECT $column FROM ".$table
+        public function selectFromTable(string $table, string $whereStatement = "", string $orderBy = ""):array{
+            $query = "SELECT * FROM ".$table
                 .(($whereStatement == "") ? "" : " Where $whereStatement")
                 .(($orderBy == "") ? "" : " ORDER BY $orderBy");
 
@@ -189,7 +189,7 @@
         }
 
         /**
-         * Metoda vraci vsechny hledane uzivatele serazene podle id
+         * Metoda vraci vsechny prava    serazene podle id
          * @return array - pole uzivatelu
          */
         public function getAllRights():array{
