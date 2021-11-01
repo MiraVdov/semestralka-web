@@ -31,7 +31,6 @@ const WEB_PAGES = array(
     ///// stranka Informace /////
     "information" => array(
         "title" => "informace",
-        "view_class_name" => \app\Views\InformationTemplate::class,
         "controller_class_name" => \app\Controllers\InformationController::class,
         "view_name" => "page-information.twig",
     ),
@@ -39,7 +38,6 @@ const WEB_PAGES = array(
     ///// Stranka registrace //////
     "registration" => array(
         "title" => "registrace",
-        "view_class_name" => \app\Views\RegistrationTemplate::class,
         "controller_class_name" => \app\Controllers\RegistrationController::class,
         "view_name" => "page-registration.twig",
     ),
@@ -47,14 +45,12 @@ const WEB_PAGES = array(
     ///// Stranka programu ///////
     "program" => array(
         "title" => "program",
-        "view_class_name" => \app\Views\ProgramTemplate::class,
         "controller_class_name" => \app\Controllers\ProgramController::class,
         "view_name" => "page-program.twig",
     ),
     ////stranka spravy uzivatelu////
     "user-management" => array(
         "title" => "správa uživatelů",
-        "view_class_name" => \app\Views\UserManagementTemplate::class,
         "controller_class_name" => \app\Controllers\UserManagementController::class,
         "view_name" => "page-user-management.twig",
     ),
@@ -62,8 +58,7 @@ const WEB_PAGES = array(
     /////stranka vlasnich clanku/////
     "my-articles" => array(
         "title" => "články",
-        "view_class_name" => app\Views\MyArticlesTemplate::class,
         "controller_class_name" => app\Controllers\MyArticlesController::class,
-
+        "view_name" => "articles.twig",
     ),
 );
