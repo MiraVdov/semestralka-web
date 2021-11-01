@@ -1,0 +1,21 @@
+{# vypis input elementu #}
+{% macro inputElement(type, name, value, other) %}
+    <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" {{ other|default("") }} />
+{% endmacro %}
+
+{# row in table #}
+{% macro tableRow(user) %}
+    <tr>
+        <td>{{ user.id_uzivatel }}</td>
+        <td>{{ user.id_uzivatel }}</td>
+        <td>{{ user.login }}</td>
+        <td>{{ user.jmeno }}</td>
+        <td>{{ user.jmeno }}</td>
+        <td>
+            <form method="post">
+                <input type="hidden" name="id_user" value="$u[id_uzivatel]">
+                <button type="submit" name="action" value="delete">Smazat</button>
+            </form>
+        </td>
+    </tr>
+{% endmacro %}

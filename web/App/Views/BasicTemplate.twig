@@ -1,0 +1,75 @@
+{# Baisc template #}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {# imports #}
+    {% block imports %}
+        {% include("imports.twig") %}
+    {% endblock %}
+
+    <!--Logo and title-->
+    <title>{{ title }}</title>
+    <link rel="shortcut icon" href="images/favicon.png">
+</head>
+
+<body>
+<!--Title-->
+<div class="container-fluid text-center align-self-center" id="title">
+    <h1>Konference internet věcí</h1>
+</div>
+
+{# menu #}
+{% block menu %}
+    {% include("menu.twig") %}
+{% endblock %}
+
+{# login form #}
+{% block login %}
+    {% include("login.twig") %}
+{% endblock %}
+
+{# alerts #}
+{% block alerts %}
+{% endblock %}
+
+<!--Container-->
+<div class="container">
+    <h3>{{ title | title }}</h3>
+
+    {# Informations #}
+    {% block information %}
+    {% endblock %}
+
+    {# program #}
+    {% block program %}
+    {% endblock %}
+
+    {# user management #}
+    {% block userManagement %}
+    {% endblock %}
+
+    {# registration #}
+    {% block registration %}
+    {% endblock %}
+
+</div>
+
+<!--arrow-->
+<a href="#"><span class="fa fa-arrow-circle-up fa-4x" id="arrow"></span></a>
+
+<!--Footer-->
+<div class="alert alert-dark" role="alert" id="footer">
+    &copyMiroslav Vdoviak
+</div>
+{# scripts #}
+{% block scripts %}
+    {% include("scripts.twig") %}
+{% endblock %}
+
+</body>
+</html>

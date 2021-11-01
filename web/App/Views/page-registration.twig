@@ -1,0 +1,77 @@
+{# page registration #}
+{% extends "BasicTemplate.twig" %}
+
+{# registration #}
+{% block registration %}
+    {# user isnt logged - show him registration #}
+    {% if user == null %}
+        <form action="" method="POST">
+            <!--Username-->
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <label for="username" class="form-label">Uživatelská přezdívka:</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-username"><i class="fa fa-user"></i></span>
+                        <input type="text" class="form-control" name="username" id="username" aria-describedby="username"
+                               placeholder="přezdívka" required>
+                    </div>
+                    <!--Full name-->
+                    <label for="fullName" class="form-label">Celé jméno:</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-fullName"><i class="fa fa-user"></i></span>
+                        <input type="text" class="form-control" name="fullName" id="fullName" aria-describedby="fullName"
+                               placeholder="celé jméno" required>
+                    </div>
+                    <!--telephone number-->
+                    <label for="telephone" class="form-label">Telefonní číslo:</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-telephone"><i class="fa fa-phone"></i></span>
+                        <input type="tel" class="form-control" name="telephone" id="telephone" aria-describedby="telephone"
+                               placeholder="123 456 789" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" required>
+                    </div>
+                    <p id="phoneHelp">Formát: 123 456 789</p>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <!--Email-->
+                    <label for="email" class="form-label">Emailová adresa:</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-email">@</span>
+                        <input type="email" class="form-control" name="email" id="email" aria-describedby="email"
+                               placeholder="e-mail">
+                    </div>
+                    <!--password-->
+                    <label for="password" class="form-label">Heslo:</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-password"><i class="fa fa-lock"></i></span>
+                        <input name="password" type="password" value="" class="input form-control" id="passwordRegistration"
+                               placeholder="password" aria-label="password"
+                               aria-describedby="basic-addon1" required/>
+                        <span class="input-group-text" onmousedown="password_show_hide2();" onmouseup="password_show_hide2();">
+                              <i class="fa fa-eye-slash" id="show_eye2"></i>
+                              <i class="fa fa-eye d-none" id="hide_eye2"></i>
+                            </span>
+                    </div>
+                    <label for="password2" class="form-label">Zopakujte heslo:</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-password2"><i class="fa fa-lock"></i></span>
+                        <input type="password" name="password2" class="form-control" id="password2" aria-describedby="password2"
+                               placeholder="password" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p>Už jste zaregistrován/a? <a id="loginFade">Přihlásit se</a>
+                <p>
+            </div>
+            <div class="row mx-auto" id="formSubmit">
+                <!--Submit-->
+                <button type="submit" class="btn btn-primary" name="action" value="registration">Registrovat</button>
+            </div>
+        </form>
+    {# user is logged -> he cant register - dont show him#}
+    {% else %}
+        <script>
+            location.replace("index.php?page=informations");
+        </script>
+    {% endif %}
+{% endblock %}

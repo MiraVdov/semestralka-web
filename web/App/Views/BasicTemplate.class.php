@@ -149,12 +149,12 @@ class BasicTemplate
                         <label for="password" class="form-label">Heslo:</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-password"><i class="fa fa-lock"></i></span>
-                            <input name="password" type="password" value="" class="input form-control" id="password"
+                            <input name="password" type="password" value="" class="input form-control" id="passwordRegistration"
                                    placeholder="password" aria-label="password"
                                    aria-describedby="basic-addon1" required/>
-                            <span class="input-group-text" onmousedown="password_show_hide();" onmouseup="password_show_hide();">
-                              <i class="fa fa-eye-slash" id="show_eye"></i>
-                              <i class="fa fa-eye d-none" id="hide_eye"></i>
+                            <span class="input-group-text" onmousedown="password_show_hide2();" onmouseup="password_show_hide2();">
+                              <i class="fa fa-eye-slash" id="show_eye2"></i>
+                              <i class="fa fa-eye d-none" id="hide_eye2"></i>
                             </span>
                         </div>
                         <label for="password2" class="form-label">Zopakujte heslo:</label>
@@ -199,22 +199,42 @@ class BasicTemplate
 
         <!--scripts-->
         <script>
+            //funkce slouzi  zobrazeni loginu
             $(document).ready(function () {
                 $("#btnLogin, #loginFade").click(function () {
                     $("#loginForm").fadeIn();
                 });
             });
 
+            // funkce slouzi k zavreni loginu
             $(document).ready(function () {
                 $("#closeButton").click(function () {
                     $("#loginForm").fadeOut();
                 });
             });
 
+            // funkce slouzi k zobrazeni hesel
             function password_show_hide() {
                 var x = document.getElementById("password");
                 var show_eye = document.getElementById("show_eye");
                 var hide_eye = document.getElementById("hide_eye");
+                hide_eye.classList.remove("d-none");
+                if (x.type === "password") {
+                    x.type = "text";
+                    show_eye.style.display = "none";
+                    hide_eye.style.display = "block";
+                } else {
+                    x.type = "password";
+                    show_eye.style.display = "block";
+                    hide_eye.style.display = "none";
+                }
+            }
+
+             // metoda slouzi k zobrazeni hesel
+             function password_show_hide2() {
+                var x = document.getElementById("passwordRegistration");
+                var show_eye = document.getElementById("show_eye2");
+                var hide_eye = document.getElementById("hide_eye2");
                 hide_eye.classList.remove("d-none");
                 if (x.type === "password") {
                     x.type = "text";

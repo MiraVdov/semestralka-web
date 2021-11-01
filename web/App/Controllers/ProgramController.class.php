@@ -2,7 +2,7 @@
 
 namespace app\Controllers;
 
-use app\Models\DatabaseModel as DB;
+use app\Models\DatabaseManagerModel as DB;
 use app\Utils\Helper;
 
 /**
@@ -28,8 +28,10 @@ class ProgramController implements IController
      */
     public function show(string $pageTitle): array
     {
+        $tplData["title"] = $pageTitle;
+
         Helper::loginHelp($this->db);
-        $tplData["links"] = Helper::linkHelp($this->db);
+
         return $tplData;
     }
 }

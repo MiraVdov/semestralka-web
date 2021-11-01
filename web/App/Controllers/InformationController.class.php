@@ -2,7 +2,7 @@
 
 namespace app\Controllers;
 
-use app\Models\DatabaseModel as DB;
+use app\Models\DatabaseManagerModel as DB;
 use app\Utils\Helper;
 
 /**
@@ -28,8 +28,11 @@ class InformationController implements IController
      */
     public function show(string $pageTitle): array
     {
+        $tplData["title"] = $pageTitle;
+        $tplData["user"] = $this->db->getUserInfo();
+        $tplData["userRight"] = $this->db->getUserRightInfo();
+
         Helper::loginHelp($this->db);
-        $tplData["links"] = Helper::linkHelp($this->db);
         return $tplData;
     }
 }

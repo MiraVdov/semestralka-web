@@ -18,7 +18,6 @@ class UserManagementTemplate implements IView
         echo $data["links"];
         $basicTemplate->getLoginForm();
         echo $data["table"];
-
         $basicTemplate->getFooter();
     }
 }

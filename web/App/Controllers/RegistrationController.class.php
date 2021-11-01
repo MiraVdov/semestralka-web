@@ -2,7 +2,7 @@
 
 namespace app\Controllers;
 
-use app\Models\DatabaseModel as DB;
+use app\Models\DatabaseManagerModel as DB;
 use app\Utils\Helper;
 
 /**
@@ -28,11 +28,10 @@ class RegistrationController implements IController
      */
     public function show(string $pageTitle):array
     {
-        $tplData = [];
         $tplData["title"] = $pageTitle;
+        $tplData["user"] = $this->db->getUserInfo();
 
         Helper::loginHelp($this->db);
-        $tplData["links"] = Helper::linkHelp($this->db);
 
         // bylo zmáčknuté tlačítko
         if (isset($_POST["action"]) && $_POST["action"] == "registration"){
@@ -53,7 +52,6 @@ class RegistrationController implements IController
             }
         }
 
-        if ($this->db->isUserLogged())$tplData["registrationVisible"] = "<h2 style='font-weight: bold'>Pokud se chcete zaregistrovat s jiným účtem tak se nejprve odhlašte!</h2>";
         return $tplData;
     }
 }

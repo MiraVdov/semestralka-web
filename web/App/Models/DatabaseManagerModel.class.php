@@ -6,8 +6,8 @@
     /**
      * Třída spravující databazi
      */
-    class DatabaseModel{
-        /** @var DatabaseModel $database  Singleton databazoveho modelu. */
+    class DatabaseManagerModel{
+        /** @var DatabaseManagerModel $database  Singleton databazoveho modelu. */
         private static $database;
 
         /** @var \PDO $pdo  Objekt pracujici s databazi prostrednictvim PDO. */
@@ -29,10 +29,10 @@
 
         /**
          * Metoda vrací jedinou instanci databazoveho modelu
-         * @return DatabaseModel - databazovy model
+         * @return DatabaseManagerModel - databazovy model
          */
-        public static function getDatabaseModel():DatabaseModel{
-            if (empty(self::$database)) self::$database = new DatabaseModel();
+        public static function getDatabaseModel():DatabaseManagerModel{
+            if (empty(self::$database)) self::$database = new DatabaseManagerModel();
             return self::$database;
         }
 
@@ -144,6 +144,7 @@
             $user = $this->selectFromTable(TABLE_USER,$where);
 
             if (count($user) > 0){
+                // return the first one
                 $this->session->setSession($user[0]);
                 return true;
             }
@@ -190,27 +191,25 @@
         }
 
         /**
-         * Metoda vraci data prav
-         * nebo null
-         */
-        public function getRightInfo(){
-           $right = $this->getUserRight();
-           $this->selectFromTable(TABLE_RIGHTS);
-            return null;
-        }
-
-        /**
          * Metoda vraci jmeno prava nebo null
          */
         public function getUserRightInfo(){
             $right = $this->getUserRight();
-            if ($right != null) return $this->selectFromTable(TABLE_RIGHTS,"id_pravo='$right'");
+            if ($right != null) {
+                $rightData =  $this->selectFromTable(TABLE_RIGHTS,"id_pravo='$right'");
+                // return the first one
+                return ($rightData == null) ? null : $rightData[0];
+            }
             else return null;
         }
 
+        /**
+         * Metoda vraci jmeno uzivatelovo prava nebo null
+         * @return mixed
+         */
         public function getUserRightName(){
             $userRight = $this->getUserRightInfo();
             // beru prvni pozici v poli
-            return $userRight[0]["nazev"];
+            return ($userRight == null) ? null : $userRight["nazev"];
         }
     }

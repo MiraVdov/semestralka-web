@@ -1,0 +1,42 @@
+{# user management page #}
+{% extends "BasicTemplate.twig" %}
+
+{% import "makra.twig" as makra %}
+
+{# user management #}
+{% block userManagement %}
+    {# user is logged and has a right #}
+    {% if user != null or userRight != null %}
+        {# user is admin or superadmin #}
+        {% if user.id_pravo == 1 or user.id_pravo == 2 %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="table-dark">
+                            <th>ID</th>
+                            <th>S.</th>
+                            <th>Login</th>
+                            <th>Jméno</th>
+                            <th>Role</th>
+                            <th>Správa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {# going throught all users #}
+                        {% for useri in users %}
+                            {{ makra.tableRow(useri) }}
+                        {% endfor %}
+                    </tbody>
+                </table>
+        {% else %}
+            {# user isnt admin or superadmin so he doesnt have access #}
+            <script>
+                location.replace("index.php?page=informations");
+            </script>
+        {% endif %}
+    {% else %}
+        {# user isnt logged so he doesnt have access #}
+        <script>
+            location.replace("index.php?page=informations");
+        </script>
+    {% endif %}
+{% endblock %}

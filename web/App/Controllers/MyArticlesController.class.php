@@ -2,7 +2,7 @@
 
 namespace app\Controllers;
 
-use app\Models\DatabaseModel as DB;
+use app\Models\DatabaseManagerModel as DB;
 use app\Utils\Helper;
 
 /**
@@ -28,10 +28,9 @@ class MyArticlesController implements IController
      */
     public function show(string $pageTitle): array
     {
-        Helper::loginHelp($this->db);
-        $tplData["links"] = Helper::linkHelp($this->db);
+        $tplData["title"] = $pageTitle;
 
-        $tplData["addNewArticleButton"] = "<button type='button' class='btn btn-success'>Success</button>";
+        Helper::loginHelp($this->db);
 
         return $tplData;
     }

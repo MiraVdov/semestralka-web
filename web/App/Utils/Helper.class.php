@@ -2,7 +2,7 @@
 
 namespace app\Utils;
 
-use app\Models\DatabaseModel;
+use app\Models\DatabaseManagerModel;
 
 /**
  * Trida slouzi k zkraceni opakovani kodu pro login form a odkzay
@@ -10,10 +10,10 @@ use app\Models\DatabaseModel;
 class Helper
 {
     /**
-     * Metoda pomaha s prihlasenim uzivatele aby se kod ve tridach neopakoval
-     * @param DatabaseModel $db - databazovy model
+     * Metoda pomaha s prihlasenim uzivatele aby se kod ve tridach neopakoval (da se prihlasit z jakekoliv stranky)
+     * @param DatabaseManagerModel $db - databazovy model
      */
-    public static function loginHelp(DatabaseModel $db){
+    public static function loginHelp(DatabaseManagerModel $db){
         // kliklo se na tlačítko přihlásit
         if (isset($_POST["action"]) && $_POST["action"] == "login"){
             // je vyplněen login a heslo
@@ -46,16 +46,16 @@ class Helper
     }
 
     /**
-     * Metoda pomaha se zobrazenim spravnych odkazu
-     * @param DatabaseModel $db - databazovy model
+     * Metoda pomaha se zobrazenim spravnych odkazu - nastavi odkazy ktere uzivatel uvidi podle jeho prava
+     * @param DatabaseManagerModel $db - databazovy model
      */
-    public static function linkHelp(DatabaseModel $db){
+    public static function linkHelp(DatabaseManagerModel $db){
         $linkOutput = "";
 
-        if ($db->isUserLogged()){
-            $userRight = $db->getUserRight();
-            $userName = $db->getUserName();
-            $userRightName = $db->getUserRightName();
+        if ($db->isUserLogged()){   // $data["isLogged"];
+            $userRight = $db->getUserRight(); // $data["userRight"];
+            $userName = $db->getUserName(); // $data["userName"];
+            $userRightName = $db->getUserRightName();  // $data["userRightName"];
             switch ($userRight) {
                 // superAdministrator a administrator
                 case 2:
