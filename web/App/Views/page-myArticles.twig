@@ -4,5 +4,21 @@
 
 {# myArticles #}
 {% block myArticles %}
-    <div id="editor"></div>
+    {# vlastní články si může zobrazit pouze autor #}
+    {% if user.id_pravo == 4 %}
+        <button type="button" class="btn btn-success fa fa-plus-circle"> Přidat nový článek</button>
+        {# prochazime všechny uzivatelovo clanky #}
+        {% for article in userArticles %}
+            <div class="card mx-auto articles">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.nadpis }}</h5>
+                    <p class="card-text">{{ article.obsah }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        <br><div id="editor"></div>
+    {% else %}
+        {# vracíme na stránku informací #}
+        <script> location.replace("index.php?page=informations"); </script>
+    {% endif %}
 {% endblock %}

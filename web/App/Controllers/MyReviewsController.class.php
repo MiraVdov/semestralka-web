@@ -2,14 +2,11 @@
 
 namespace app\Controllers;
 
-use app\Models\UserManagerModel as UMM;
 use app\Models\ArticlesManagerModel as AM;
+use app\Models\UserManagerModel as UMM;
 use app\Utils\Helper;
 
-/**
- * Trida zajistujici zobrazeni stranky s vlastnimi clanky
- */
-class MyArticlesController implements IController
+class MyReviewsController implements IController
 {
     /**@var UMM $um instance modelu spravy uzivatelu*/
     private $um;
@@ -35,8 +32,6 @@ class MyArticlesController implements IController
         $tplData["title"] = $pageTitle;
         $tplData["user"] = $this->um->getUserInfo();
         $tplData["userRight"] = $this->um->getUserRightInfo();
-        // pokud mám uživatele tak si uložím všechny jeho články
-        if ($tplData["user"] != null)$tplData["userArticles"] = $this->articlesManager->getAllUsersArticles($tplData["user"]["id_uzivatel"]);
 
         Helper::loginHelp($this->um);
 

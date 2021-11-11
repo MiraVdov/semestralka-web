@@ -13,11 +13,13 @@ class ArticlesManagerModel
         $this->databaseManager = DM::getDatabaseModel();
     }
 
-    function getUsersArticles(){
-
-    }
 
     public function getAllArticles(){
         return $this->databaseManager->selectFromTable(TABLE_ARTICLES);
+    }
+
+    public function getAllUsersArticles(int $userID){
+
+        return $this->databaseManager->selectFromTable(TABLE_ARTICLES, "id_uzivatel=$userID");
     }
 }

@@ -71,4 +71,11 @@ const WEB_PAGES = array(
         "controller_class_name" => app\Controllers\ArticlesController::class,
         "view_name" => "page-articles.twig",
     ),
+
+    /////stranka vlastnich recenzi/////
+    "my-reviews" => array(
+        "title" => "moje recenze",
+        "controller_class_name" => app\Controllers\MyReviewsController::class,
+        "view_name" => "page-myReviews.twig",
+    ),
 );
