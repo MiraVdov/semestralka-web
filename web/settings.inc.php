@@ -18,6 +18,8 @@ const DB_PASSWORD = "";
 const TABLE_USER = "miravdov_uzivatel";
 /**Tabulka s právama*/
 const TABLE_RIGHTS = "miravdov_pravo";
+/**Tabulka s clankama*/
+const TABLE_ARTICLES = "miravdov_clanek";
 
 ///////////
 const ID_UZIVATEL = "id_uzivatel";
@@ -58,8 +60,15 @@ const WEB_PAGES = array(
 
     /////stranka vlasnich clanku/////
     "my-articles" => array(
-        "title" => "články",
+        "title" => "moje články",
         "controller_class_name" => app\Controllers\MyArticlesController::class,
-        "view_name" => "myArticles.twig",
+        "view_name" => "page-myArticles.twig",
+    ),
+
+    /////stranka vsech clanku/////
+    "articles" => array(
+        "title" => "články",
+        "controller_class_name" => app\Controllers\ArticlesController::class,
+        "view_name" => "page-articles.twig",
     ),
 );

@@ -2,7 +2,6 @@
 
 namespace app;
 
-use app\Views\IView;
 use app\Controllers\IController;
 
 /**Start webove appky*/
@@ -24,11 +23,6 @@ class ApplicationStart
 
         // data šablony od kontroleru
         $tplData = $controller->show($pageInfo["title"]);
-
-
-       // $view = new $pageInfo["view_class_name"];
-
-      //  $view->printOut($tplData);
 
         $view = $pageInfo["view_name"];
         require_once 'libraries/composer/vendor/autoload.php';

@@ -51,6 +51,7 @@ body{
     padding: 1.5%;
 }
 
+/**Tabulka registrace -> text pro pomoc u tel cisla*/
 #phoneHelp{
     font-size: 80%;
     color: grey;
@@ -184,5 +185,10 @@ h2{
 
 .boldRight{
 color: #09deb4;
+}
+
+.articles{
+    margin-top: 2%;
+    background-color: #e2f8ff;
 }
 
