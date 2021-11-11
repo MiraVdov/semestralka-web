@@ -60,6 +60,6 @@ const WEB_PAGES = array(
     "my-articles" => array(
         "title" => "články",
         "controller_class_name" => app\Controllers\MyArticlesController::class,
-        "view_name" => "articles.twig",
+        "view_name" => "myArticles.twig",
     ),
 );

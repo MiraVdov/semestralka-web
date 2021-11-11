@@ -2,7 +2,6 @@
 
     namespace app\Models;
     use PDOStatement;
-    use app\Utils\MySessions;
     /**
      * Třída spravující databazi
      */
@@ -13,9 +12,6 @@
         /** @var \PDO $pdo  Objekt pracujici s databazi prostrednictvim PDO. */
         private $pdo;
 
-        /**@var MySessions $session - session*/
-        private $session;
-
         /**Připojení k databázi*/
         private function __construct()
         {
@@ -23,8 +19,6 @@
             $this->pdo = new \PDO("mysql:host=".DB_SERVER.";dbname=".DB_NAME, DB_USER, DB_PASSWORD);
             //nastavení utf8
             $this->pdo->exec("set names utf8");
-
-            $this->session = new MySessions();
         }
 
         /**
@@ -43,7 +37,6 @@
          */
         private function exectuteQuery(string $query){
             $data = $this->pdo->query($query);
-
             if($data) return $data;
             echo $this->pdo->errorInfo()[2];
             return null;
@@ -86,7 +79,7 @@
         public function deleteFromTable(string $table, string $whereStatement):bool{
             $query = "DELETE FROM $table WHERE $whereStatement";
             $data =  $this->exectuteQuery($query);
-            return (data != null);
+            return ($data != null);
         }
 
         /**
@@ -97,102 +90,8 @@
          */
         public function updateInTable(string $table, string $updateValues, string $whereStatement):bool{
             $query = "UPDATE $table SET $updateValues WHERE $whereStatement";
-            $data = $this->$this->exectuteQuery($query);
-            return (data != null);
-        }
 
-        /**
-         * Metoda prida noveho uzivatele do databaze
-         * @param string $login - login uzivatele
-         * @param string $fullName - cele jmeno uzivatele
-         * @param string $phoneNumber - cislo uzivatele
-         * @param string $email - emial uzivatele
-         * @param string $password - heslo uzivatele
-         * @return bool - podarilo se uzivatele pridat do databaze
-         */
-        public function registerNewUser(string $login, string $fullName, string $phoneNumber, string $email, string $password, int $pravo = 4):bool{
-            $insertStatement = "id_pravo, jmeno, login, heslo, email, cislo";
-            $insertValues = "'$pravo', '$fullName', '$login', '$password', '$email', '$phoneNumber'";
-
-            return $this->insertIntoTable(TABLE_USER, $insertStatement, $insertValues);
-        }
-
-        /**
-         * Metoda vraci zda je uzivatel prihlasen
-         * @return bool - true prihlasen, false - neprihlasen
-         */
-        public function isUserLogged():bool{
-            return $this->session->isSessionSet();
-        }
-
-        /**
-         * Metoda prihlasi uzivatele
-         * @param string $login - login uzivatele
-         * @param string $password - heslo uzivatele
-         * @return bool - true - uzivatel uspesne prihlasen, false - uziatel neexistuje
-         */
-        public function loginUser(string $login, string $password):bool{
-            $where = "login='$login' AND heslo='$password'";
-            $user = $this->selectFromTable(TABLE_USER,$where);
-
-            if (count($user) > 0){
-                // return the first one
-                $this->session->setSession($user[0]);
-                return true;
-            }
-            else return false;
-        }
-
-        /**
-         * Metoda slouzi k odhlaseni uzivatele
-         */
-        public function logoutUser(){
-            $this->session->removeSession();
-        }
-
-        /**
-         * Metoda vraci data uzivatele
-         * nebo null
-         */
-        public function getUserInfo(){
-            if ($this->isUserLogged()){
-                $userData = $this->session->readSession();
-                if ($userData == null){
-                    $this->logoutUser();
-                    return null;
-                }
-                else return $userData;
-            }
-            return null;
-        }
-
-        /**
-         * Metoda vraci informace o pravu uzivatele nebo null
-         */
-        public function getUserRightInfo(){
-            $userInfo = $this->getUserInfo();
-            $right = 0;
-            if ($userInfo != null)$right = $userInfo[1];
-            else return null;
-
-            $rightData = $this->selectFromTable(TABLE_RIGHTS,"id_pravo='$right'");
-            // return the first one
-            return ($rightData == null) ? null : $rightData[0];
-        }
-
-        /**
-         * Metoda vraci vsechny hledane uzivatele serazene podle id
-         * @return array - pole uzivatelu
-         */
-        public function getAllUsers():array{
-            return $this->selectFromTable(TABLE_USER, "",ID_UZIVATEL);
-        }
-
-        /**
-         * Metoda vraci vsechny prava    serazene podle id
-         * @return array - pole uzivatelu
-         */
-        public function getAllRights():array{
-            return $this->selectFromTable(TABLE_RIGHTS, "",ID_RIGHT);
+            $data = $this->exectuteQuery($query);
+            return ($data != null);
         }
     }

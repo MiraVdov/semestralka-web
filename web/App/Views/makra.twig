@@ -22,7 +22,7 @@
 
         {# logged user is superadmin #}
         {% if loggedUser.id_pravo == 1 %}
-            {# superadmin cant change his role and cant delete himself#}
+            {# superadmin cant change his role and cant ban himself#}
             {% if loggedUser.id_uzivatel != user.id_uzivatel %}
                 <td style="width: 20%;">
                     <select class="form-select form-select-sm" aria-label="Default select example">
@@ -45,7 +45,7 @@
                 <td style="text-align: center">
                     <form method="post" >
                         <input type="hidden" name="id_user" value="{{ user.id_uzivatel }}">
-                        <button type="submit" class="btn btn-danger" name="action" value="delete">Smazat</button>
+                        <button type="submit" class="btn btn-danger" name="action" value="ban">Zakázat</button>
                     </form>
                 </td>
             {% else %}
@@ -56,13 +56,13 @@
         {% else %}
             {# show Superadmin #}
             {% if user.id_pravo == 1 %}
-                <td>Superadmin</td>
+                <td>SuperAdmin</td>
                 <td></td>
             {# show Admin#}
             {% elseif user.id_pravo == 2 %}
                 <td>Admin</td>
                 <td></td>
-            {# user isnt admin or superadmin so u can change his role or delete him #}
+            {# user isnt admin or superadmin so u can change his role or ban him #}
             {% else %}
                 <td style="width: 20%;">
                     <select class="form-select form-select-sm" aria-label="Default select example">
@@ -83,11 +83,11 @@
                     </select>
                 </td>
                 <td style="text-align: center">
-                    {# dont show delete button if id of user is same as logged or if user id of right is 1 or 2 #}
+                    {# dont show ban button if id of user is same as logged or if user id of right is 1 or 2 #}
                     {% if user.id_uzivatel != loggedUser.id_uzivatel and user.id_pravo != 2 and user.id_pravo != 1 %}
                         <form method="post" >
                             <input type="hidden" name="id_user" value="{{ user.id_uzivatel }}">
-                            <button type="submit" class="btn btn-danger" name="action" value="delete">Smazat</button>
+                            <button type="submit" class="btn btn-danger" name="action" value="ban">Zakázat</button>
                         </form>
 
                     {%  endif %}

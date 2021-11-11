@@ -3,6 +3,8 @@
 <!--jquery import-->
 <script src="libraries/jquery/jquery-3.5.1.min.js"></script>
 
+<!--CKEDITOR import-->
+<script src="ckEditor/ckeditor.js"></script>
 
 <!--scripts-->
 <script>
@@ -53,4 +55,11 @@
             hide_eye.style.display = "none";
         }
     }
+
+    ///////////////////////////CKEDITOR/////////////////////////
+    ClassicEditor
+        .create( document.querySelector( '#editor' ))
+        .catch( error => {
+            console.log( error );
+        } );
 </script>

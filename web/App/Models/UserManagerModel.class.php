@@ -24,6 +24,30 @@ class UserManagerModel
     }
 
     /**
+     * Metoda prida noveho uzivatele do databaze
+     * @param string $login - login uzivatele
+     * @param string $fullName - cele jmeno uzivatele
+     * @param string $phoneNumber - cislo uzivatele
+     * @param string $email - emial uzivatele
+     * @param string $password - heslo uzivatele
+     * @return bool - podarilo se uzivatele pridat do databaze
+     */
+    public function registerNewUser(string $login, string $fullName, string $phoneNumber, string $email, string $password, int $pravo = 4, int $banned = 0):bool{
+        $insertStatement = "id_pravo, jmeno, login, heslo, email, cislo, isBanned";
+        $insertValues = "'$pravo', '$fullName', '$login', '$password', '$email', '$phoneNumber', '$banned'";
+
+        return $this->databaseManager->insertIntoTable(TABLE_USER, $insertStatement, $insertValues);
+    }
+
+    /**
+     * Metoda vraci zda je uzivatel prihlasen
+     * @return bool - true prihlasen, false - neprihlasen
+     */
+    public function isUserLogged():bool{
+        return $this->session->isSessionSet();
+    }
+
+    /**
      * Metoda prihlasi uzivatele
      * @param string $login - login uzivatele
      * @param string $password - heslo uzivatele
@@ -34,6 +58,7 @@ class UserManagerModel
         $user = $this->databaseManager->selectFromTable(TABLE_USER,$where);
 
         if (count($user) > 0){
+            // return the first one
             $this->session->setSession($user[0]);
             return true;
         }
@@ -47,28 +72,26 @@ class UserManagerModel
         $this->session->removeSession();
     }
 
-    /**
-     * Metoda vraci zda je uzivatel prihlasen
-     * @return bool - true prihlasen, false - neprihlasen
-     */
-    public function isUserLogged():bool{
-        return $this->session->isSessionSet();
+    public function updateUser(int $userID, int $rightID, string $name, string $login, string $password, string $email, string $number, int $banned = 0){
+
     }
 
     /**
-     * Metoda prida noveho uzivatele do databaze
-     * @param string $login - login uzivatele
-     * @param string $fullName - cele jmeno uzivatele
-     * @param string $phoneNumber - cislo uzivatele
-     * @param string $email - emial uzivatele
-     * @param string $password - heslo uzivatele
-     * @return bool - podarilo se uzivatele pridat do databaze
+     * Metoda slouzi k zabanovani uzivatele
+     * @param $userID - id banovaneho uzivatele
+     * @return bool - podarilo se zabanovat uzivatele true/false
      */
-    public function registerNewUser(string $login, string $fullName, string $phoneNumber, string $email, string $password, int $pravo = 4):bool{
-        $insertStatement = "id_pravo, jmeno, login, heslo, email, cislo";
-        $insertValues = "'$pravo', '$fullName', '$login', '$password', '$email', '$phoneNumber'";
+    public function banUser($userID):bool{
+        return $this->databaseManager->updateInTable(TABLE_USER, "isBanned=1", "id_uzivatel=$userID");
+    }
 
-        return $this->databaseManager->insertIntoTable(TABLE_USER, $insertStatement, $insertValues);
+    /**
+     * Metoda slouzi k odbanovani uzivatele
+     * @param $userID - id odbanovaneho uzivate
+     * @return bool - podarilo se zabanovat uzivatele - true/false
+     */
+    public function unBanUser($userID):bool{
+        return $this->databaseManager->updateInTable(TABLE_USER, "isBanned=0", "id_uzivatel=$userID");
     }
 
     /**
@@ -88,6 +111,20 @@ class UserManagerModel
     }
 
     /**
+     * Metoda vraci informace o pravu uzivatele nebo null
+     */
+    public function getUserRightInfo(){
+        $userInfo = $this->getUserInfo();
+        $right = 0;
+        if ($userInfo != null)$right = $userInfo[1];
+        else return null;
+
+        $rightData = $this->databaseManager->selectFromTable(TABLE_RIGHTS,"id_pravo='$right'");
+        // return the first one
+        return ($rightData == null) ? null : $rightData[0];
+    }
+
+    /**
      * Metoda vraci vsechny hledane uzivatele serazene podle id
      * @return array - pole uzivatelu
      */
@@ -96,37 +133,10 @@ class UserManagerModel
     }
 
     /**
-     * Metoda vraci jmeno uzivatele nebo null
+     * Metoda vraci vsechny prava serazene podle id
+     * @return array - pole uzivatelu
      */
-    public function getUserName(){
-        $userData = $this->getUserInfo();
-        return ($userData == null) ?  null: $userData[2];
-    }
-
-    /**
-     * Metoda vraci pravo uzivatele nebo null
-     */
-    public function getUserRight(){
-        $userData = $this->getUserInfo();
-        return ($userData == null) ?  null: $userData[1];
-    }
-
-    /**
-     * Metoda vraci jmeno prava nebo null
-     */
-    public function getUserRightInfo(){
-        $right = $this->getUserRight();
-        if ($right != null) return $this->databaseManager->selectFromTable(TABLE_RIGHTS,"id_pravo='$right'");
-        else return null;
-    }
-
-    /**
-     * Metoda vraci jmeno uzivatelovo prava
-     * @return mixed
-     */
-    public function getUserRightName(){
-        $userRight = $this->getUserRightInfo();
-        // beru prvni pozici v poli pokud není null
-        return ($userRight != null) ? $userRight[0]["nazev"] : null;
+    public function getAllRights():array{
+        return $this->databaseManager->selectFromTable(TABLE_RIGHTS, "",ID_RIGHT);
     }
 }

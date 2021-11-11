@@ -2,7 +2,7 @@
 
 namespace app\Controllers;
 
-use app\Models\DatabaseManagerModel as DB;
+use app\Models\UserManagerModel as UMM;
 use app\Utils\Helper;
 
 /**
@@ -10,15 +10,15 @@ use app\Utils\Helper;
  */
 class UserManagementController implements IController
 {
-    /**@var DB $db - instance modelu databaze */
-    private $db;
+    /**@var UMM $um instance modelu spravy uzivatelu*/
+    private $um;
 
     /**
      * Vytvoreni instance pro komunikaci s databazi
      */
     public function __construct()
     {
-        $this->db = DB::getDatabaseModel();
+        $this->um = new UMM();
     }
 
     /**
@@ -28,12 +28,22 @@ class UserManagementController implements IController
     public function show(string $pageTitle): array
     {
         $tplData["title"] = $pageTitle;
-        $tplData["allUsers"] = $this->db->getAllUsers();
-        $tplData["user"] = $this->db->getUserInfo();
-        $tplData["userRight"] = $this->db->getUserRightInfo();
-        $tplData["allRights"] = $this->db->getAllRights();
+        $tplData["allUsers"] = $this->um->getAllUsers();
+        $tplData["user"] = $this->um->getUserInfo();
+        $tplData["userRight"] = $this->um->getUserRightInfo();
+        $tplData["allRights"] = $this->um->getAllRights();
 
-        Helper::loginHelp($this->db);
+        // bylo zavolano smazani uzivatele
+        if (isset($_POST["action"])){
+            if ($_POST["action"] == "ban"){
+                echo $this->um->banUser($_POST["id_user"]);
+            }
+            else if ($_POST["action"] == "unban"){
+                $this->um->unBanUser($_POST["id_user"]);
+            }
+        }
+
+        Helper::loginHelp($this->um);
 
         return $tplData;
     }

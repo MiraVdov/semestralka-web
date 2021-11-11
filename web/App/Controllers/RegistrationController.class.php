@@ -2,7 +2,7 @@
 
 namespace app\Controllers;
 
-use app\Models\DatabaseManagerModel as DB;
+use app\Models\UserManagerModel as UMM;
 use app\Utils\Helper;
 
 /**
@@ -10,15 +10,15 @@ use app\Utils\Helper;
  */
 class RegistrationController implements IController
 {
-    /**@var DB $db - instance modelu databaze*/
-    private $db;
+    /**@var UMM $um instance modelu spravy uzivatelu*/
+    private $um;
 
     /**
      * Vytvoreni instance pro komunikaci s databazi
      */
     public function __construct()
     {
-        $this->db = DB::getDatabaseModel();
+        $this->um = new UMM();
     }
 
     /**
@@ -29,9 +29,9 @@ class RegistrationController implements IController
     public function show(string $pageTitle):array
     {
         $tplData["title"] = $pageTitle;
-        $tplData["user"] = $this->db->getUserInfo();
+        $tplData["user"] = $this->um->getUserInfo();
 
-        Helper::loginHelp($this->db);
+        Helper::loginHelp($this->um);
 
         // bylo zmáčknuté tlačítko
         if (isset($_POST["action"]) && $_POST["action"] == "registration"){
@@ -44,10 +44,14 @@ class RegistrationController implements IController
                 if (isset($_POST["password"]) && $_POST["password"] != "" &&
                 isset($_POST["password2"]) && $_POST["password2"] != "" &&
                 $_POST["password"] == $_POST["password2"]){
-                    $this->db->registerNewUser($_POST["username"], $_POST["fullName"], $_POST["telephone"], $_POST["email"], $_POST["password"]);
+                    if($this->um->registerNewUser($_POST["username"], $_POST["fullName"], $_POST["telephone"], $_POST["email"], $_POST["password"])) {
+                        echo "<script>setTimeout(() => {alert('Uživatel úspěšně zaregistrován!') }, 200)</script>";
+                        header('Refresh: 0.5');
+                    }
                 }
                 else{
-                    $tplData["not_same_password"] = "hesla se neshoduji";
+                    echo "<script>setTimeout(() => {alert('Hesla se neshodují nebo jsou prázdná!') }, 200)</script>";
+                    header('Refresh: 0.5');
                 }
             }
         }

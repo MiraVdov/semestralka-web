@@ -2,7 +2,8 @@
 
 namespace app\Controllers;
 
-use app\Models\DatabaseManagerModel as DB;
+use app\Models\UserManagerModel;
+use app\Models\UserManagerModel as UMM;
 use app\Utils\Helper;
 
 /**
@@ -10,15 +11,15 @@ use app\Utils\Helper;
  */
 class ProgramController implements IController
 {
-    /**@var DB $db - instance modelu databaze*/
-    private $db;
+    /**@var UMM $um instance modelu spravy uzivatelu*/
+    private $um;
 
     /**
      * Vytvoreni instance pro komunikaci s databazi
      */
     public function __construct()
     {
-        $this->db = DB::getDatabaseModel();
+        $this->um = new UserManagerModel();
     }
 
     /**
@@ -29,10 +30,10 @@ class ProgramController implements IController
     public function show(string $pageTitle): array
     {
         $tplData["title"] = $pageTitle;
-        $tplData["user"] = $this->db->getUserInfo();
-        $tplData["userRight"] = $this->db->getUserRightInfo();
+        $tplData["user"] = $this->um->getUserInfo();
+        $tplData["userRight"] = $this->um->getUserRightInfo();
 
-        Helper::loginHelp($this->db);
+        Helper::loginHelp($this->um);
 
         return $tplData;
     }
