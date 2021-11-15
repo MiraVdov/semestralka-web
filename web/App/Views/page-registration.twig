@@ -5,6 +5,7 @@
 {% block registration %}
     {# user isnt logged - show him registration #}
     {% if user == null %}
+
         <form action="" method="POST">
             <!--Username-->
             <div class="row">
@@ -14,6 +15,9 @@
                         <span class="input-group-text" id="basic-username"><i class="fa fa-user"></i></span>
                         <input type="text" class="form-control" name="username" id="username" aria-describedby="username"
                                placeholder="přezdívka" required>
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
                     </div>
                     <!--Full name-->
                     <label for="fullName" class="form-label">Celé jméno:</label>

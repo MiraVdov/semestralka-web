@@ -189,7 +189,31 @@ color: #09deb4;
 
 .articles{
     margin-top: 2%;
-    background-color: #e2f8ff;
+    background-color: #fdf8ec;
     width: 90%;
+}
+
+#editor {
+
+}
+
+#newArticleDiv{
+    margin-top: 2%;
+    width: 90%;
+    border-radius: 5px;
+    border: solid 1px silver;
+    padding: 2% 3%;
+    background-color: #e5f8f3;
+}
+
+
+#closeNewArticleDiv{
+    margin: -2% -3%;
+}
+
+h4{
+    text-align: center;
+    margin-top: -2%;
+    margin-bottom: 2%;
 }
 

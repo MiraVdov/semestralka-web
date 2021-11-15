@@ -13,13 +13,26 @@
         $("#btnLogin, #loginFade").click(function () {
             $("#loginForm").fadeIn();
         });
-    });
 
-    // funkce slouzi k zavreni loginu
-    $(document).ready(function () {
+        // funkce slouzi k zavreni loginu
         $("#closeButton").click(function () {
             $("#loginForm").fadeOut();
         });
+
+        // formátování datumu
+        dateFormat();
+
+        //$("#newArticleDiv").hide();
+
+        $("#addNewArticle").click(function () {
+           $("#newArticleDiv").show();
+        });
+
+        $("#closeNewArticleDiv").click(function () {
+            $("#newArticleDiv").hide();
+        });
+
+
     });
 
     // funkce slouzi k zobrazeni hesel
@@ -53,6 +66,20 @@
             x.type = "password";
             show_eye.style.display = "block";
             hide_eye.style.display = "none";
+        }
+    }
+
+    // metoda slouží k formatovani datumu
+    function dateFormat(){
+        const months = ["ledna", "února", "března", "dubna", "května", "června", "července", "srpna", "září", "října", "listopadu", "prosince"];
+
+        var dateArray = document.getElementsByClassName("articlesHeader");
+        var numberOfArticles = dateArray.length;
+        var date;
+        for (let i = 0; i < numberOfArticles; i++) {
+            date = new Date(dateArray[i].innerHTML);
+            dateArray[i].innerHTML = date.getDate() + ". " + months[date.getMonth()] + " " + date.getFullYear();
+            dateArray[i].style.fontSize = "12px";
         }
     }
 
