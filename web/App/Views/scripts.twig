@@ -31,6 +31,9 @@
         $("#closeNewArticleDiv").click(function () {
             $("#newArticleDiv").hide(500);
         });
+
+        $(".pdfFiles").hide();
+        $(".hidePDFFiles").hide();
     });
 
     // funkce slouzi k zobrazeni hesel
@@ -83,6 +86,11 @@
             dateArray[i].innerHTML = date.getDate() + ". " + months[date.getMonth()] + " " + date.getFullYear() + " " + hours + ":" + minutes;
             dateArray[i].style.fontSize = "12px";
         }
+    }
+
+    function showPDFFile(index){
+        $("#pdfFile" + index).show();
+        $("#hidePDFFile" + index).show();
     }
 
     ///////////////////////////CKEDITOR/////////////////////////

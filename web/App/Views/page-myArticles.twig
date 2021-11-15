@@ -17,13 +17,13 @@
                     <input type="text" class="form-control" id="Nadpis" name="title" placeholder="Nadpis" required>
                 </div>
 
-                <label for="editor" class="form-label">Obsah</label>
+                <label for="editor" class="form-label">Abstrakt</label>
                 <div id="editor"></div>
                 <br>
                 <label for="pdf_file" class="form-label">Připojit soubor (.pdf)</label>
                 <div class="mb-3">
                     <div class="mb-3 col-md-4 col-sm-12">
-                        <input type="file" class="form-control" name="pdf_file" aria-label="pdf_file" accept="application/pdf">
+                        <input type="file" class="form-control" name="pdf_file" aria-label="pdf_file" accept="application/pdf" required>
                     </div>
                 </div>
                 <div class="row mx-auto w-25">
@@ -42,7 +42,7 @@
                 <div class="card-body">
                     <div class="float-end ">
                         <form method="POST" id="form{{ index }}">
-                            <button type="button" class="btn btn-success btn-sm">zobrazit</button>
+                            <button type="button" class="btn btn-success btn-sm" onclick="showPDFFile({{ index }})">zobrazit</button>
                             <button type="button" class="btn btn-warning btn-sm">upravit</button>
                             <button type="button" class="btn btn-danger btn-sm btnDelete" onclick="deleteArticle()">
                                 odstranit
@@ -52,8 +52,8 @@
                     </div>
                     <h5 class="card-title mb-4">{{ article.nadpis }}</h5>
                     <p class="card-text">{{ article.obsah }}</p>
-                    <br>
-                    <object data="data:application/pdf;base64,{{ article.pdf }}" type="application/pdf" class="pdfFiles"></object>
+                    <div class="hidePDFFiles mx-auto" id="hidePDFFile{{ index }}">asdasda</div><br>
+                    <object data="data:application/pdf;base64,{{ article.pdf }}" type="application/pdf" class="pdfFiles" id="pdfFile{{ index }}"></object>
                 </div>
             </div>
             {% set index = index + 1 %}
