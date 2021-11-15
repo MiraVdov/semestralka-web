@@ -8,38 +8,55 @@
     {% if user.id_pravo == 4 %}
         <button type="button" class="btn btn-success fa fa-plus-circle" id="addNewArticle"> Přidat nový článek</button>
         <div class="mx-auto" id="newArticleDiv">
-            <button type="button" class="btn-close float-end" aria-label="Close" id="closeNewArticleDiv"></button><br>
+            <button type="button" class="btn-close float-end" aria-label="Close" id="closeNewArticleDiv"></button>
+            <br>
             <h4>Nový článek</h4>
-            <form>
+            <form method="post" enctype="multipart/form-data" autocomplete="on">
                 <div class="mb-3 col-md-3 col-sm-12">
                     <label for="Nadpis" class="form-label">Nadpis</label>
-                    <input type="text" class="form-control" id="Nadpis" placeholder="Nadpis" required>
+                    <input type="text" class="form-control" id="Nadpis" name="title" placeholder="Nadpis" required>
+                </div>
+
+                <label for="editor" class="form-label">Obsah</label>
+                <div id="editor"></div>
+                <br>
+                <label for="pdf_file" class="form-label">Připojit soubor (.pdf)</label>
+                <div class="mb-3">
+                    <div class="mb-3 col-md-4 col-sm-12">
+                        <input type="file" class="form-control" name="pdf_file" aria-label="pdf_file" accept="application/pdf">
+                    </div>
+                </div>
+                <div class="row mx-auto w-25">
+                    <button type="submit" class="btn btn-success" name="action" value="createNewArticle">Vytvořit nový článek</button>
                 </div>
             </form>
-            <label for="editor" class="form-label">Obsah</label>
-            <div id="editor"></div><br>
-            <label for="fileChooser" class="form-label">Připojit soubor (.pdf)</label>
-            <div class="mb-3">
-                <div class="mb-3 col-md-4 col-sm-12">
-                    <input type="file" class="form-control" aria-label="fileChooser" accept="application/pdf" required>
-                </div>
-            </div>
-            <div class="row mx-auto w-25" >
-                <button type="submit" class="btn btn-success">Uložit</button>
-            </div>
 
         </div>
         {# prochazime všechny uzivatelovo clanky #}
+        {% set index = 0 %}
         {% for article in userArticles %}
             <div class="card mx-auto articles">
                 <div class="card-header articlesHeader">
                     {{ article.datum }}
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ article.nadpis }}</h5>
+                    <div class="float-end ">
+                        <form method="POST" id="form{{ index }}">
+                            <button type="button" class="btn btn-success btn-sm">zobrazit</button>
+                            <button type="button" class="btn btn-warning btn-sm">upravit</button>
+                            <button type="button" class="btn btn-danger btn-sm btnDelete" onclick="deleteArticle()">
+                                odstranit
+                            </button>
+                            <input type="hidden" name="id_clanku" value="{{ article.id_clanku }}">
+                        </form>
+                    </div>
+                    <h5 class="card-title mb-4">{{ article.nadpis }}</h5>
                     <p class="card-text">{{ article.obsah }}</p>
+                    <br>
+                    <object data="data:application/pdf;base64,{{ article.pdf }}" type="application/pdf" class="pdfFiles"></object>
                 </div>
             </div>
+            {% set index = index + 1 %}
         {% endfor %}
     {% else %}
         {# vracíme na stránku informací #}
