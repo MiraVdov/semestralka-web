@@ -44,6 +44,17 @@ class ArticlesManagerModel
 
         $insertStatement = "obsah, datum, id_uzivatel, nadpis, pdf";
         $insertValues = "'$content', '$date','$userID', '$name', '$file'";
-        $this->databaseManager->insertIntoTable(TABLE_ARTICLES, $insertStatement, $insertValues);
+        return $this->databaseManager->insertIntoTable(TABLE_ARTICLES, $insertStatement, $insertValues);
     }
+
+    public function editArticle(string $name, string $content, int $articleID){
+        $date = date('Y-m-d H:i:s');
+
+        $file_tmp = $_FILES['pdf_file']['tmp_name']; // cesta k souboru
+        $file = addslashes(file_get_contents($file_tmp));
+
+        $insertStatementWithValues = "obsah='$content', datum='$date', nadpis='$name', pdf='$file'";
+        return $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatementWithValues, "id_clanku='$articleID'");
+    }
+
 }

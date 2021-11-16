@@ -18,7 +18,7 @@
                 </div>
 
                 <label for="editor" class="form-label">Abstrakt</label>
-                <div id="editor"></div>
+                <textarea name="abstract" id="editor"></textarea>
                 <br>
                 <label for="pdf_file" class="form-label">Připojit soubor (.pdf)</label>
                 <div class="mb-3">
@@ -30,7 +30,6 @@
                     <button type="submit" class="btn btn-success" name="action" value="createNewArticle">Vytvořit nový článek</button>
                 </div>
             </form>
-
         </div>
         {# prochazime všechny uzivatelovo clanky #}
         {% set index = 0 %}
@@ -39,20 +38,18 @@
                 <div class="card-header articlesHeader">
                     {{ article.datum }}
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="body{{ index }}">
                     <div class="float-end ">
                         <form method="POST" id="form{{ index }}">
-                            <button type="button" class="btn btn-success btn-sm" onclick="showPDFFile({{ index }})">zobrazit</button>
-                            <button type="button" class="btn btn-warning btn-sm">upravit</button>
-                            <button type="button" class="btn btn-danger btn-sm btnDelete" onclick="deleteArticle()">
-                                odstranit
-                            </button>
+                            <button type="button" class="btn btn-success btn-sm" onclick="showPDFFile({{ index }})"><span class="fa fa-book"></span> zobrazit</button>
+                            <button type="button" class="btn btn-warning btn-sm" onclick="editArticle({{ index }}, {{ article.id_clanku }})"><span class="fa fa-pencil"></span> upravit</button>
+                            <button type="button" class="btn btn-danger btn-sm btnDelete" onclick="deleteArticle()"> odstranit</button>
                             <input type="hidden" name="id_clanku" value="{{ article.id_clanku }}">
                         </form>
                     </div>
-                    <h5 class="card-title mb-4">{{ article.nadpis }}</h5>
-                    <p class="card-text">{{ article.obsah }}</p>
-                    <div class="hidePDFFiles mx-auto" id="hidePDFFile{{ index }}">asdasda</div><br>
+                    <h5 class="card-title mb-4" id="title{{ index }}">{{ article.nadpis }}</h5>
+                    <p class="card-text" id="content{{ index }}">{{ article.obsah }}</p>
+                    <div class="hidePDFFiles mx-auto" id="hidePDFFile{{ index }}"><a  href="javascript:void(0); onclick(hidePDFFile({{ index }}));">Skrýt PDF</a></div><br>
                     <object data="data:application/pdf;base64,{{ article.pdf }}" type="application/pdf" class="pdfFiles" id="pdfFile{{ index }}"></object>
                 </div>
             </div>
