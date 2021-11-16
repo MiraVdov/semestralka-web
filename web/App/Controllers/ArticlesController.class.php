@@ -34,6 +34,13 @@ class ArticlesController implements IController
         $tplData["userRight"] = $this->um->getUserRightInfo();
         $tplData["allArticles"] = $this->articlesManager->getAllArticles();
 
+        if ($tplData["allArticles"] != null){
+            // rozkodování clanku
+            for ($i = 0; $i < sizeof($tplData["allArticles"]); $i++){
+                $tplData["allArticles"][$i]["pdf"] = base64_encode($tplData["allArticles"][$i]["pdf"]);
+            }
+        }
+
         Helper::loginHelp($this->um);
 
         return $tplData;

@@ -44,7 +44,7 @@ class MyArticlesController implements IController
                     if (!empty($_FILES["pdf_file"]["name"]) && $_FILES["pdf_file"]["error"] == 0){
                         $this->articlesManager->createNewArticle($_POST["title"], strip_tags($_POST["abstract"]), $tplData["user"]["id_uzivatel"]);
                     }
-                }
+                } // upravení existujícího článku
                 elseif (isset($_POST["titleEdit"]) && $_POST["titleEdit"] != "" && $_POST["action"] == "editArticle"){
                     if (!empty($_FILES["pdf_file"]["name"]) && $_FILES["pdf_file"]["error"] == 0){
                         $this->articlesManager->editArticle($_POST["titleEdit"], strip_tags($_POST["abstractEdit"]), $_POST["id_articleEdit"]);
