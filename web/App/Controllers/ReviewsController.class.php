@@ -40,9 +40,11 @@ class ReviewsController implements IController
 
             for ($i = 0; $i < sizeof($tplData["allArticles"]); $i++){
                 $tplData["articles"][$i] = $this->articlesManager->getAllPossibleReviewers($tplData["allArticles"][$i]["id_clanku"]);
+
+                $tplData["articleReviews"][$i] = $this->articlesManager->getAllArticleReviews($tplData["allArticles"][$i]["id_clanku"]);
+                $tplData["articleReviewers"][$i] = $this->articlesManager->getAllArticleReviewers($tplData["allArticles"][$i]["id_clanku"]);
             }
         }
-
         Helper::loginHelp($this->um);
 
         return $tplData;

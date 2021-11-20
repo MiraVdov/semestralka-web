@@ -14,8 +14,11 @@
                 <button type="button" class="btn btn-success btn-sm float-end" onclick="showPDFFile({{ index }})"><span class="fa fa-book"></span> zobrazit PDF</button>
                 <h5 class="card-title">{{ article.nadpis }}</h5>
                 <p class="card-text">{{ article.obsah }}</p>
-                <div class="hidePDFFiles mx-auto" id="hidePDFFile{{ index }}"><a  href="javascript:void(0); onclick(hidePDFFile({{ index }}));">Skrýt PDF</a></div><br>
-                <object data="data:application/pdf;base64,{{ article.pdf }}" type="application/pdf" class="pdfFiles" id="pdfFile{{ index }}"></object>
+
+                <div class="showPDF" id="showPDF{{ index }}">
+                    <div class="hidePDFFiles mx-auto"><a  href="javascript:void(0);" onclick="hidePDFFile({{ index }})">Skrýt PDF</a></div><br>
+                    <object data="data:application/pdf;base64,{{ article.pdf }}" type="application/pdf" class="pdfFiles"></object>
+                </div>
             </div>
         </div>
     {% set index = index + 1 %}

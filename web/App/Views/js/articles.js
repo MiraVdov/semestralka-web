@@ -2,18 +2,20 @@
 $(document).ready(function () {
     // formátování datumu
     dateFormat();
-
-    $(".pdfFiles").hide();
-
-    $(".hidePDFFiles").hide();
 });
 
-function showPDFFile(index){
-    $("#pdfFile" + index).show();
-    $("#hidePDFFile" + index).show();
+/**
+ * Funkce schova pdf soubor
+ * @param index
+ */
+function hidePDFFile(index){
+    document.getElementById("showPDF"+index).style.display = "none";
 }
 
-function hidePDFFile(index){
-    $("#pdfFile" + index).hide();
-    $("#hidePDFFile" + index).hide();
+/**
+ * Funkce zobrazi pdf soubor
+ * @param index
+ */
+function showPDFFile(index){
+    document.getElementById("showPDF"+index).style.display = "block";
 }

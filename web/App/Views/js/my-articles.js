@@ -1,8 +1,6 @@
 src="myScript.js"
 
 $(document).ready(function () {
-    $("#newArticleDiv").hide();
-
     $("#addNewArticle").click(function () {
         $("#newArticleDiv").show(500);
     });
