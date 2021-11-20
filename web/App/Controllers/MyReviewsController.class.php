@@ -33,6 +33,11 @@ class MyReviewsController implements IController
         $tplData["user"] = $this->um->getUserInfo();
         $tplData["userRight"] = $this->um->getUserRightInfo();
 
+        if ($tplData["user"] != null){
+            $tplData["allArticles"] = $this->articlesManager->getAllArticles();
+        }
+
+        $tplData["assignedArticles"] = $this->articlesManager->getAllAssignedArticles($tplData["user"]["id_uzivatel"]);
         Helper::loginHelp($this->um);
 
         return $tplData;

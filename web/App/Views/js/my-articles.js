@@ -41,10 +41,3 @@ function editArticle(index, indexOfArticle){
 function closeEdit(){
     document.getElementById("body" + indexx).innerHTML = previous;
 }
-
-///////////////////////////CKEDITOR/////////////////////////
-ClassicEditor
-    .create( document.querySelector( '#editor' ))
-    .catch( error => {
-        console.log( error );
-    } );

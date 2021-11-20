@@ -51,6 +51,7 @@
                     <p class="card-text" id="content{{ index }}">{{ article.obsah }}</p>
 
                     <div class="showPDF" id="showPDF{{ index }}">
+                        <hr>
                          <div class="hidePDFFiles mx-auto"><a  href="javascript:void(0)" onclick="hidePDFFile({{ index }})">Skrýt PDF</a></div><br>
                          <object data="data:application/pdf;base64,{{ article.pdf }}" type="application/pdf" class="pdfFiles"></object>
                     </div>
@@ -69,4 +70,5 @@
     <script src="app/Views/js/articles.js"></script>
     <script src="app/Views/js/my-articles.js"></script>
     <script src="app/Views/js/dateFormat.js"></script>
+    <script src="app/Views/js/ckEditor.js"></script>
 {% endblock %}

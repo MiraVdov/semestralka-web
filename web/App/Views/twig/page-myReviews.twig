@@ -4,4 +4,70 @@
 
 {# myReviews #}
 {% block myReviews %}
+    {% if user != null and user.id_pravo == 3 %}
+        {% set index = 0 %}
+        {% for article in assignedArticles %}
+        <div class="card mx-auto articles">
+            <div class="card-header articlesHeader">
+                {{ article.datum }}
+            </div>
+            <div class="card-body">
+                <div class="float-end">
+                    <form method="POST">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="showReviewForm({{ index }})"><span class="fa fa-pencil"></span> Recenzovat</button>
+                        <button type="button" class="btn btn-success btn-sm"><span class="fa fa-download"> Stáhnout</span></button>
+                    </form>
+                </div>
+                <h5 class="card-title mb-4">{{ article.nadpis }}</h5>
+                <p class="card-text">{{ article.obsah }}</p>
+                <div class="reviewForms" id="reviewForm{{ index }}">
+                    <hr>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <label for="editor" class="form-label">Posuzované vlasnosti:</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text w-25" id="basic-addon1">Kvalita obsahu</span>
+                                    <input type="number" class="form-control" placeholder="3" value="3" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text w-25" id="basic-addon1">Formální úroveň</span>
+                                    <input type="number" class="form-control w-25" placeholder="3" value="3" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text w-25" id="basic-addon1">Novost</span>
+                                    <input type="number" class="form-control" placeholder="3" value="3" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text w-25" id="basic-addon1">Kvalita jazyka</span>
+                                    <input type="number" class="form-control float-end" placeholder="3" value="3" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editor" class="form-label">Vlastní komentář:</label>
+                                <textarea name="abstract" id="editor"></textarea>
+                            </div>
+
+                            <div style="text-align: center;"><button type="submit" class="btn btn-success" name="action" value="saveReview">Uložit recenzi</button>
+                                <button type="button" class="btn btn-danger ms-3" name="action" value="cancelReview" onclick="cancelReviewForm({{ index }})">Zrušit</button></div>
+                        </div>
+                    </form>
+                </div> <!---skryto-->
+            </div>
+        </div>
+        {% set index = index + 1 %}
+        {% endfor %}
+    {% else %}
+        {# user isnt reviewer so he doesnt have access #}
+        <script>
+            location.replace("index.php?page=informations");
+        </script>
+    {% endif %}
+{% endblock %}
+
+{# my scripts #}
+{% block myJS %}
+    <script src="app/Views/js/ckEditor.js"></script>
+    <script src="app/Views/js/reviews.js"></script>
 {% endblock %}

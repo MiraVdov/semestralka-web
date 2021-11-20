@@ -120,4 +120,24 @@ class ArticlesManagerModel
 
         return $articleReviewers;
     }
+
+    function getAllAssignedArticles($userID){
+        $articles = $this->databaseManager->selectFromTable(TABLE_REVIEWS, "id_recenzenta = '$userID'");
+        $articlesID = array();
+
+        for($i = 0; $i < sizeof($articles); $i++){
+            $articlesID[$i] = $articles[$i]["id_clanku"];
+        }
+
+        $whereStatement = "id_clanku = ";
+        for($i = 0; $i < sizeof($articlesID); $i++){
+            if ($i == sizeof($articlesID) - 1){
+                $whereStatement .= "'$articlesID[$i]'";
+            }else{
+                $whereStatement .= "'$articlesID[$i]' OR id_clanku = ";
+            }
+        }
+
+        return $this->databaseManager->selectFromTable(TABLE_ARTICLES, $whereStatement);
+    }
 }
