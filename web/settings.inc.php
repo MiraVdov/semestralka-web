@@ -20,6 +20,8 @@ const TABLE_USER = "miravdov_uzivatel";
 const TABLE_RIGHTS = "miravdov_pravo";
 /**Tabulka s clankama*/
 const TABLE_ARTICLES = "miravdov_clanek";
+/**Tabulka s recenzema*/
+const TABLE_REVIEWS = "miravdov_recenze";
 
 ///////////
 const ID_UZIVATEL = "id_uzivatel";
@@ -77,5 +79,12 @@ const WEB_PAGES = array(
         "title" => "moje recenze",
         "controller_class_name" => app\Controllers\MyReviewsController::class,
         "view_name" => "page-myReviews.twig",
+    ),
+
+    /////stranka spravy recenzi/////
+    "reviews" => array(
+        "title" => "správa článků a recenzí",
+        "controller_class_name" => app\Controllers\ReviewsController::class,
+        "view_name" => "page-reviews.twig",
     ),
 );

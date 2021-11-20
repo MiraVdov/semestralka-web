@@ -1,0 +1,46 @@
+{# user management and review management page #}
+{% extends "BasicTemplate.twig" %}
+
+{# reviewsManagement #}
+{% block reviewsManagement %}
+    {% set index = 0 %}
+    {% for article in allArticles %}
+        <div class="card mx-auto articles">
+            <div class="card-header articlesHeader">
+                {{ article.datum }}
+            </div>
+            <div class="card-body">
+                <div class="float-end ">
+                    <form method="POST">
+                        <button type="button" class="btn btn-success btn-sm"><span class="fa fa-check-circle"></span> schválit</button>
+                        <button type="button" class="btn btn-danger btn-sm btnDelete"><img src="images/xMark.png" style="width:12px; margin-top: -2px"> zamítnout</button>
+                    </form>
+                </div>
+                <h5 class="card-title mb-4">{{ article.nadpis }}</h5>
+                <p class="card-text">Recenze:</p>
+
+                <div class="input-group mb-3" style="width: 40%">
+                    {# if article has less than 3 reviewers -> show him selectbox #}
+                    {% if articles[index] != null %}
+                        <span class="input-group-text " id="basic-addon1">Přdat recenzenta</span>
+                        <select class="form-select" aria-label="Default select example">
+                            {# going through all reviewers for specific article #}
+                            {% for reviewer in articles[index] %}
+                                <option>{{ reviewer.jmeno }}</option>
+                            {% endfor %}
+                        </select>
+                        <button class="btn btn-success" type="button" id="button-addon2">Přidat</button>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+        {% set index = index + 1 %}
+    {% endfor %}
+{% endblock %}
+
+{# my scripts #}
+{% block myJS %}
+    <script src="app/Views/js/articles.js"></script>
+    <script src="app/Views/js/dateFormat.js"></script>
+{% endblock %}

@@ -7,6 +7,9 @@
     {% set index = 0 %}
     {% for article in allArticles %}
         <div class="card mx-auto articles">
+            <div class="card-header articlesHeader">
+                {{ article.datum }}
+            </div>
             <div class="card-body">
                 <button type="button" class="btn btn-success btn-sm float-end" onclick="showPDFFile({{ index }})"><span class="fa fa-book"></span> zobrazit PDF</button>
                 <h5 class="card-title">{{ article.nadpis }}</h5>
@@ -17,4 +20,11 @@
         </div>
     {% set index = index + 1 %}
     {% endfor %}
+{% endblock %}
+
+{# my scripts #}
+{% block myJS %}
+    <script src="app/Views/js/login-registration.js"></script>
+    <script src="app/Views/js/articles.js"></script>
+    <script src="app/Views/js/dateFormat.js"></script>
 {% endblock %}

@@ -13,7 +13,7 @@
     {% endblock %}
 
     <!--Logo and title-->
-    <title>{{ title | title }}</title>
+    <title>{{ title | capitalize  }}</title>
     <link rel="shortcut icon" href="images/favicon.png">
 </head>
 
@@ -39,7 +39,7 @@
 
 <!--Container-->
 <div class="container">
-    <h3>{{ title | title }}</h3>
+    <h3>{{ title | capitalize }}</h3>
 
     {# Informations #}
     {% block information %}
@@ -69,6 +69,10 @@
     {% block myReviews %}
     {% endblock %}
 
+    {# reviewsManagement #}
+    {% block reviewsManagement %}
+    {% endblock %}
+
 </div>
 
 <!--arrow-->
@@ -81,6 +85,10 @@
 {# scripts #}
 {% block scripts %}
     {% include("scripts.twig") %}
+{% endblock %}
+
+{# my scripts #}
+{% block myJS %}
 {% endblock %}
 
 </body>

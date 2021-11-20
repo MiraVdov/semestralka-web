@@ -26,7 +26,7 @@ class ApplicationStart
 
         $view = $pageInfo["view_name"];
         require_once 'libraries/composer/vendor/autoload.php';
-        $templatesDirectory = 'App/Views';
+        $templatesDirectory = 'App/Views/twig';
         $loader = new \Twig\Loader\FilesystemLoader($templatesDirectory);
         $twig = new \Twig\Environment($loader, [
             'debug' => true,

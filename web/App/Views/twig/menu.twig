@@ -28,7 +28,7 @@
     {# Admin or SuperAdmin - links Recenze and Uživatelé#}
     {% if user.id_pravo == 1 or user.id_pravo == 2%}
         <li class='nav-item' xmlns=\"http://www.w3.org/1999/html\"><a class='nav-link underline'
-                                                                      href='index.php?page=clanky'>Recenze</a></li>
+                                                                      href='index.php?page=reviews'>Recenze</a></li>
         <li class='nav-item'><a class='nav-link underline' href='index.php?page=user-management'>Uživatelé</a></li>
         <li class='nav-item'>
             <div class='loggedUserWhiteText'><span><i class='fa fa-user'></i></span> {{ user.jmeno }} (<strong

@@ -32,6 +32,8 @@ class MyArticlesController implements IController
      */
     public function show(string $pageTitle): array
     {
+        Helper::loginHelp($this->um);
+
         $tplData["title"] = $pageTitle;
         $tplData["user"] = $this->um->getUserInfo();
         $tplData["userRight"] = $this->um->getUserRightInfo();
@@ -53,15 +55,12 @@ class MyArticlesController implements IController
             }
 
             $tplData["userArticles"] = $this->articlesManager->getAllUsersArticles($tplData["user"]["id_uzivatel"]);
-
-            if ($tplData["userArticles"] != null){
                 // rozkodování clanku
-                for ($i = 0; $i < sizeof($tplData["userArticles"]); $i++){
-                    $tplData["userArticles"][$i]["pdf"] = base64_encode($tplData["userArticles"][$i]["pdf"]);
-                }
+            for ($i = 0; $i < sizeof($tplData["userArticles"]); $i++){
+                $tplData["userArticles"][$i]["pdf"] = base64_encode($tplData["userArticles"][$i]["pdf"]);
             }
         }
-        Helper::loginHelp($this->um);
+
         return $tplData;
     }
 }

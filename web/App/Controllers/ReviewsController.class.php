@@ -2,14 +2,16 @@
 
 namespace app\Controllers;
 
-use app\Models\UserManagerModel as UMM;
 use app\Models\ArticlesManagerModel as AM;
+use app\Models\UserManagerModel;
+use app\Models\UserManagerModel as UMM;
 use app\Utils\Helper;
 
-class ArticlesController implements IController
+class ReviewsController implements IController
 {
     /**@var UMM $um instance modelu spravy uzivatelu*/
     private $um;
+
     /**@var AM $articlesManager instance modelu spravy clanku*/
     private $articlesManager;
 
@@ -18,30 +20,30 @@ class ArticlesController implements IController
      */
     public function __construct()
     {
-        $this->um = new UMM();
+        $this->um = new UserManagerModel();
         $this->articlesManager = new AM();
     }
 
     /**
-     * Metoda vraci telo stranky
+     * Metoda vraci data stranky programu
      * @param string $pageTitle - nazev stranky
-     * @return array -data stranky
+     * @return array - data stranky
      */
     public function show(string $pageTitle): array
     {
-        Helper::loginHelp($this->um);
-
         $tplData["title"] = $pageTitle;
         $tplData["user"] = $this->um->getUserInfo();
         $tplData["userRight"] = $this->um->getUserRightInfo();
-        $tplData["allArticles"] = $this->articlesManager->getAllArticles();
 
-        if (count($tplData["allArticles"]) > 0){
-            // rozkodování clanku
+        if ($tplData["user"] != null){
+            $tplData["allArticles"] = $this->articlesManager->getAllArticles();
+
             for ($i = 0; $i < sizeof($tplData["allArticles"]); $i++){
-                $tplData["allArticles"][$i]["pdf"] = base64_encode($tplData["allArticles"][$i]["pdf"]);
+                $tplData["articles"][$i] = $this->articlesManager->getAllPossibleReviewers($tplData["allArticles"][$i]["id_clanku"]);
             }
         }
+
+        Helper::loginHelp($this->um);
 
         return $tplData;
     }
