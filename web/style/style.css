@@ -193,10 +193,6 @@ color: #09deb4;
     width: 90%;
 }
 
-#editor {
-
-}
-
 #newArticleDiv{
     margin-top: 2%;
     width: 90%;
@@ -237,5 +233,26 @@ h4{
 .reviewForms{
     display: none;
 }
+
+.ck.ck-content {
+    font-size: 1em;
+    line-height: 1.6em;
+    margin-bottom: 0.8em;
+    min-height: 7.8vw;
+    padding: 1.5em 2em;
+}
+
+.ck.ck-editor {
+    box-shadow: 2px 2px 2px rgba(0,0,0,.1);
+}
+
+#editor {
+    background: var(--ck-sample-color-white);
+    box-shadow: 2px 2px 2px rgba(0,0,0,.1);
+    border: 1px solid #DFE4E6;
+    border-bottom-color: #cdd0d2;
+    border-right-color: #cdd0d2;
+}
+
 
 

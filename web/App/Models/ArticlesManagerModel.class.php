@@ -101,26 +101,6 @@ class ArticlesManagerModel
         return  $this->databaseManager->selectFromTable(TABLE_REVIEWS, $whereStatement);
     }
 
-    /**
-     * Metoda vraci vsechny recenzenty daneho clanku clanku
-     * @param int $articleID
-     * @return array
-     */
-    function getAllArticleReviewers(int $articleID){
-        $whereStatement = "id_clanku = '$articleID'";
-        $reviews = $this->databaseManager->selectFromTable(TABLE_REVIEWS, $whereStatement);
-        $articleReviewers = array();
-        $index = 0;
-
-        foreach ($reviews as $review){
-            $usedID = $review["id_recenzenta"];
-            $user = $this->databaseManager->selectFromTable(TABLE_USER, "id_uzivatel = '$usedID'");
-            $articleReviewers[$index++] = $user[0];
-        }
-
-        return $articleReviewers;
-    }
-
     function getAllAssignedArticles($userID){
         $articles = $this->databaseManager->selectFromTable(TABLE_REVIEWS, "id_recenzenta = '$userID'");
         $articlesID = array();
@@ -139,5 +119,9 @@ class ArticlesManagerModel
         }
 
         return $this->databaseManager->selectFromTable(TABLE_ARTICLES, $whereStatement);
+    }
+
+    function saveReview(string $content, int $articleID, int $reviewerID, int $reviewValue, int $contentValue, int $formalValue, int $newestValue, int $languageValue){
+
     }
 }

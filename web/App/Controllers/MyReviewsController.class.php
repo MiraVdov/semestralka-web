@@ -35,9 +35,21 @@ class MyReviewsController implements IController
 
         if ($tplData["user"] != null){
             $tplData["allArticles"] = $this->articlesManager->getAllArticles();
+
+            $tplData["assignedArticles"] = $this->articlesManager->getAllAssignedArticles($tplData["user"]["id_uzivatel"]);
+
+            if (isset($_POST["action"]) && $_POST["action"] == "saveReview"){
+
+            }
+            $index = 0;
+            foreach ($tplData["assignedArticles"] as $article){
+                $tplData["pdfs"][$index++] = base64_encode($article["pdf"]);
+            }
+
+            $data = $tplData["pdfs"][0];
+
         }
 
-        $tplData["assignedArticles"] = $this->articlesManager->getAllAssignedArticles($tplData["user"]["id_uzivatel"]);
         Helper::loginHelp($this->um);
 
         return $tplData;
