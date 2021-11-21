@@ -6,10 +6,6 @@ ClassicEditor
     } );
 
 
-    $('.editor').each(function () {
-        ClassicEditor.replace($(this).prop('id'));
-});
-
 
 
 

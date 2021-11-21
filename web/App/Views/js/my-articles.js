@@ -1,5 +1,3 @@
-src="myScript.js"
-
 $(document).ready(function () {
     $("#addNewArticle").click(function () {
         $("#newArticleDiv").show(500);
@@ -23,7 +21,7 @@ function editArticle(index, indexOfArticle){
         " <label for='Nadpis' class='form-label'>Nadpis</label>" +
         "<input type='text' class='form-control' id='Nadpis' name='titleEdit' value='"+title+"' placeholder='Nadpis' required></div>"+
         "<label for='abstract' class='form-label'>Abstrakt</label><br>"+
-        "<textarea name='abstractEdit' id='editor' class='w-50' style='height: 10vw'>"+ content+"</textarea>"+
+        "<textarea name='abstractEdit' class='w-50' style='height: 10vw;'>"+ content +"</textarea>"+
         "<br><label for='pdf_file' class='form-label'>Připojit soubor (.pdf)</label>"+
         "<div class='mb-3'>"+
         "<div class='mb-3 col-md-4 col-sm-12'>"+
