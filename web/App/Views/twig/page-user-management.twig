@@ -9,7 +9,7 @@
     {% if user != null or userRight != null %}
         {# user is admin or superadmin #}
         {% if user.id_pravo == 1 or user.id_pravo == 2 %}
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered" style="table-layout: fixed;">
                     <thead>
                         <tr class="table-dark">
                             <th>ID</th>

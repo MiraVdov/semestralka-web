@@ -3,6 +3,7 @@
 namespace app\Models;
 
 use app\Models\DatabaseManagerModel as DM;
+use Cassandra\Date;
 
 /**
  * Třída sloužící ke správě článků
@@ -68,33 +69,6 @@ class ArticlesManagerModel
         return $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatementWithValues, "id_clanku='$articleID'");
     }
 
-    /**
-     * Metoda vraci pro dany clanek všechny dostpune recenzenty. (ps ty kteří ještě daný článek nerecenzovali)
-     * @param int $articleID
-     * @return array
-     */
-    function getAllPossibleReviewers(int $articleID){
-        $whereStatement = "id_clanku = '$articleID'";
-        $usedReviewers = array();
-        $reviews = $this->databaseManager->selectFromTable(TABLE_REVIEWS, $whereStatement);
-
-        for ($i = 0; $i < sizeof($reviews); $i++){
-            $usedReviewers[$i] = $reviews[$i]["id_recenzenta"];
-        }
-
-        $allReviewers = $this->databaseManager->selectFromTable(TABLE_USER, "id_pravo = 3");
-        $g =sizeof($allReviewers);
-        for ($i = 0; $i < $g; $i++) {
-            for ($j = 0; $j < sizeof($usedReviewers); $j++) {
-                if ($allReviewers[$i]["id_uzivatel"] == $usedReviewers[$j]){
-                    unset($allReviewers[$i]);
-                    break;
-                }
-            }
-        }
-
-        return $allReviewers;
-    }
 
     function getAllArticleReviews(int $articleID){
         $whereStatement = "id_clanku = '$articleID'";
@@ -102,26 +76,56 @@ class ArticlesManagerModel
     }
 
     function getAllAssignedArticles($userID){
-        $articles = $this->databaseManager->selectFromTable(TABLE_REVIEWS, "id_recenzenta = '$userID'");
-        $articlesID = array();
+        $orderBy = TABLE_ARTICLES .".datum ASC";
+        $whereStatement = TABLE_REVIEWS .".id_recenzenta = $userID";
+        $inner = TABLE_REVIEWS. " ON ". TABLE_ARTICLES . ".id_clanku = " . TABLE_REVIEWS . ".id_clanku";
+        $m = TABLE_ARTICLES;
+        $selection = "$m.id_clanku, $m.obsah, $m.datum, $m.id_uzivatel, $m.nadpis, $m.pdf, $m.id_stav";
 
-        for($i = 0; $i < sizeof($articles); $i++){
-            $articlesID[$i] = $articles[$i]["id_clanku"];
-        }
-
-        $whereStatement = "id_clanku = ";
-        for($i = 0; $i < sizeof($articlesID); $i++){
-            if ($i == sizeof($articlesID) - 1){
-                $whereStatement .= "'$articlesID[$i]'";
-            }else{
-                $whereStatement .= "'$articlesID[$i]' OR id_clanku = ";
-            }
-        }
-
-        return $this->databaseManager->selectFromTable(TABLE_ARTICLES, $whereStatement);
+        return $this->databaseManager->selectFromTable(TABLE_ARTICLES, $whereStatement, $orderBy, $selection,$inner);
     }
 
-    function saveReview(string $content, int $articleID, int $reviewerID, int $reviewValue, int $contentValue, int $formalValue, int $newestValue, int $languageValue){
+
+    /**
+     * Metoda slouzi k vytvoreni recenze
+     * @param string $content
+     * @param int $articleID
+     * @param int $reviewerID
+     * @param int $reviewValue
+     * @param int $contentValue
+     * @param int $formalValue
+     * @param int $newestValue
+     * @param int $languageValue
+     */
+    function createReview(string $content, int $articleID, int $reviewerID, int $reviewValue, int $contentValue, int $formalValue, int $newestValue, int $languageValue){
+        $date = date('Y-m-d H:i:s');
+        $insertStatement = "datum, obsah, id_clanku, id_recenzenta, celkem, obsahBody, formalnost, novost, jazyk, zverejnena";
+        $insertValues = "'$date', '$content', '$articleID', '$reviewerID', '$reviewValue', '$contentValue', '$formalValue', '$newestValue', '$languageValue', '0'";
+
+        $this->databaseManager->insertIntoTable(TABLE_REVIEWS,$insertStatement, $insertValues);
+    }
+
+    /**
+     * Metoda slouzi k aktualizaci recenze
+     * @param string $content
+     * @param int $articleID
+     * @param int $reviewerID
+     * @param int $reviewValue
+     * @param int $contentValue
+     * @param int $formalValue
+     * @param int $newestValue
+     * @param int $languageValue
+     */
+    function updateReview(string $content, int $articleID, int $reviewerID, int $reviewValue, int $contentValue, int $formalValue, int $newestValue, int $languageValue){
+        $date = date('Y-m-d H:i:s');
+        $insertStatementWithValues = "datum='$date', obsah='$content', celkem='$reviewValue', obsahBody='$contentValue', formalnost='$formalValue', novost='$newestValue', jazyk='$languageValue', zverejnena='1'";
+        $whereStatement = "id_clanku='$articleID'";
+
+        $this->databaseManager->updateInTable(TABLE_REVIEWS, $insertStatementWithValues, $whereStatement);
+
+    }
+
+    function deleteReview(){
 
     }
 }

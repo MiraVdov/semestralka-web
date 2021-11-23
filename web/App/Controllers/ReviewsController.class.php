@@ -39,7 +39,7 @@ class ReviewsController implements IController
             $tplData["allArticles"] = $this->articlesManager->getAllArticles();
 
             for ($i = 0; $i < sizeof($tplData["allArticles"]); $i++){
-                $tplData["articles"][$i] = $this->articlesManager->getAllPossibleReviewers($tplData["allArticles"][$i]["id_clanku"]);
+                $tplData["articles"][$i] = $this->um->getAllPossibleReviewers($tplData["allArticles"][$i]["id_clanku"]);
 
                 $tplData["articleReviews"][$i] = $this->articlesManager->getAllArticleReviews($tplData["allArticles"][$i]["id_clanku"]);
                 $tplData["articleReviewers"][$i] = $this->um->getAllArticleReviewers($tplData["allArticles"][$i]["id_clanku"]);

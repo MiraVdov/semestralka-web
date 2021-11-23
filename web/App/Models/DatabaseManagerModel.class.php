@@ -48,12 +48,16 @@
          * @param string $orderBy - poradi
          * @return array - vraci pole vysledku hledani
          */
-        public function selectFromTable(string $table, string $whereStatement = "", string $orderBy = ""):array{
-            $query = "SELECT * FROM ".$table
+        public function selectFromTable(string $table, string $whereStatement = "", string $orderBy = "", string $selection = "*",string $innerJoin = ""):array{
+            if ($selection == "") $selection = "*";
+
+            $query = "SELECT $selection FROM ".$table
+                .(($innerJoin == "") ? "" : " INNER JOIN $innerJoin")
                 .(($whereStatement == "") ? "" : " Where $whereStatement")
                 .(($orderBy == "") ? "" : " ORDER BY $orderBy");
 
             $data = $this->exectuteQuery($query);
+
             if ($data == null) return [];
             return $data->fetchAll();
         }

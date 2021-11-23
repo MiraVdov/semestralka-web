@@ -34,9 +34,10 @@ class MyReviewsController implements IController
         $tplData["userRight"] = $this->um->getUserRightInfo();
 
         if ($tplData["user"] != null){
-            $tplData["allArticles"] = $this->articlesManager->getAllArticles();
+            //$tplData["allArticles"] = $this->articlesManager->getAllArticles();
 
             $tplData["assignedArticles"] = $this->articlesManager->getAllAssignedArticles($tplData["user"]["id_uzivatel"]);
+            //print_r($tplData["assignedArticles"]);
 
             if (isset($_POST["action"]) && $_POST["action"] == "saveReview"){
 
