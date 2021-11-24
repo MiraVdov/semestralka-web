@@ -1,13 +1,23 @@
-{# vypis input elementu #}
-{% macro inputElement(type, name, value, other) %}
-    <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" {{ other|default("") }} />
-{% endmacro %}
-
 {# 1 - superAdmin
    2 - admin
    3 - recenzent
    4 - auto
 #}
+
+{% macro starRating(value) %}
+    {% for i in 1..5 %}
+        {% if i <= value %}
+            <span class="fa fa-star checked"></span>
+        {% else %}
+            {% if value >= (i - 0.5) %}
+                <span class="fa fa-star-half-full checked"></span>
+            {% else %}
+                <span class="fa fa-star"></span>
+            {% endif %}
+
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
 
 {# row in table #}
 {% macro tableRow(user, loggedUser, allRights) %}

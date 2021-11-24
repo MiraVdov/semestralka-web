@@ -1,6 +1,9 @@
 {# user management and review management page #}
 {% extends "BasicTemplate.twig" %}
 
+{# import makra #}
+{% import "makra.twig" as makra %}
+
 {# reviewsManagement #}
 {% block reviewsManagement %}
     {% if user != null and user.id_pravo == 1 or user.id_pravo == 2 %}
@@ -76,11 +79,11 @@
                                 <tr>
                                     {% if review.zverejnena != 0 %}
                                         <td>{{ articleReviewers[articleNumber][reviewerNumber].jmeno }}</td>
-                                        <td>{{ review.celkem }}</td>
-                                        <td>{{ review.obsahBody }}</td>
-                                        <td>{{ review.formalnost }}</td>
-                                        <td>{{ review.novost }}</td>
-                                        <td>{{ review.jazyk }}</td>
+                                        <td> {{ makra.starRating(review.celkem) }}</td>
+                                        <td>{{ makra.starRating(review.obsahBody) }}</td>
+                                        <td>{{ makra.starRating(review.formalnost) }}</td>
+                                        <td>{{ makra.starRating(review.novost) }}</td>
+                                        <td>{{ makra.starRating(review.jazyk) }}</td>
                                     {% else %}
                                         <td>{{ articleReviewers[articleNumber][reviewerNumber].jmeno }}</td>
                                         <td colspan="5"><div class="alert alert-light alertWaiting" role="alert">Čeká na hodnocení</div></td>
