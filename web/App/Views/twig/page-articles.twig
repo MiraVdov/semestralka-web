@@ -6,22 +6,24 @@
 {% block articles%}
     {% set index = 0 %}
     {% for article in allArticles %}
-        <div class="card mx-auto articles">
-            <div class="card-header articlesHeader">
-                {{ article.datum }}
-            </div>
-            <div class="card-body">
-                <button type="button" class="btn btn-success btn-sm float-end" onclick="showPDFFile({{ index }})"><span class="fa fa-book"></span> zobrazit PDF</button>
-                <h5 class="card-title">{{ article.nadpis }}</h5>
-                <p class="card-text">{{ article.obsah }}</p>
+        {% if article.id_stav == 2 %}
+            <div class="card mx-auto articles">
+                <div class="card-header articlesHeader">
+                    {{ article.datum }}
+                </div>
+                <div class="card-body">
+                    <button type="button" class="btn btn-success btn-sm float-end" onclick="showPDFFile({{ index }})"><span class="fa fa-book"></span> zobrazit PDF</button>
+                    <h5 class="card-title">{{ article.nadpis }}</h5>
+                    <p class="card-text">{{ article.obsah }}</p>
 
-                <div class="showPDF" id="showPDF{{ index }}">
-                    <hr>
-                    <div class="hidePDFFiles mx-auto"><a  href="javascript:void(0);" onclick="hidePDFFile({{ index }})">Skrýt PDF</a></div><br>
-                    <object data="data:application/pdf;base64,{{ article.pdf }}" type="application/pdf" class="pdfFiles"></object>
+                    <div class="showPDF" id="showPDF{{ index }}">
+                        <hr>
+                        <div class="hidePDFFiles mx-auto"><a  href="javascript:void(0);" onclick="hidePDFFile({{ index }})">Skrýt PDF</a></div><br>
+                        <object data="data:application/pdf;base64,{{ article.pdf }}" type="application/pdf" class="pdfFiles"></object>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     {% set index = index + 1 %}
     {% endfor %}
 {% endblock %}

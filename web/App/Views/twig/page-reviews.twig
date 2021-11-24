@@ -20,7 +20,14 @@
                     {% endif %}
                     <div class="float-end">
                         <form method="POST">
-                            {% if (articleReviewers[articleNumber] | length) == 3  %}
+                            {# checking if all reviews are published #}
+                            {% set flag = false %}
+                            {% for review in articleReviews[articleNumber] %}
+                                {% if review.zverejnena == 0 %}
+                                    {% set flag = true %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if (articleReviewers[articleNumber] | length) == 3 and flag == false %}
                                 <button type="submit" class="btn btn-success btn-sm" name="action" value="acceptArticle"><span class="fa fa-check-circle"></span> schválit</button>
                                 <button type="submit" class="btn btn-danger btn-sm" name="action" value="rejectArticle"><img src="images/xMark.png" style="width:12px; margin-top: -2px"> zamítnout</button>
                                 <input type="hidden" name="articleID" value="{{ article.id_clanku }}">
