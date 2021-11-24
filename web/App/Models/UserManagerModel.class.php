@@ -187,4 +187,14 @@ class UserManagerModel
 
         return $allReviewers;
     }
+
+    /**
+     * Metoda odebere uživatele od přiazeného článku
+     * @param int $reviewerID
+     * @return bool
+     */
+    function removeReviewer(int $reviewerID, $articleID){
+        $whereStatement = "id_recenzenta = '$reviewerID' AND id_clanku = '$articleID'";
+        return $this->databaseManager->deleteFromTable(TABLE_REVIEWS, $whereStatement);
+    }
 }

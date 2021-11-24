@@ -36,8 +36,18 @@ class ReviewsController implements IController
         $tplData["userRight"] = $this->um->getUserRightInfo();
 
         if ($tplData["user"] != null){
-            if (isset($_POST["action"]) && $_POST["action"] == "addReviewer"){
-                $this->articlesManager->createReview("", $_POST["articleID"], $_POST["reviewer"], 0, 0, 0, 0, 0);
+            if (isset($_POST["action"])){
+                if ($_POST["action"] == "addReviewer"){
+                    $this->articlesManager->createReview("", $_POST["articleID"], $_POST["reviewer"], 0, 0, 0, 0, 0);
+                }
+                else if ($_POST["action"] == "removeReviewer"){
+                    $this->um->removeReviewer($_POST["reviewerID"], $_POST["articleID"]);
+                }
+                else if ($_POST["action"] == "acceptArticle"){
+                    $this->articlesManager->acceptArticle($_POST["articleID"]);
+                }else if ($_POST["action"] == "rejectArticle"){
+                    $this->articlesManager->rejectArticle($_POST["articleID"]);
+                }
             }
 
             $tplData["allArticles"] = $this->articlesManager->getAllArticles();

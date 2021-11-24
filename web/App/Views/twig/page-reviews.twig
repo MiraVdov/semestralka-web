@@ -11,10 +11,23 @@
                     {{ article.datum }}
                 </div>
                 <div class="card-body">
+                    {% if article.id_stav == 3 %}
+                        <div class="alert alert-info d-flex align-items-center statusAlerts" role="alert">Čeká na posouzení</div>
+                    {% elseif article.id_stav == 2 %}
+                        <div class="alert alert-success d-flex align-items-center statusAlerts" role="alert">Článek akceptován</div>
+                    {% elseif article.id_stav == 1 %}
+                        <div class="alert alert-danger d-flex align-items-center statusAlerts" role="alert">Článek zamítnut</div>
+                    {% endif %}
                     <div class="float-end">
                         <form method="POST">
-                            <button type="button" class="btn btn-success btn-sm"><span class="fa fa-check-circle"></span> schválit</button>
-                            <button type="button" class="btn btn-danger btn-sm"><img src="images/xMark.png" style="width:12px; margin-top: -2px"> zamítnout</button>
+                            {% if (articleReviewers[articleNumber] | length) == 3  %}
+                                <button type="submit" class="btn btn-success btn-sm" name="action" value="acceptArticle"><span class="fa fa-check-circle"></span> schválit</button>
+                                <button type="submit" class="btn btn-danger btn-sm" name="action" value="rejectArticle"><img src="images/xMark.png" style="width:12px; margin-top: -2px"> zamítnout</button>
+                                <input type="hidden" name="articleID" value="{{ article.id_clanku }}">
+                            {% else %}
+                                <button type="submit" disabled class="btn btn-success btn-sm" name="action" value="acceptArticle"><span class="fa fa-check-circle"></span> schválit</button>
+                                <button type="submit" disabled class="btn btn-danger btn-sm" name="action" value="rejectArticle"><img src="images/xMark.png" style="width:12px; margin-top: -2px"> zamítnout</button>
+                            {% endif %}
                         </form>
                     </div>
                     <h5 class="card-title mb-4">{{ article.nadpis }}</h5>
@@ -61,18 +74,17 @@
                                         <td>{{ review.formalnost }}</td>
                                         <td>{{ review.novost }}</td>
                                         <td>{{ review.jazyk }}</td>
-                                        <td style="text-align:center;"><button type="button" class="btn btn-danger" style="width: 30%;" ><img src="images/xMark.png" style="width:11px; height: 2%"></button></td>
                                     {% else %}
                                         <td>{{ articleReviewers[articleNumber][reviewerNumber].jmeno }}</td>
                                         <td colspan="5"><div class="alert alert-light alertWaiting" role="alert">Čeká na hodnocení</div></td>
-
-                                        <td style="text-align:center;">
-                                            <form method="post">
-                                                <button type="button" class="btn btn-danger btnRemoveReviewer" type="submit" name="action" value="removeReviewer"><img src="images/xMark.png" style="width:11px; "></button>
-                                                <input type="hidden" name="reviewerID" value="{{ articleReviewers[articleNumber][reviewerNumber].id_uzivatel}}">
-                                            </form>
-                                        </td>
                                     {% endif %}
+                                    <td style="text-align:center;">
+                                        <form method="post">
+                                            <button class="btn btn-danger btnRemoveReviewer" type="submit" name="action" value="removeReviewer"><img src="images/xMark.png" style="width:11px; "></button>
+                                            <input type="hidden" name="reviewerID" value="{{ articleReviewers[articleNumber][reviewerNumber].id_uzivatel}}">
+                                            <input type="hidden" name="articleID" value="{{ review.id_clanku }}">
+                                        </form>
+                                    </td>
                                 </tr>
                             {% set reviewerNumber = reviewerNumber + 1 %}
                             {% endfor%}

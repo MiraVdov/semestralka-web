@@ -47,8 +47,8 @@ class ArticlesManagerModel
         $file_tmp = $_FILES['pdf_file']['tmp_name']; // cesta k souboru
         $file = addslashes(file_get_contents($file_tmp));
 
-        $insertStatement = "obsah, datum, id_uzivatel, nadpis, pdf";
-        $insertValues = "'$content', '$date','$userID', '$name', '$file'";
+        $insertStatement = "obsah, datum, id_uzivatel, nadpis, pdf, 'id_stav'";
+        $insertValues = "'$content', '$date','$userID', '$name', '$file', '3'";
         return $this->databaseManager->insertIntoTable(TABLE_ARTICLES, $insertStatement, $insertValues);
     }
 
@@ -116,21 +116,34 @@ class ArticlesManagerModel
      * @param int $newestValue
      * @param int $languageValue
      */
-    function updateReview(string $content, int $articleID, int $reviewerID, int $reviewValue, int $contentValue, int $formalValue, int $newestValue, int $languageValue){
+    function updateReview(string $content, int $articleID, int $contentValue, int $formalValue, int $newestValue, int $languageValue, int $userID){
         $date = date('Y-m-d H:i:s');
+        $reviewValue = ($contentValue + $formalValue + $newestValue + $languageValue)/4;
+
         $insertStatementWithValues = "datum='$date', obsah='$content', celkem='$reviewValue', obsahBody='$contentValue', formalnost='$formalValue', novost='$newestValue', jazyk='$languageValue', zverejnena='1'";
-        $whereStatement = "id_clanku='$articleID'";
+        $whereStatement = "id_clanku='$articleID' AND id_recenzenta = '$userID'";
 
         return $this->databaseManager->updateInTable(TABLE_REVIEWS, $insertStatementWithValues, $whereStatement);
     }
 
-    function removeReviewer(int $reviewerID){
-        $whereStatement = "id_recenzenta = '$reviewerID'";
-        return $this->databaseManager->deleteFromTable(TABLE_REVIEWS, $whereStatement);
+    function acceptArticle($articleID){
+        $insertStatementWithValue = "id_stav = '2'";
+        $whereStatement = "id_clanku = '$articleID'";
+
+        $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatementWithValue, $whereStatement);
     }
+
+    function rejectArticle($articleID){
+        $insertStatementWithValue = "id_stav = '1'";
+        $whereStatement = "id_clanku = '$articleID'";
+
+        $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatementWithValue, $whereStatement);
+    }
+
+
 
     function deleteReview(int $aticleID){
         $whereStatement = "id";
-        $this->databaseManager->deleteFromTable(TABLE_REVIEWS);
+        //$this->databaseManager->deleteFromTable(TABLE_REVIEWS);
     }
 }

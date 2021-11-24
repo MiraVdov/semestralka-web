@@ -12,6 +12,13 @@
                 {{ article.datum }}
             </div>
             <div class="card-body">
+                {% if article.id_stav == 3 %}
+                    <div class="alert alert-info d-flex align-items-center statusAlerts" role="alert">Hodnocení: čeká na posouzení</div>
+                {% elseif article.id_stav == 2 %}
+                    <div class="alert alert-success d-flex align-items-center statusAlerts" role="alert">Hodnocení:</div>
+                {% elseif article.id_stav == 1 %}
+                    <div class="alert alert-danger d-flex align-items-center statusAlerts" role="alert">Hodnocení:</div>
+                {% endif %}
                 <div class="float-end">
                     <form method="POST">
                         <button type="button" class="btn btn-primary btn-sm" onclick="showReviewForm({{ index }})"><span class="fa fa-pencil"></span> Recenzovat</button>
@@ -32,11 +39,11 @@
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text w-25" id="basic-addon1">Formální úroveň</span>
-                                    <input type="number" class="form-control w-25" placeholder="3" value="3" aria-label="formalValue" aria-describedby="basic-addon1" min="1" max="5">
+                                    <input type="number" class="form-control w-25" placeholder="3" value="3" aria-label="formalValue" name="formalValue" aria-describedby="basic-addon1" min="1" max="5">
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text w-25" id="basic-addon1">Novost</span>
-                                    <input type="number" class="form-control" placeholder="3" value="3" aria-label="newestValue" aria-describedby="basic-addon1" min="1" max="5">
+                                    <input type="number" class="form-control" placeholder="3" value="3" aria-label="newestValue" name="newestValue" aria-describedby="basic-addon1" min="1" max="5">
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text w-25" id="basic-addon1">Kvalita jazyka</span>
@@ -46,11 +53,13 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="editor" class="form-label">Vlastní komentář:</label>
-                                <textarea class="editor" style="height: 9.7vw; width: 100%; background-color: white;"></textarea>
+                                <textarea class="editor" style="height: 9.7vw; width: 100%; background-color: white;" name="content"></textarea>
                             </div>
 
                             <div style="text-align: center;"><button type="submit" class="btn btn-success" name="action" value="saveReview">Uložit recenzi</button>
-                                <button type="button" class="btn btn-danger ms-3" name="action" value="cancelReview" onclick="cancelReviewForm({{ index }})">Zrušit</button></div>
+                                <button type="button" class="btn btn-danger ms-3" name="action" value="cancelReview" onclick="cancelReviewForm({{ index }})">Zrušit</button>
+                                <input type="hidden" name="articleID" value="{{ article.id_clanku }}">
+                            </div>
                         </div>
                     </form>
                 </div> <!---skryto-->
