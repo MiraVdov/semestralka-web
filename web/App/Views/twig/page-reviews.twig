@@ -20,19 +20,22 @@
                     <h5 class="card-title mb-4">{{ article.nadpis }}</h5>
                     <p class="card-text">Recenze:</p>
 
-                    <div class="input-group mb-3" style="width: 40%">
-                        {# if article has less than 3 reviewers -> show him selectbox #}
-                        {% if articles[articleNumber] != null %}
-                            <span class="input-group-text " id="basic-addon1">Přdat recenzenta</span>
-                            <select class="form-select" aria-label="Default select example">
-                                {# going through all reviewers for specific article #}
-                                {% for reviewer in articles[articleNumber] %}
-                                    <option>{{ reviewer.jmeno }}</option>
-                                {% endfor %}
-                            </select>
-                            <button class="btn btn-success" type="button" id="button-addon2">Přidat</button>
-                        {% endif %}
-                    </div>
+                    {# if article has less than 3 reviewers -> show him selectbox #}
+                    {% if articles[articleNumber] != null %}
+                        <form method="post">
+                            <div class="input-group mb-3" style="width: 40%">
+                                <span class="input-group-text " id="basic-addon1">Přdat recenzenta</span>
+                                <select class="form-select" aria-label="Default select example" name="reviewer">
+                                    {# going through all reviewers for specific article #}
+                                    {% for reviewer in articles[articleNumber] %}
+                                        <option value="{{ reviewer.id_uzivatel }}">{{ reviewer.jmeno }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn btn-success" type="submit" id="button-addon2" name="action" value="addReviewer">Přidat</button>
+                                <input type="hidden" name="articleID" value="{{ article.id_clanku }}">
+                            </div>
+                        </form>
+                    {% endif %}
 
                     <table class="table table-bordered table-striped mx-auto" style="background-color: #e8fcee;  table-layout: fixed;">
                         <thead style="background-color: #75d9b6">
@@ -51,13 +54,25 @@
                             {% set reviewerNumber = 0 %}
                             {% for review in articleReviews[articleNumber] %}
                                 <tr>
-                                    <td>{{ articleReviewers[articleNumber][reviewerNumber].jmeno }}</td>
-                                    <td>{{ review.celkem }}</td>
-                                    <td>{{ review.obsahBody }}</td>
-                                    <td>{{ review.formalnost }}</td>
-                                    <td>{{ review.novost }}</td>
-                                    <td>{{ review.jazyk }}</td>
-                                    <td style="text-align:center;"><button type="button" class="btn btn-danger" style="width: 30%; "><img src="images/xMark.png" style="width:11px; height: 2%"></button></td>
+                                    {% if review.zverejnena != 0 %}
+                                        <td>{{ articleReviewers[articleNumber][reviewerNumber].jmeno }}</td>
+                                        <td>{{ review.celkem }}</td>
+                                        <td>{{ review.obsahBody }}</td>
+                                        <td>{{ review.formalnost }}</td>
+                                        <td>{{ review.novost }}</td>
+                                        <td>{{ review.jazyk }}</td>
+                                        <td style="text-align:center;"><button type="button" class="btn btn-danger" style="width: 30%;" ><img src="images/xMark.png" style="width:11px; height: 2%"></button></td>
+                                    {% else %}
+                                        <td>{{ articleReviewers[articleNumber][reviewerNumber].jmeno }}</td>
+                                        <td colspan="5"><div class="alert alert-light alertWaiting" role="alert">Čeká na hodnocení</div></td>
+
+                                        <td style="text-align:center;">
+                                            <form method="post">
+                                                <button type="button" class="btn btn-danger btnRemoveReviewer" type="submit" name="action" value="removeReviewer"><img src="images/xMark.png" style="width:11px; "></button>
+                                                <input type="hidden" name="reviewerID" value="{{ articleReviewers[articleNumber][reviewerNumber].id_uzivatel}}">
+                                            </form>
+                                        </td>
+                                    {% endif %}
                                 </tr>
                             {% set reviewerNumber = reviewerNumber + 1 %}
                             {% endfor%}
@@ -66,7 +81,7 @@
                             {% if articles[articleNumber] != null %}
                                 <tr>
                                     <td colspan="7">
-                                        <div class="alert alert-warning" style="margin: -5px" role="alert">Přiřaďte ještě
+                                        <div class="alert alert-warning alertAddReviewer" role="alert">Přiřaďte ještě
                                             {{ 3 - articleReviewers[articleNumber] | length }}
                                             {% if (3 - articleReviewers[articleNumber] | length) == 1 %}
                                                 recenzenta.

@@ -74,7 +74,7 @@
                         {% else %}
                             <option value="{{ right.id_pravo }}"
                             {# if user right is is same as right id -> selected#}
-                            {% if user.id_pravo == right.id_pravo%}
+                            {% if user.id_pravo == right.id_pravo %}
                                 selected
                             {% endif %}
                             >{{ right.nazev }}</option>

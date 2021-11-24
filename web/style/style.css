@@ -254,6 +254,19 @@ h4{
     border-right-color: #cdd0d2;
 }
 
+.alertWaiting{
+    margin: -2px 5px -5px -5px;
+    text-align: center;
+    background-color: #d5d3d3;
+}
 
+.alertAddReviewer{
+    margin: -5px;
+}
+
+.btnRemoveReviewer{
+    width: 30%;
+    margin-top: 5%;
+}
 
 

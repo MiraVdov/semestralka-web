@@ -36,6 +36,10 @@ class ReviewsController implements IController
         $tplData["userRight"] = $this->um->getUserRightInfo();
 
         if ($tplData["user"] != null){
+            if (isset($_POST["action"]) && $_POST["action"] == "addReviewer"){
+                $this->articlesManager->createReview("", $_POST["articleID"], $_POST["reviewer"], 0, 0, 0, 0, 0);
+            }
+
             $tplData["allArticles"] = $this->articlesManager->getAllArticles();
 
             for ($i = 0; $i < sizeof($tplData["allArticles"]); $i++){
@@ -44,6 +48,9 @@ class ReviewsController implements IController
                 $tplData["articleReviews"][$i] = $this->articlesManager->getAllArticleReviews($tplData["allArticles"][$i]["id_clanku"]);
                 $tplData["articleReviewers"][$i] = $this->um->getAllArticleReviewers($tplData["allArticles"][$i]["id_clanku"]);
             }
+
+
+
         }
         Helper::loginHelp($this->um);
 

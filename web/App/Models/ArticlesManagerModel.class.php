@@ -102,7 +102,7 @@ class ArticlesManagerModel
         $insertStatement = "datum, obsah, id_clanku, id_recenzenta, celkem, obsahBody, formalnost, novost, jazyk, zverejnena";
         $insertValues = "'$date', '$content', '$articleID', '$reviewerID', '$reviewValue', '$contentValue', '$formalValue', '$newestValue', '$languageValue', '0'";
 
-        $this->databaseManager->insertIntoTable(TABLE_REVIEWS,$insertStatement, $insertValues);
+         return $this->databaseManager->insertIntoTable(TABLE_REVIEWS,$insertStatement, $insertValues);
     }
 
     /**
@@ -121,11 +121,16 @@ class ArticlesManagerModel
         $insertStatementWithValues = "datum='$date', obsah='$content', celkem='$reviewValue', obsahBody='$contentValue', formalnost='$formalValue', novost='$newestValue', jazyk='$languageValue', zverejnena='1'";
         $whereStatement = "id_clanku='$articleID'";
 
-        $this->databaseManager->updateInTable(TABLE_REVIEWS, $insertStatementWithValues, $whereStatement);
-
+        return $this->databaseManager->updateInTable(TABLE_REVIEWS, $insertStatementWithValues, $whereStatement);
     }
 
-    function deleteReview(){
+    function removeReviewer(int $reviewerID){
+        $whereStatement = "id_recenzenta = '$reviewerID'";
+        return $this->databaseManager->deleteFromTable(TABLE_REVIEWS, $whereStatement);
+    }
 
+    function deleteReview(int $aticleID){
+        $whereStatement = "id";
+        $this->databaseManager->deleteFromTable(TABLE_REVIEWS);
     }
 }
