@@ -2,6 +2,9 @@
 
 {% extends "BasicTemplate.twig" %}
 
+{# import makra #}
+{% import "makra.twig" as makra %}
+
 {# myArticles #}
 {% block myArticles %}
     {# vlastní články si může zobrazit pouze autor #}
@@ -39,6 +42,31 @@
                     {{ article.datum }}
                 </div>
                 <div class="card-body" id="body{{ index }}">
+                    {% if article.id_stav == 3 %}
+                        <div class="alert alert-info d-flex align-items-center statusAlerts" role="alert">Hodnocení: Čeká na posouzení</div>
+                    {% elseif article.id_stav == 2 %}
+                        <div class="alert alert-success d-flex align-items-center statusAlerts" role="alert">Hodnocení:
+                            {% set i = 0 %}
+                            {% for review in articles[index] %}
+                                <div class="alertReview">
+                                    {{ alphabet[i] }}  {{ makra.starRating(review.celkem) }}
+                                </div>
+                                {% set i = i + 1 %}
+                            {% endfor %}
+                            <div class="alertAccepted"> Status: akceptováno. </div>
+                        </div>
+                    {% elseif article.id_stav == 1 %}
+                        <div class="alert alert-danger d-flex align-items-center statusAlerts" role="alert">Hodnocení:
+                            {% set i = 0 %}
+                            {% for review in articles[index] %}
+                                <div class="alertReview">
+                                    {{ alphabet[i] }}  {{ makra.starRating(review.celkem) }}
+                                </div>
+                                {% set i = i + 1 %}
+                            {% endfor %}
+                            <div class="alertRejected"> Status: zamítnuto. </div>
+                        </div>
+                    {% endif %}
                     <div class="float-end ">
                         <form method="POST" id="form{{ index }}">
                             <button type="button" class="btn btn-success btn-sm" onclick="showPDFFile({{ index }})"><span class="fa fa-book"></span> zobrazit PDF</button>

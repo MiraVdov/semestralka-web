@@ -59,6 +59,11 @@ class MyArticlesController implements IController
             for ($i = 0; $i < sizeof($tplData["userArticles"]); $i++){
                 $tplData["userArticles"][$i]["pdf"] = base64_encode($tplData["userArticles"][$i]["pdf"]);
             }
+
+            for ($i = 0; $i < sizeof($tplData["userArticles"]); $i++){
+                $tplData["articles"][$i] = $this->articlesManager->getAllArticleReviews($tplData["userArticles"][$i]["id_clanku"]);
+            }
+            $tplData["alphabet"] =  array('A', 'B', 'C');
         }
 
         return $tplData;

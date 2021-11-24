@@ -45,6 +45,11 @@ class MyReviewsController implements IController
             foreach ($tplData["assignedArticles"] as $article){
                 $tplData["pdfs"][$index++] = base64_encode($article["pdf"]);
             }
+
+            for ($i = 0; $i < sizeof($tplData["assignedArticles"]); $i++){
+                $tplData["articles"][$i] = $this->articlesManager->getAllArticleReviews($tplData["assignedArticles"][$i]["id_clanku"]);
+            }
+            $tplData["alphabet"] =  array('A', 'B', 'C');
         }
 
         Helper::loginHelp($this->um);

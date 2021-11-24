@@ -2,6 +2,9 @@
 
 {% extends "BasicTemplate.twig" %}
 
+{# import makra #}
+{% import "makra.twig" as makra %}
+
 {# articles #}
 {% block articles%}
     {% set index = 0 %}
@@ -12,6 +15,16 @@
                     {{ article.datum }}
                 </div>
                 <div class="card-body">
+                    <div class="alert alert-success d-flex align-items-center statusAlerts" role="alert">Hodnocení:
+                        {% set i = 0 %}
+                        {% for review in articles[index] %}
+                            <div class="alertReview">
+                                {{ alphabet[i] }}  {{ makra.starRating(review.celkem) }}
+                            </div>
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                        <div class="alertAccepted"> Status: akceptováno. </div>
+                    </div>
                     <button type="button" class="btn btn-success btn-sm float-end" onclick="showPDFFile({{ index }})"><span class="fa fa-book"></span> zobrazit PDF</button>
                     <h5 class="card-title">{{ article.nadpis }}</h5>
                     <p class="card-text">{{ article.obsah }}</p>

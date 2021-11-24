@@ -270,11 +270,42 @@ h4{
 }
 
 .statusAlerts{
-    max-height: 2px
+    max-height: 2px;
 }
 
 .checked{
     color: orange;
 }
+
+.alertReview{
+    border: solid 1px silver;
+    margin-left: 1%;
+    padding: 0px 6px;
+    border-radius: 8px;
+    background-color: #ece9e9;
+    color: black;
+    font-size: 11pt;
+}
+
+.alertRejected{
+    border: solid 1px silver;
+    margin-left: 1%;
+    padding: 0px 6px;
+    border-radius: 8px;
+    background-color: #e11414;
+    color: white;
+    font-size: 9pt;
+}
+
+.alertAccepted{
+    border: solid 1px silver;
+    margin-left: 1%;
+    padding: 0px 6px;
+    border-radius: 8px;
+    background-color: #108110;
+    color: white;
+    font-size: 9pt;
+}
+
 
 
