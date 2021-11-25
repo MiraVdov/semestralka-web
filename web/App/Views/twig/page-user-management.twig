@@ -13,7 +13,6 @@
                     <thead>
                         <tr class="table-dark">
                             <th>ID</th>
-                            <th>S.</th>
                             <th>Login</th>
                             <th>Jméno</th>
                             <th>Role</th>
@@ -21,9 +20,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% set index = 0 %}
                         {# going throught all users #}
                         {% for useri in allUsers %}
-                            {{ makra.tableRow(useri, user, allRights) }}
+                            {{ makra.tableRow(useri, user, allRights, index) }}
+                            {% set index = index + 1 %}
                         {% endfor %}
                     </tbody>
                 </table>
@@ -39,4 +40,9 @@
             location.replace("index.php?page=informations");
         </script>
     {% endif %}
+{% endblock %}
+
+{# my scripts #}
+{% block myJS %}
+    <script src="app/Views/js/user-management.js"></script>
 {% endblock %}

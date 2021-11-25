@@ -197,4 +197,10 @@ class UserManagerModel
         $whereStatement = "id_recenzenta = '$reviewerID' AND id_clanku = '$articleID'";
         return $this->databaseManager->deleteFromTable(TABLE_REVIEWS, $whereStatement);
     }
+
+    function changeUserRole(int $userID, $rightID): bool{
+        $updateStatementWithValues = "id_pravo = '$rightID'";
+        $whereStatement = "id_uzivatel = '$userID'";
+        return $this->databaseManager->updateInTable(TABLE_USER, $updateStatementWithValues, $whereStatement);
+    }
 }

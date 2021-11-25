@@ -2,6 +2,7 @@
 
 namespace app\Controllers;
 
+use app\Models\ReviewManagerModel as RM;
 use app\Models\UserManagerModel as UMM;
 use app\Models\ArticlesManagerModel as AM;
 use app\Utils\Helper;
@@ -16,6 +17,9 @@ class MyArticlesController implements IController
     /**@var AM $articlesManager instance modelu spravy clanku*/
     private $articlesManager;
 
+    /**@var RM $reviewManager instance modelu spravy recenzi*/
+    private $reviewManager;
+
     /**
      * Vytvoreni instance pro komunikaci s databazi
      */
@@ -23,6 +27,7 @@ class MyArticlesController implements IController
     {
         $this->um = new UMM();
         $this->articlesManager = new AM();
+        $this->reviewManager = new RM();
     }
 
     /**
@@ -61,7 +66,7 @@ class MyArticlesController implements IController
             }
 
             for ($i = 0; $i < sizeof($tplData["userArticles"]); $i++){
-                $tplData["articles"][$i] = $this->articlesManager->getAllArticleReviews($tplData["userArticles"][$i]["id_clanku"]);
+                $tplData["articles"][$i] = $this->reviewManager->getAllArticleReviews($tplData["userArticles"][$i]["id_clanku"]);
             }
             $tplData["alphabet"] =  array('A', 'B', 'C');
         }

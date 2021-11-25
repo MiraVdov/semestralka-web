@@ -3,6 +3,7 @@
 namespace app\Controllers;
 
 use app\Models\ArticlesManagerModel as AM;
+use app\Models\ReviewManagerModel as RM;
 use app\Models\UserManagerModel as UMM;
 use app\Utils\Helper;
 
@@ -13,6 +14,9 @@ class MyReviewsController implements IController
     /**@var AM $articlesManager instance modelu spravy clanku*/
     private $articlesManager;
 
+    /**@var RM $reviewManager instance modelu spravy recenzi*/
+    private $reviewManager;
+
     /**
      * Vytvoreni instance pro komunikaci s databazi
      */
@@ -20,6 +24,7 @@ class MyReviewsController implements IController
     {
         $this->um = new UMM();
         $this->articlesManager = new AM();
+        $this->reviewManager = new RM();
     }
 
     /**
@@ -38,7 +43,7 @@ class MyReviewsController implements IController
             $tplData["assignedArticles"] = $this->articlesManager->getAllAssignedArticles($tplData["user"]["id_uzivatel"]);
 
             if (isset($_POST["action"]) && $_POST["action"] == "saveReview"){
-               $this->articlesManager->updateReview($_POST["content"], $_POST["articleID"], $_POST["qualityValue"],$_POST["formalValue"], $_POST["newestValue"], $_POST["languageValue"], $tplData["user"]["id_uzivatel"]);
+               $this->reviewManager->updateReview($_POST["content"], $_POST["articleID"], $_POST["qualityValue"],$_POST["formalValue"], $_POST["newestValue"], $_POST["languageValue"], $tplData["user"]["id_uzivatel"]);
             }
 
             $index = 0;
@@ -47,7 +52,7 @@ class MyReviewsController implements IController
             }
 
             for ($i = 0; $i < sizeof($tplData["assignedArticles"]); $i++){
-                $tplData["articles"][$i] = $this->articlesManager->getAllArticleReviews($tplData["assignedArticles"][$i]["id_clanku"]);
+                $tplData["articles"][$i] = $this->reviewManager->getAllArticleReviews($tplData["assignedArticles"][$i]["id_clanku"]);
             }
             $tplData["alphabet"] =  array('A', 'B', 'C');
         }

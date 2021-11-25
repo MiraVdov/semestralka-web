@@ -20,10 +20,13 @@
 {% endmacro %}
 
 {# row in table #}
-{% macro tableRow(user, loggedUser, allRights) %}
-    <tr>
+{% macro tableRow(user, loggedUser, allRights, index) %}
+    {% if user.isBanned == 1 %}
+        <tr class="bannedRow">
+    {% else %}
+        <tr>
+    {% endif %}
         {# user id #}
-        <td>{{ user.id_uzivatel }}</td>
         <td>{{ user.id_uzivatel }}</td>
         {# user login #}
         <td>{{ user.login }}</td>
@@ -75,7 +78,7 @@
             {# user isnt admin or superadmin so u can change his role or ban him #}
             {% else %}
                 <td style="width: 20%;">
-                    <select class="form-select form-select-sm" aria-label="Default select example">
+                    <select class="form-select form-select-sm" aria-label="Default select example" id="select{{ index }}" onchange="changeRight({{ index }}, {{ user.id_uzivatel }})" onclick="previousValue({{ index }})">
                     {# going through all rights#}
                     {% for right in allRights %}
                         {# if right is SuperAdmin dont show option #}
@@ -95,10 +98,13 @@
                 <td style="text-align: center">
                     {# dont show ban button if id of user is same as logged or if user id of right is 1 or 2 #}
                     {% if user.id_uzivatel != loggedUser.id_uzivatel and user.id_pravo != 2 and user.id_pravo != 1 %}
-                        <form method="post" >
-                            <input type="hidden" name="id_user" value="{{ user.id_uzivatel }}">
-                            <button type="submit" class="btn btn-danger" name="action" value="ban">Zakázat</button>
-                        </form>
+                        {% if user.isBanned == 1 %}
+                            <button type="button" class="btn btn-success" name="action" value="ban" onclick="banUnbanUser({{ user.id_uzivatel }},'unban')">Povolit</button>
+                        {% else %}
+                            <button type="button" class="btn btn-danger" name="action" value="ban" onclick="banUnbanUser({{ user.id_uzivatel }},'ban')">Zakázat</button>
+                        {% endif %}
+
+
 
                     {%  endif %}
                 </td>

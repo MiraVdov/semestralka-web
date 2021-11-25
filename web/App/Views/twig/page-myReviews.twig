@@ -22,7 +22,12 @@
                         {% set i = 0 %}
                         {% for review in articles[index] %}
                             <div class="alertReview">
-                                {{ alphabet[i] }}  {{ makra.starRating(review.celkem) }}
+                                {% if review.id_recenzenta == user.id_uzivatel %}
+                                    Moje
+                                {% else %}
+                                    {{ alphabet[i] }}
+                                {% endif %}
+                                {{ makra.starRating(review.celkem) }}
                             </div>
                             {% set i = i + 1 %}
                         {% endfor %}
@@ -33,7 +38,12 @@
                         {% set i = 0 %}
                         {% for review in articles[index] %}
                             <div class="alertReview">
-                                {{ alphabet[i] }}  {{ makra.starRating(review.celkem) }}
+                                {% if review.id_recenzenta == user.id_uzivatel %}
+                                    Moje
+                                {% else %}
+                                    {{ alphabet[i] }}
+                                {% endif %}
+                                {{ makra.starRating(review.celkem) }}
                             </div>
                             {% set i = i + 1 %}
                         {% endfor %}
@@ -47,7 +57,7 @@
                     </form>
                 </div>
                 <h5 class="card-title mb-4">{{ article.nadpis }}</h5>
-                <p class="card-text">{{ article.obsah }}</p>
+                <p class="card-text"><b>Abstrakt: </b>{{ article.obsah }}</p>
                 <div class="reviewForms" id="reviewForm{{ index }}">
                     <hr>
                     <form method="post">

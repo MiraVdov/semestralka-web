@@ -33,16 +33,6 @@ class UserManagementController implements IController
         $tplData["userRight"] = $this->um->getUserRightInfo();
         $tplData["allRights"] = $this->um->getAllRights();
 
-        // bylo zavolano smazani uzivatele
-        if (isset($_POST["action"])){
-            if ($_POST["action"] == "ban"){
-                echo $this->um->banUser($_POST["id_user"]);
-            }
-            else if ($_POST["action"] == "unban"){
-                $this->um->unBanUser($_POST["id_user"]);
-            }
-        }
-
         Helper::loginHelp($this->um);
 
         return $tplData;

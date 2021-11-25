@@ -27,7 +27,7 @@
                     </div>
                     <button type="button" class="btn btn-success btn-sm float-end" onclick="showPDFFile({{ index }})"><span class="fa fa-book"></span> zobrazit PDF</button>
                     <h5 class="card-title">{{ article.nadpis }}</h5>
-                    <p class="card-text">{{ article.obsah }}</p>
+                    <p class="card-text"><b>Abstrakt: </b>{{ article.obsah }}</p>
 
                     <div class="showPDF" id="showPDF{{ index }}">
                         <hr>
