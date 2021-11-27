@@ -57,12 +57,15 @@ class UserManagerModel
         $where = "login='$login' AND heslo='$password'";
         $user = $this->databaseManager->selectFromTable(TABLE_USER,$where);
 
-        if (count($user) > 0){
+        if (count($user) > 0 && isset($user[0]["isBanned"]) && $user[0]["isBanned"] == 0){
             // return the first one
             $this->session->setSession($user[0]);
             return true;
         }
-        else return false;
+        else{
+            if (isset($user[0]["isBanned"]))$GLOBALS["isBanned"] = 1;
+            return false;
+        }
     }
 
     /**

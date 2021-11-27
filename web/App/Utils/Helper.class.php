@@ -21,14 +21,11 @@ class Helper
                 isset($_POST["password"]) && trim($_POST["password"]) != ""){
                 if (!$um->isUserLogged()){
                     if($um->loginUser($_POST["login"], $_POST["password"])){
-                        //vypsání alertu
                         echo "<script>setTimeout(() => {alert('Uživatel úspěšně přihlášen!') }, 200)</script>";
-                        // refresh stranky
-
                     }
                     else{
-                        echo "<script>setTimeout(() => {alert('Zadány špatné přihlašovací údaje!') }, 200)</script>";
-                        // refresh stranky
+                        if (isset($GLOBALS["isBanned"])) echo "<script>setTimeout(() => {alert('Uživatele nebylo možné přihlásit, protože byl zabanován!') }, 200)</script>";
+                        else echo "<script>setTimeout(() => {alert('Zadány špatné přihlašovací údaje!') }, 200)</script>";
                     }
                     header('Refresh: 0.5');
                 }
