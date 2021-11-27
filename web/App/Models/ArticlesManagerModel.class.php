@@ -73,7 +73,7 @@ class ArticlesManagerModel
      * @return array
      */
     function getAllAssignedArticles($userID): array{
-        $orderBy = TABLE_ARTICLES .".datum ASC";
+        $orderBy = TABLE_ARTICLES .".datum DESC";
         $whereStatement = TABLE_REVIEWS .".id_recenzenta = $userID";
         $inner = TABLE_REVIEWS. " ON ". TABLE_ARTICLES . ".id_clanku = " . TABLE_REVIEWS . ".id_clanku";
         $m = TABLE_ARTICLES;

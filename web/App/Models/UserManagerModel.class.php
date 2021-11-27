@@ -177,7 +177,7 @@ class UserManagerModel
             $usedReviewers[$i] = $reviews[$i]["id_recenzenta"];
         }
 
-        $allReviewers = $this->databaseManager->selectFromTable(TABLE_USER, "id_pravo = 3");
+        $allReviewers = $this->databaseManager->selectFromTable(TABLE_USER, "id_pravo = 3 AND isBanned = 0");
         $g = sizeof($allReviewers);
         for ($i = 0; $i < $g; $i++) {
             for ($j = 0; $j < sizeof($usedReviewers); $j++) {

@@ -1,9 +1,3 @@
-//funkce slouzi  zobrazeni loginu
-$(document).ready(function () {
-    // formátování datumu
-    dateFormat();
-});
-
 /**
  * Funkce schova pdf soubor
  * @param index
