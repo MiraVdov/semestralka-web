@@ -1,5 +1,9 @@
-function banUnbanUser(userID, action) {
-    var result = confirm("Jste si jisti, že chcete daného uživatele zabanovat?");
+function banUnbanUser(userID, action, index) {
+    var result;
+
+    if (action == "ban") result = confirm("Jste si jisti, že chcete daného uživatele zabanovat?");
+    else result = confirm("Jste si jisti, že chcete daného uživatele odbanovat?");
+
     if (result == true) {
         $.post(
             "App/models/banUnbanUser-ajax.php",
@@ -13,7 +17,26 @@ function banUnbanUser(userID, action) {
             function (response, status) {
 
                 if (status == "success") {
-                    alert("Uživatel zabanován");
+                    var user = "#user" + userID;
+                    var columnWithButtons = "columnBanUnban"+userID;
+                    var columnSelect = "#select"+index;
+
+                    if (action == "ban"){
+                        action = "unban";
+                        document.getElementById(columnWithButtons).innerHTML = "<button type='button' class='btn btn-success' name='action' value='unban'" +
+                            "onClick='banUnbanUser(" + userID + ", &#39;"+ action +"&#39;, "+index+")'>Povolit</button>";
+                        $(user).addClass("bannedRow");
+                        $(columnSelect).attr('disabled','disabled');
+                    }else {
+                        action = "ban";
+                        document.getElementById(columnWithButtons).innerHTML = "<button type='button' class='btn btn-danger' name='action' value='ban'" +
+                             "onClick='banUnbanUser("+ userID +", &#39;" + action + "&#39;, "+index+")'>Zakázat</button>";
+                        $(user).removeClass("bannedRow");
+                        $(columnSelect).removeAttr("disabled");
+                    }
+
+                    alert(response);
+
                 } else if (status == "error") {
                     alert("Došlo k chybě!");
                 }
@@ -21,7 +44,6 @@ function banUnbanUser(userID, action) {
         );
     }
 }
-
 
 var previousSelectValue;
 function previousValue(index){

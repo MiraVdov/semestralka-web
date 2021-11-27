@@ -94,7 +94,6 @@
          */
         public function updateInTable(string $table, string $updateValues, string $whereStatement):bool{
             $query = "UPDATE $table SET $updateValues WHERE $whereStatement";
-            echo $query;
             $data = $this->exectuteQuery($query);
             return ($data != null);
         }
