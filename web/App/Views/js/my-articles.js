@@ -39,3 +39,32 @@ function editArticle(index, indexOfArticle){
 function closeEdit(){
     document.getElementById("body" + indexx).innerHTML = previous;
 }
+
+function deleteArticle(articleID) {
+    var result = confirm("Opravdu si přejete odstranit daný příspěvěk?");
+
+    if (result){
+        $.post(
+            "App/models/deleteArticle-ajax.php",
+
+            {
+                "articleID" : articleID
+            },
+
+            // reakce na odpoved
+            function(response, status) {
+                console.log(response);
+                if( status == "success" ){
+                    var article = "#article"+articleID;
+
+                    $(article).remove();
+                    alert("Příspěvek úspěšně vymazán!");
+                }
+                else if( status == "error" ){
+                    alert("Došlo k chybě!");
+                }
+            }
+        );
+    }
+    
+}

@@ -14,7 +14,6 @@ function dateFormat(){
     for (let i = 0; i < numberOfArticles; i++) {
         date = new Date(dateArray[i].innerHTML);
         var minutes = date.getMinutes();
-        console.log(minutes);
         var hours = date.getHours();
         if (minutes < 10) minutes = "0" + minutes;
         if (hours < 10) hours = "0" + hours;

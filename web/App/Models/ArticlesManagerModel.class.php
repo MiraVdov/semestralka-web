@@ -81,4 +81,13 @@ class ArticlesManagerModel
 
         return $this->databaseManager->selectFromTable(TABLE_ARTICLES, $whereStatement, $orderBy, $selection,$inner);
     }
+
+    /**
+     * @param int $articleID cislo clanku
+     * @return bool true -zdarilo se, false - nikoliv
+     */
+    function deleteArticle(int $articleID): bool{
+        $whereStatement = "id_clanku = '$articleID'";
+        return $this->databaseManager->deleteFromTable(TABLE_ARTICLES, $whereStatement);
+    }
 }

@@ -37,7 +37,7 @@
         {# prochazime všechny uzivatelovo clanky #}
         {% set index = 0 %}
         {% for article in userArticles %}
-            <div class="card mx-auto articles">
+            <div class="card mx-auto articles" id="article{{ article.id_clanku }}">
                 <div class="card-header articlesHeader">
                     {{ article.datum }}
                 </div>
@@ -71,7 +71,7 @@
                         <form method="POST" id="form{{ index }}">
                             <button type="button" class="btn btn-success btn-sm" onclick="showPDFFile({{ index }})"><span class="fa fa-book"></span> zobrazit PDF</button>
                             <button type="button" class="btn btn-warning btn-sm" onclick="editArticle({{ index }}, {{ article.id_clanku }})"><span class="fa fa-pencil"></span> upravit</button>
-                            <button type="button" class="btn btn-danger btn-sm btnDelete" onclick="deleteArticle()"><img src="images/xMark.png" style="width:12px; margin-top: -2px"> odstranit</button>
+                            <button type="button" class="btn btn-danger btn-sm btnDelete" onclick="deleteArticle({{ article.id_clanku }})"><img src="images/xMark.png" style="width:12px; margin-top: -2px"> odstranit</button>
                             <input type="hidden" name="id_clanku" value="{{ article.id_clanku }}">
                         </form>
                     </div>
