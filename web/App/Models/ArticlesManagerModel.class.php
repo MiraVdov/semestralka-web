@@ -64,7 +64,8 @@ class ArticlesManagerModel
         $file_tmp = $_FILES['pdf_file']['tmp_name']; // cesta k souboru
         $file = addslashes(file_get_contents($file_tmp));
 
-        $insertStatementWithValues = "obsah='$content', datum='$date', nadpis='$name', pdf='$file'";
+        $this->databaseManager->deleteFromTable(TABLE_REVIEWS, "id_clanku = '$articleID'");
+        $insertStatementWithValues = "obsah='$content', datum='$date', nadpis='$name', pdf='$file', id_stav= '3'";
         return $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatementWithValues, "id_clanku='$articleID'");
     }
 
