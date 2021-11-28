@@ -46,7 +46,7 @@ class ArticlesManagerModel
         $file_tmp = $_FILES['pdf_file']['tmp_name']; // cesta k souboru
         $file = addslashes(file_get_contents($file_tmp));
 
-        $insertStatement = "obsah, datum, id_uzivatel, nadpis, pdf, 'id_stav'";
+        $insertStatement = "obsah, datum, id_uzivatel, nadpis, pdf, id_stav";
         $insertValues = "'$content', '$date','$userID', '$name', '$file', '3'";
         return $this->databaseManager->insertIntoTable(TABLE_ARTICLES, $insertStatement, $insertValues);
     }

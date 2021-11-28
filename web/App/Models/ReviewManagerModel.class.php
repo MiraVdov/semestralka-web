@@ -54,6 +54,9 @@ class ReviewManagerModel
         $insertStatementWithValues = "datum='$date', obsah='$content', celkem='$reviewValue', obsahBody='$contentValue', formalnost='$formalValue', novost='$newestValue', jazyk='$languageValue', zverejnena='1'";
         $whereStatement = "id_clanku='$articleID' AND id_recenzenta = '$userID'";
 
+        $insertStatement = "id_stav = '3'";
+        $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatement, "id_clanku = '$articleID'");
+
         return $this->databaseManager->updateInTable(TABLE_REVIEWS, $insertStatementWithValues, $whereStatement);
     }
 
