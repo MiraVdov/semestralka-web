@@ -30,7 +30,8 @@ class ArticlesManagerModel
      * @return array
      */
     public function getAllUsersArticles(int $userID): array{
-        return $this->databaseManager->selectFromTable(TABLE_ARTICLES, "id_uzivatel=$userID", "datum DESC");
+        $userID = htmlspecialchars($userID);
+        return $this->databaseManager->getAllUsersArticles($userID);
     }
 
     /**
@@ -42,18 +43,13 @@ class ArticlesManagerModel
     public function createNewArticle(string $name, string $content, int $userID):bool{
         $name = htmlspecialchars($name);
         $content = htmlspecialchars($content);
-
         $date = date('Y-m-d H:i:s');
-
         $file_tmp = $_FILES['pdf_file']['tmp_name']; // cesta k souboru
         $file = addslashes(file_get_contents($file_tmp));
 
-        $insertStatement = "obsah, datum, id_uzivatel, nadpis, pdf, id_stav";
-        $insertValues = "'$content', '$date', '$userID', '$name', '$file', '3'";
-        //$insertValues = ":content, '$date', '$userID', ':name', '$file', '3'";
-
         if ($_FILES["pdf_file"]["type"] != "application/pdf")return false;
-        return $this->databaseManager->insertIntoTable(TABLE_ARTICLES, $insertStatement, $insertValues);
+
+        return $this->databaseManager->insertNewArticle($content, $date, $userID, $name, $file);
     }
 
     /**
@@ -63,15 +59,17 @@ class ArticlesManagerModel
      * @param int $articleID
      * @return bool zda se povedlo
      */
-    public function editArticle(string $name, string $content, int $articleID){
+    public function editArticle(string $name, string $content, int $articleID): bool{
         $date = date('Y-m-d H:i:s');
-
         $file_tmp = $_FILES['pdf_file']['tmp_name']; // cesta k souboru
         $file = addslashes(file_get_contents($file_tmp));
+        $name = htmlspecialchars($name);
+        $content = htmlspecialchars($content);
 
-        $this->databaseManager->deleteFromTable(TABLE_REVIEWS, "id_clanku = '$articleID'");
-        $insertStatementWithValues = "obsah='$content', datum='$date', nadpis='$name', pdf='$file', id_stav= '3'";
-        return $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatementWithValues, "id_clanku='$articleID'");
+        if ($_FILES["pdf_file"]["type"] != "application/pdf")return false;
+
+        $this->databaseManager->deleteArticleReviews($articleID);
+        return $this->databaseManager->updateArticle($content, $date, $name, $file, $articleID);
     }
 
     /**
@@ -93,7 +91,7 @@ class ArticlesManagerModel
      * @return bool true -zdarilo se, false - nikoliv
      */
     function deleteArticle(int $articleID): bool{
-        $whereStatement = "id_clanku = '$articleID'";
-        return $this->databaseManager->deleteFromTable(TABLE_ARTICLES, $whereStatement);
+        $articleID = htmlspecialchars($articleID);
+        return $this->databaseManager->deleteArticle($articleID);
     }
 }

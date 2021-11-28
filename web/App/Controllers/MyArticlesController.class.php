@@ -56,7 +56,9 @@ class MyArticlesController implements IController
                 } // upravení existujícího článku
                 elseif (isset($_POST["titleEdit"]) && $_POST["titleEdit"] != "" && $_POST["action"] == "editArticle"){
                     if (!empty($_FILES["pdf_file"]["name"]) && $_FILES["pdf_file"]["error"] == 0){
-                        $this->articlesManager->editArticle($_POST["titleEdit"], strip_tags($_POST["abstractEdit"]), $_POST["id_articleEdit"]);
+                        if (!$this->articlesManager->editArticle($_POST["titleEdit"], strip_tags($_POST["abstractEdit"]), $_POST["id_articleEdit"])){
+                            echo "<script>setTimeout(() => {alert('Soubor není pdf!') }, 200)</script>";
+                        }else echo "<script>setTimeout(() => {alert('Článek upraven.') }, 200)</script>";
                     }
                 }
             }

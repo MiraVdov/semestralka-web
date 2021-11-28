@@ -97,4 +97,101 @@
             $data = $this->exectuteQuery($query);
             return ($data != null);
         }
+
+        /**
+         * Metoda slouzi k pridani clanku s osetrenim
+         * @param string $content
+         * @param $date
+         * @param int $userID
+         * @param string $name
+         * @param $file
+         * @return bool
+         */
+        public function insertNewArticle(string $content, $date, int $userID, string $name, $file): bool{
+            $insertStatement = "obsah, datum, id_uzivatel, nadpis, pdf, id_stav";
+            $insertValues = ":content, :date, :userID, :name, '$file', :stateID";
+
+            $query = "INSERT INTO ". TABLE_ARTICLES ." ($insertStatement) VALUES ($insertValues)";
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":content", $content);
+            $result->bindValue(":date", $date);
+            $result->bindValue(":userID", $userID);
+            $result->bindValue(":name", $name);
+            $result->bindValue(":stateID", 3);
+
+            if ($result->execute()) return true;
+            return false;
+        }
+
+        /**
+         * Metoda slouzi k upraveni clanku
+         * @param string $content
+         * @param $date
+         * @param string $name
+         * @param $file
+         * @param $articleID
+         * @return bool
+         */
+        public function updateArticle(string $content, $date, string $name, $file, $articleID): bool{
+            $insertStatementWithValues = "obsah=:content, datum='$date', nadpis=:name, pdf='$file', id_stav= '3'";
+            $whereStatement = "id_clanku = $articleID";
+            $query = "UPDATE ". TABLE_ARTICLES. " SET $insertStatementWithValues WHERE $whereStatement";
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":content", $content);
+            $result->bindValue(":name", $name);
+
+            if ($result->execute()) return true;
+            return false;
+        }
+
+        /**
+         * Metoda slouzic k odstraneni vsech recenzi clanku
+         * @param int $articleID
+         * @return bool
+         */
+        function deleteArticleReviews(int $articleID): bool{
+            $query = "DELETE FROM ". TABLE_REVIEWS ." WHERE id_clanku = :articleID";
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":articleID", $articleID);
+
+            if ($result->execute()) return true;
+            return false;
+        }
+
+        /**
+         * Metoda slouzi k odstraneni clanku
+         * @param int $articleID
+         * @return bool
+         */
+        function deleteArticle(int $articleID): bool{
+            $query = "DELETE FROM ". TABLE_ARTICLES ." WHERE id_clanku = :articleID";
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":articleID", $articleID);
+
+            if ($result->execute()) return true;
+            return false;
+        }
+
+        /**
+         * @param int $userID
+         * @return array
+         */
+        function getAllUsersArticles(int $userID):array{
+            $query = "SELECT * FROM ". TABLE_ARTICLES ." WHERE id_uzivatel = :userID";
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":userID", $userID);
+
+            if ($result->execute())return $result->fetchAll();
+            return [];
+
+        }
+
+        function getAllAssignedArticles(int $articleID){
+            $query = "SELECT * FROM ". TABLE_ARTICLES ." WHERE id_clanku = :articleID";
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":articleID", $articleID);
+
+            if ($result->execute()) return true;
+            return false;
+        }
     }
