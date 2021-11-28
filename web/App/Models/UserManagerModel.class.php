@@ -150,7 +150,7 @@ class UserManagerModel
      */
     function getAllArticleReviewers(int $articleID){
         $whereStatement = "id_clanku = '$articleID'";
-        $reviews = $this->databaseManager->selectFromTable(TABLE_REVIEWS, $whereStatement);
+        $reviews = $this->databaseManager->selectFromTable(TABLE_REVIEWS, $whereStatement, "id_recenzenta ASC");
         $articleReviewers = array();
         $index = 0;
 
@@ -198,6 +198,12 @@ class UserManagerModel
      */
     function removeReviewer(int $reviewerID, $articleID){
         $whereStatement = "id_recenzenta = '$reviewerID' AND id_clanku = '$articleID'";
+        $article = $this->databaseManager->selectFromTable(TABLE_ARTICLES, "id_clanku = $articleID");
+
+        if ($article[0]["id_stav"] != 3){
+            $insertStatement = "id_stav = '3'";
+            $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatement, "id_clanku = '$articleID'");
+        }
         return $this->databaseManager->deleteFromTable(TABLE_REVIEWS, $whereStatement);
     }
 

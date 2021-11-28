@@ -83,6 +83,6 @@ class ReviewManagerModel
      */
     function getAllArticleReviews(int $articleID): array{
         $whereStatement = "id_clanku = '$articleID'";
-        return  $this->databaseManager->selectFromTable(TABLE_REVIEWS, $whereStatement, "datum DESC");
+        return  $this->databaseManager->selectFromTable(TABLE_REVIEWS, $whereStatement, "id_recenzenta ASC");
     }
 }

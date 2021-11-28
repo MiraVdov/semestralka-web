@@ -87,7 +87,7 @@
                                 <textarea class="editor" style="height: 9.7vw; width: 100%; background-color: white;" name="content"></textarea>
                             </div>
 
-                            <div style="text-align: center;"><button type="submit" class="btn btn-success" name="action" value="saveReview">Uložit recenzi</button>
+                            <div style="text-align: center;"><button type="submit" class="btn btn-success" name="action" value="saveReview" onclick="alert('Recenze úspěšně vytvořena.')">Uložit recenzi</button>
                                 <button type="button" class="btn btn-danger ms-3" name="action" value="cancelReview" onclick="cancelReviewForm({{ index }})">Zrušit</button>
                                 <input type="hidden" name="articleID" value="{{ article.id_clanku }}">
                             </div>
