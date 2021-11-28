@@ -29,8 +29,7 @@ class ArticlesManagerModel
      * @param int $userID
      * @return array
      */
-    public function getAllUsersArticles(int $userID){
-
+    public function getAllUsersArticles(int $userID): array{
         return $this->databaseManager->selectFromTable(TABLE_ARTICLES, "id_uzivatel=$userID", "datum DESC");
     }
 
@@ -41,13 +40,18 @@ class ArticlesManagerModel
      * @return bool
      */
     public function createNewArticle(string $name, string $content, int $userID):bool{
+        $name = htmlspecialchars($name);
+        $content = htmlspecialchars($content);
+
         $date = date('Y-m-d H:i:s');
 
         $file_tmp = $_FILES['pdf_file']['tmp_name']; // cesta k souboru
         $file = addslashes(file_get_contents($file_tmp));
 
         $insertStatement = "obsah, datum, id_uzivatel, nadpis, pdf, id_stav";
-        $insertValues = "'$content', '$date','$userID', '$name', '$file', '3'";
+        $insertValues = "'$content', '$date', '$userID', '$name', '$file', '3'";
+        //$insertValues = ":content, '$date', '$userID', ':name', '$file', '3'";
+
         return $this->databaseManager->insertIntoTable(TABLE_ARTICLES, $insertStatement, $insertValues);
     }
 

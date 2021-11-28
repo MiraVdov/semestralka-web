@@ -33,6 +33,13 @@ class UserManagerModel
      * @return bool - podarilo se uzivatele pridat do databaze
      */
     public function registerNewUser(string $login, string $fullName, string $phoneNumber, string $email, string $password, int $pravo = 4, int $banned = 0):bool{
+        $login = htmlspecialchars($login);
+        $fullName = htmlspecialchars($fullName);
+        $phoneNumber = htmlspecialchars($phoneNumber);
+        $email = htmlspecialchars($email);
+        $password = htmlspecialchars($password);
+        $password = password_hash($password, PASSWORD_BCRYPT);
+
         $insertStatement = "id_pravo, jmeno, login, heslo, email, cislo, isBanned";
         $insertValues = "'$pravo', '$fullName', '$login', '$password', '$email', '$phoneNumber', '$banned'";
 
@@ -54,13 +61,16 @@ class UserManagerModel
      * @return bool - true - uzivatel uspesne prihlasen, false - uziatel neexistuje
      */
     public function loginUser(string $login, string $password):bool{
-        $where = "login='$login' AND heslo='$password'";
+        $where = "login='$login'";
         $user = $this->databaseManager->selectFromTable(TABLE_USER,$where);
 
-        if (count($user) > 0 && isset($user[0]["isBanned"]) && $user[0]["isBanned"] == 0){
+        if (count($user) > 0 && password_verify($password, $user[0]["heslo"]) && isset($user[0]["isBanned"]) && $user[0]["isBanned"] == 0){
             // return the first one
             $this->session->setSession($user[0]);
             return true;
+        }
+        else if (!password_verify($password, $user[0]["heslo"])){
+            return false;
         }
         else{
             if (isset($user[0]["isBanned"]))$GLOBALS["isBanned"] = 1;
@@ -73,10 +83,6 @@ class UserManagerModel
      */
     public function logoutUser(){
         $this->session->removeSession();
-    }
-
-    public function updateUser(int $userID, int $rightID, string $name, string $login, string $password, string $email, string $number, int $banned = 0){
-
     }
 
     /**
