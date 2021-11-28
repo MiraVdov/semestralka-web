@@ -95,7 +95,7 @@
                                     {% endif %}
                                     <td style="text-align:center;">
                                         <form method="post">
-                                            <button class="btn btn-danger btnRemoveReviewer" type="submit" name="action" value="removeReviewer"><img src="images/xMark.png" style="width:11px; "></button>
+                                            <button class="btn btn-danger btnRemoveReviewer" type="submit" name="action" value="removeReviewer" onclick="alert('Recenzent odebrán od daného příspěvku!')"><img src="images/xMark.png" style="width:11px; "></button>
                                             <input type="hidden" name="reviewerID" value="{{ articleReviewers[articleNumber][reviewerNumber].id_uzivatel}}">
                                             <input type="hidden" name="articleID" value="{{ review.id_clanku }}">
                                         </form>

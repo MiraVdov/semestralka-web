@@ -44,6 +44,7 @@
 
         /**
          * @param string $table - nazev tabulky
+         * @param string $table - nazev tabulky
          * @param string $whereStatement - dotaz na urcite vlastnosti
          * @param string $orderBy - poradi
          * @return array - vraci pole vysledku hledani
@@ -172,12 +173,30 @@
             return false;
         }
 
+
+        function deleteReviews(int $reviewerID, int $reviewID = -1): bool{
+            if ($reviewID == -1){
+                $query = "DELETE FROM ". TABLE_REVIEWS ." WHERE id_recenzenta = :reviewerID";
+                $result = $this->pdo->prepare($query);
+                $result->bindValue(":reviewerID", $reviewerID);
+            }
+            else{ // byl zadán reviewerID
+                $query = "DELETE FROM ". TABLE_REVIEWS ." WHERE id_clanku = :articleID AND id_recenzenta = :reviewerID";
+                $result = $this->pdo->prepare($query);
+                $result->bindValue(":articleID", $reviewID);
+                $result->bindValue(":reviewerID", $reviewerID);
+            }
+
+            if ($result->execute()) return true;
+            return false;
+        }
+
         /**
          * @param int $userID
          * @return array
          */
         function getAllUsersArticles(int $userID):array{
-            $query = "SELECT * FROM ". TABLE_ARTICLES ." WHERE id_uzivatel = :userID";
+            $query = "SELECT * FROM ". TABLE_ARTICLES ." WHERE id_uzivatel = :userID ORDER BY datum DESC";
             $result = $this->pdo->prepare($query);
             $result->bindValue(":userID", $userID);
 
@@ -224,9 +243,9 @@
          * Metoda slouzi k zakazani nebo povoleni clanku
          * @param int $articleID
          * @param int $status
-         * @return array|false
+         * @return true|false
          */
-        function updateArticleStatus(int $articleID, int $status){
+        function updateArticleStatus(int $articleID, int $status): bool{
             $whereStatement = "id_clanku = :articleID";
             $query = "UPDATE ". TABLE_ARTICLES. " SET id_stav = :status WHERE $whereStatement";
             $result = $this->pdo->prepare($query);
@@ -306,6 +325,116 @@
 
             $result = $this->pdo->prepare($query);
             $result->bindValue(":status", $status);
+            $result->bindValue(":userID", $userID);
+
+            if ($result->execute()) return true;
+            return false;
+        }
+
+        /**
+         * Metoda slouzi k zaregistrovani noveho uzivatele
+         * @param string $login
+         * @param string $fullName
+         * @param string $phoneNumber
+         * @param string $email
+         * @param string $password
+         * @param int $pravo
+         * @param int $banned
+         * @return bool
+         */
+        function registerNewUser(string $login, string $fullName, string $phoneNumber, string $email, string $password, int $pravo, int $banned):bool{
+            $insertStatement = "id_pravo, jmeno, login, heslo, email, cislo, isBanned";
+            $insertValues = ":right, :fullName, :login, :password, :email, :phoneNumber, :banned";
+
+            $query = "INSERT INTO ". TABLE_USER . " ($insertStatement) VALUES ($insertValues)";
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":right", $pravo);
+            $result->bindValue(":fullName", $fullName);
+            $result->bindValue(":login", $login);
+            $result->bindValue(":password", $password);
+            $result->bindValue(":email", $email);
+            $result->bindValue(":phoneNumber", $phoneNumber);
+            $result->bindValue(":banned", $banned);
+
+            if ($result->execute()) return true;
+            return false;
+        }
+
+        /**
+         * Metoda vraci hledany clanek
+         * @param $articleID
+         * @return array|false
+         */
+        function selectArticles($articleID):array{
+            $whereStatement = "id_clanku = :articleID";
+            $query = "SELECT * FROM ". TABLE_ARTICLES. " WHERE $whereStatement";
+
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":articleID", $articleID);
+
+            if ($result->execute())return $result->fetchAll();
+            return [];
+        }
+
+        /**
+         * Metoda slouzi ke zmene role uzivatele
+         * @param int $userID
+         * @param $rightID
+         * @return bool
+         */
+        function changeUserRole(int $userID, $rightID): bool{
+            $updateStatementWithValues = "id_pravo = :rightID";
+            $whereStatement = "id_uzivatel = :userID";
+            $query = "UPDATE ". TABLE_USER . " SET $updateStatementWithValues WHERE $whereStatement";
+
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":rightID", $rightID);
+            $result->bindValue(":userID", $userID);
+
+            if ($result->execute()) return true;
+            return false;
+        }
+
+        /**
+         * Metoda vraci data vybraneho uzivatele
+         * @param $userID
+         * @return array|false
+         */
+        function selectUser($userID){
+            $whereStatement = "id_uzivatel = :userID";
+            $query = "SELECT * FROM ". TABLE_USER. " WHERE $whereStatement";
+
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":userID", $userID);
+
+            if ($result->execute())return $result->fetchAll();
+            return [];
+        }
+
+        /**
+         * Metoda vraci recenze vybraneho uzivatele
+         * @param $reviewerID
+         * @return array|false
+         */
+        function selectReview($reviewerID){
+            $whereStatement = "id_recenzenta = :reviewerID";
+            $query = "SELECT * FROM ". TABLE_REVIEWS. " WHERE $whereStatement";
+
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":reviewerID", $reviewerID);
+
+            if ($result->execute())return $result->fetchAll();
+            return [];
+        }
+
+        /**
+         * Metoda slouzi k vymazani vsech uzivatelovych clanku
+         * @param int $userID
+         * @return bool
+         */
+        function deleteUsersArticles(int $userID): bool{
+            $query = "DELETE FROM ". TABLE_ARTICLES ." WHERE id_uzivatel = :userID";
+            $result = $this->pdo->prepare($query);
             $result->bindValue(":userID", $userID);
 
             if ($result->execute()) return true;

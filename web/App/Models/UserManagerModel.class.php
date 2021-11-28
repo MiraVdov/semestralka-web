@@ -39,11 +39,10 @@ class UserManagerModel
         $email = htmlspecialchars($email);
         $password = htmlspecialchars($password);
         $password = password_hash($password, PASSWORD_BCRYPT);
+        $pravo = htmlspecialchars($pravo);
+        $banned = htmlspecialchars($banned);
 
-        $insertStatement = "id_pravo, jmeno, login, heslo, email, cislo, isBanned";
-        $insertValues = "'$pravo', '$fullName', '$login', '$password', '$email', '$phoneNumber', '$banned'";
-
-        return $this->databaseManager->insertIntoTable(TABLE_USER, $insertStatement, $insertValues);
+        return $this->databaseManager->registerNewUser($login, $fullName, $phoneNumber, $email, $password, $pravo, $banned);
     }
 
     /**
@@ -92,7 +91,7 @@ class UserManagerModel
      */
     public function banUser($userID):bool{
         $userID = htmlspecialchars($userID);
-        $this->deleteAllUsersOccurence($userID);
+        $this->deleteAllUsersOccurences($userID);
 
         return $this->databaseManager->banUnbanUser($userID, 1);
     }
@@ -159,9 +158,9 @@ class UserManagerModel
      * @param int $articleID
      * @return array
      */
-    function getAllArticleReviewers(int $articleID){
-        $whereStatement = "id_clanku = '$articleID'";
-        $reviews = $this->databaseManager->selectFromTable(TABLE_REVIEWS, $whereStatement, "id_recenzenta ASC");
+    function getAllArticleReviewers(int $articleID): array{
+        $articleID = htmlspecialchars($articleID);
+        $reviews = $this->databaseManager->getAllArticleReviews($articleID);
         $articleReviewers = array();
         $index = 0;
 
@@ -179,10 +178,10 @@ class UserManagerModel
      * @param int $articleID
      * @return array
      */
-    function getAllPossibleReviewers(int $articleID){
-        $whereStatement = "id_clanku = '$articleID'";
+    function getAllPossibleReviewers(int $articleID): array{
+        $articleID = htmlspecialchars($articleID);
         $usedReviewers = array();
-        $reviews = $this->databaseManager->selectFromTable(TABLE_REVIEWS, $whereStatement);
+        $reviews = $this->databaseManager->getAllArticleReviews($articleID);
 
         for ($i = 0; $i < sizeof($reviews); $i++){
             $usedReviewers[$i] = $reviews[$i]["id_recenzenta"];
@@ -205,26 +204,34 @@ class UserManagerModel
     /**
      * Metoda odebere uživatele od přiazeného článku
      * @param int $reviewerID
+     * @param $articleID
      * @return bool
      */
-    function removeReviewer(int $reviewerID, $articleID){
-        $whereStatement = "id_recenzenta = '$reviewerID' AND id_clanku = '$articleID'";
-        $article = $this->databaseManager->selectFromTable(TABLE_ARTICLES, "id_clanku = $articleID");
+    function removeReviewer(int $reviewerID, $articleID): bool{
+        $reviewerID = htmlspecialchars($reviewerID);
+        $articleID = htmlspecialchars($articleID);
+
+        $article = $this->databaseManager->selectArticles($articleID);
 
         if ($article[0]["id_stav"] != 3){
-            $insertStatement = "id_stav = '3'";
-            $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatement, "id_clanku = '$articleID'");
+            $this->databaseManager->updateArticleStatus($articleID, 3);
         }
-        return $this->databaseManager->deleteFromTable(TABLE_REVIEWS, $whereStatement);
+        return $this->databaseManager->deleteReviews($reviewerID, $articleID);
     }
 
+    /**
+     * Metoda slouzi ke zmene uzivatelske role
+     * @param int $userID
+     * @param $rightID
+     * @return bool
+     */
     function changeUserRole(int $userID, $rightID): bool{
-        $updateStatementWithValues = "id_pravo = '$rightID'";
-        $whereStatement = "id_uzivatel = '$userID'";
+        $userID = htmlspecialchars($userID);
+        $rightID = htmlspecialchars($rightID);
 
-        $this->deleteAllUsersOccurence($userID);
+        $this->deleteAllUsersOccurences($userID);
 
-        return $this->databaseManager->updateInTable(TABLE_USER, $updateStatementWithValues, $whereStatement);
+        return $this->databaseManager->changeUserRole($userID, $rightID);
     }
 
     /**
@@ -232,19 +239,21 @@ class UserManagerModel
      * If user right was author - method will delete all his articles
      * @param $userID - id uzivatele
      */
-    private function deleteAllUsersOccurence($userID){
-        $user = $this->databaseManager->selectFromTable(TABLE_USER, "id_uzivatel = '$userID'");
-        if ($user[0]["id_pravo"] == 3){
+    private function deleteAllUsersOccurences($userID){
+        $userID = htmlspecialchars($userID);
 
-            $articles = $this->databaseManager->selectFromTable(TABLE_REVIEWS, "id_recenzenta = '$userID'");
+        $user = $this->databaseManager->selectUser($userID);
+        if ($user[0]["id_pravo"] == 3){
+            //$this->databaseManager->de
+            $articles = $this->databaseManager->selectReview($userID);
             foreach ($articles as $article){
                 $articleID = $article["id_clanku"];
-                $this->databaseManager->updateInTable(TABLE_ARTICLES, "id_stav = 3", "id_clanku= '$articleID'");
+                $this->databaseManager->updateArticleStatus($articleID, 3);
             }
-            $this->databaseManager->deleteFromTable(TABLE_REVIEWS, "id_recenzenta = '$userID'");
+            $this->databaseManager->deleteReviews($userID);
 
         }else if ($user[0]["id_pravo"] == 4){
-            $this->databaseManager->deleteFromTable(TABLE_ARTICLES, "id_uzivatel = '$userID'");
+            $this->databaseManager->deleteUsersArticles($userID);
         }
     }
 }
