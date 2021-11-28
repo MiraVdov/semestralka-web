@@ -60,8 +60,9 @@ class UserManagerModel
      * @return bool - true - uzivatel uspesne prihlasen, false - uziatel neexistuje
      */
     public function loginUser(string $login, string $password):bool{
-        $where = "login='$login'";
-        $user = $this->databaseManager->selectFromTable(TABLE_USER,$where);
+        $login = htmlspecialchars($login);
+        $password = htmlspecialchars($password);
+        $user = $this->databaseManager->selectUserByLogin($login);
 
         if (count($user) > 0 && password_verify($password, $user[0]["heslo"]) && isset($user[0]["isBanned"]) && $user[0]["isBanned"] == 0){
             // return the first one

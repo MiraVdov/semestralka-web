@@ -440,4 +440,20 @@
             if ($result->execute()) return true;
             return false;
         }
+
+        /**
+         * Metoda vraci uzivatele s danym loginem nebo prazdne pole
+         * @param $login
+         * @return array
+         */
+        function selectUserByLogin($login):array{
+            $whereStatement = "login = :login";
+            $query = "SELECT * FROM ". TABLE_USER. " WHERE $whereStatement";
+
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":login", $login);
+
+            if ($result->execute())return $result->fetchAll();
+            return [];
+        }
     }
