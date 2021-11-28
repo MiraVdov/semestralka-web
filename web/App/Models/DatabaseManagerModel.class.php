@@ -233,8 +233,8 @@
             $result->bindValue(":status", $status);
             $result->bindValue(":articleID", $articleID);
 
-            if ($result->execute())return $result->fetchAll();
-            return [];
+            if ($result->execute())return true;
+            return false;
         }
 
         /**
@@ -295,4 +295,20 @@
             return false;
         }
 
+        /**
+         * Metoda slouzi k banovani nebo odbanovani uzivatele
+         * @param int $userID
+         * @param int $status
+         * @return bool
+         */
+        function banUnbanUser(int $userID, int $status): bool{
+            $query = "UPDATE ". TABLE_USER . " SET isBanned= :status WHERE id_uzivatel=:userID";
+
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":status", $status);
+            $result->bindValue(":userID", $userID);
+
+            if ($result->execute()) return true;
+            return false;
+        }
     }

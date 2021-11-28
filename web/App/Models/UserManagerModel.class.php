@@ -91,9 +91,10 @@ class UserManagerModel
      * @return bool - podarilo se zabanovat uzivatele true/false
      */
     public function banUser($userID):bool{
+        $userID = htmlspecialchars($userID);
         $this->deleteAllUsersOccurence($userID);
 
-        return $this->databaseManager->updateInTable(TABLE_USER, "isBanned=1", "id_uzivatel=$userID");
+        return $this->databaseManager->banUnbanUser($userID, 1);
     }
 
     /**
@@ -102,7 +103,9 @@ class UserManagerModel
      * @return bool - podarilo se zabanovat uzivatele - true/false
      */
     public function unBanUser($userID):bool{
-        return $this->databaseManager->updateInTable(TABLE_USER, "isBanned=0", "id_uzivatel=$userID");
+        $userID = htmlspecialchars($userID);
+
+        return $this->databaseManager->banUnbanUser($userID, 0);
     }
 
     /**
