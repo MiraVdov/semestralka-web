@@ -49,7 +49,9 @@ class MyArticlesController implements IController
             if (isset($_POST["action"]) ){
                 if (isset($_POST["title"]) && $_POST["title"] != "" && $_POST["action"] == "createNewArticle"){
                     if (!empty($_FILES["pdf_file"]["name"]) && $_FILES["pdf_file"]["error"] == 0){
-                        $this->articlesManager->createNewArticle($_POST["title"], strip_tags($_POST["abstract"]), $tplData["user"]["id_uzivatel"]);
+                        if (!$this->articlesManager->createNewArticle($_POST["title"], strip_tags($_POST["abstract"]), $tplData["user"]["id_uzivatel"])){
+                            echo "<script>setTimeout(() => {alert('Soubor není pdf!') }, 200)</script>";
+                        }else echo "<script>setTimeout(() => {alert('Článek vytvořen.') }, 200)</script>";
                     }
                 } // upravení existujícího článku
                 elseif (isset($_POST["titleEdit"]) && $_POST["titleEdit"] != "" && $_POST["action"] == "editArticle"){

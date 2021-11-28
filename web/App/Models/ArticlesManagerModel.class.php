@@ -52,6 +52,7 @@ class ArticlesManagerModel
         $insertValues = "'$content', '$date', '$userID', '$name', '$file', '3'";
         //$insertValues = ":content, '$date', '$userID', ':name', '$file', '3'";
 
+        if ($_FILES["pdf_file"]["type"] != "application/pdf")return false;
         return $this->databaseManager->insertIntoTable(TABLE_ARTICLES, $insertStatement, $insertValues);
     }
 
