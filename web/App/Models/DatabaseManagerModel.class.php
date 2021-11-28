@@ -183,15 +183,116 @@
 
             if ($result->execute())return $result->fetchAll();
             return [];
-
         }
 
-        function getAllAssignedArticles(int $articleID){
-            $query = "SELECT * FROM ". TABLE_ARTICLES ." WHERE id_clanku = :articleID";
+        /**
+         * Metoda slouzi k ziskani vsech prirazenych clanku pro zadaneho autora
+         * @param int $userID
+         * @return array
+         */
+        function getAllAssignedArticles(int $userID): array{
+            $orderBy = TABLE_ARTICLES .".datum DESC";
+            $whereStatement = TABLE_REVIEWS .".id_recenzenta = :userID";
+            $inner = TABLE_REVIEWS. " ON ". TABLE_ARTICLES . ".id_clanku = " . TABLE_REVIEWS . ".id_clanku";
+            $m = TABLE_ARTICLES;
+            $selection = "$m.id_clanku, $m.obsah, $m.datum, $m.id_uzivatel, $m.nadpis, $m.pdf, $m.id_stav";
+
+            $query = "SELECT $selection FROM ". TABLE_ARTICLES ." INNER JOIN $inner WHERE $whereStatement ORDER BY $orderBy";
             $result = $this->pdo->prepare($query);
+            $result->bindValue(":userID", $userID);
+
+            if ($result->execute())return $result->fetchAll();
+            return [];
+        }
+
+        /**
+         * @param int $articleID
+         * @return array
+         */
+        function getAllArticleReviews(int $articleID): array{
+            $whereStatement = "id_clanku = :articleID";
+            $query = "SELECT * FROM ". TABLE_REVIEWS. " WHERE $whereStatement ORDER BY id_recenzenta ASC";
+
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":articleID", $articleID);
+
+            if ($result->execute())return $result->fetchAll();
+            return [];
+        }
+
+        /**
+         * Metoda slouzi k zakazani nebo povoleni clanku
+         * @param int $articleID
+         * @param int $status
+         * @return array|false
+         */
+        function updateArticleStatus(int $articleID, int $status){
+            $whereStatement = "id_clanku = :articleID";
+            $query = "UPDATE ". TABLE_ARTICLES. " SET id_stav = :status WHERE $whereStatement";
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":status", $status);
+            $result->bindValue(":articleID", $articleID);
+
+            if ($result->execute())return $result->fetchAll();
+            return [];
+        }
+
+        /**
+         * Metoda slouzi k aktualizovani recenze
+         * @param string $content
+         * @param int $articleID
+         * @param int $contentValue
+         * @param int $formalValue
+         * @param int $newestValue
+         * @param int $languageValue
+         * @param int $userID
+         * @param $date
+         * @param $reviewValue
+         * @return bool
+         */
+        function updateReview(string $content, int $articleID, int $contentValue, int $formalValue, int $newestValue, int $languageValue, int $userID, $date, $reviewValue) :bool {
+            $insertStatementWithValues = "datum=:date, obsah=:content, celkem=:reviewValue, obsahBody=:contentValue, formalnost=:formValue, novost=:newestValue, jazyk=:languageValue, zverejnena='1'";
+            $whereStatement = "id_clanku=:articleID AND id_recenzenta = :userID";
+
+            $query = "UPDATE ". TABLE_REVIEWS. " SET $insertStatementWithValues WHERE $whereStatement";
+
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":date", $date);
+            $result->bindValue(":content", $content);
+            $result->bindValue(":reviewValue", $reviewValue);
+            $result->bindValue(":contentValue", $contentValue);
+            $result->bindValue(":formValue", $formalValue);
+            $result->bindValue(":newestValue", $newestValue);
+            $result->bindValue(":languageValue", $languageValue);
+
+            $result->bindValue(":articleID", $articleID);
+            $result->bindValue(":userID", $userID);
+
+            if ($result->execute()) return true;
+            return false;
+        }
+
+        /**
+         * Metoda slouzi k vytvoreni recenze
+         * @param $date
+         * @param $content
+         * @param $articleID
+         * @param $reviewerID
+         * @return bool
+         */
+        function createReview($date, $content, $articleID, $reviewerID): bool{
+            $insertStatement = "datum, obsah, id_clanku, id_recenzenta, celkem, obsahBody, formalnost, novost, jazyk, zverejnena";
+            $insertValues = ":date, :content, :articleID, :reviewerID, '0', '0', '0', '0', '0', '0'";
+
+            $query = "INSERT INTO ". TABLE_REVIEWS ." ($insertStatement) VALUES ($insertValues)";
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":content", $content);
+            $result->bindValue(":date", $date);
+            $result->bindValue(":reviewerID", $reviewerID);
             $result->bindValue(":articleID", $articleID);
 
             if ($result->execute()) return true;
             return false;
         }
+
     }

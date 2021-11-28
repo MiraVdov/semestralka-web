@@ -20,7 +20,7 @@ class ArticlesManagerModel
      * Metoda vrací všechny články
      * @return array
      */
-    public function getAllArticles(){
+    public function getAllArticles(): array{
         return $this->databaseManager->selectFromTable(TABLE_ARTICLES, "", "datum DESC");
     }
 
@@ -77,13 +77,8 @@ class ArticlesManagerModel
      * @return array
      */
     function getAllAssignedArticles($userID): array{
-        $orderBy = TABLE_ARTICLES .".datum DESC";
-        $whereStatement = TABLE_REVIEWS .".id_recenzenta = $userID";
-        $inner = TABLE_REVIEWS. " ON ". TABLE_ARTICLES . ".id_clanku = " . TABLE_REVIEWS . ".id_clanku";
-        $m = TABLE_ARTICLES;
-        $selection = "$m.id_clanku, $m.obsah, $m.datum, $m.id_uzivatel, $m.nadpis, $m.pdf, $m.id_stav";
-
-        return $this->databaseManager->selectFromTable(TABLE_ARTICLES, $whereStatement, $orderBy, $selection,$inner);
+        $userID = htmlspecialchars($userID);
+        return $this->databaseManager->getAllAssignedArticles($userID);
     }
 
     /**

@@ -43,7 +43,7 @@ class ReviewsController implements IController
         if ($tplData["user"] != null){
             if (isset($_POST["action"])){
                 if ($_POST["action"] == "addReviewer"){
-                    $this->reviewManager->createReview("", $_POST["articleID"], $_POST["reviewer"], 0, 0, 0, 0, 0);
+                    $this->reviewManager->createReview("", $_POST["articleID"], $_POST["reviewer"]);
                 }
                 else if ($_POST["action"] == "removeReviewer"){
                     $this->um->removeReviewer($_POST["reviewerID"], $_POST["articleID"]);
@@ -63,9 +63,6 @@ class ReviewsController implements IController
                 $tplData["articleReviews"][$i] = $this->reviewManager->getAllArticleReviews($tplData["allArticles"][$i]["id_clanku"]);
                 $tplData["articleReviewers"][$i] = $this->um->getAllArticleReviewers($tplData["allArticles"][$i]["id_clanku"]);
             }
-
-
-
         }
         Helper::loginHelp($this->um);
 

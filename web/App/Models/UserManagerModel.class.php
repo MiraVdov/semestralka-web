@@ -69,7 +69,7 @@ class UserManagerModel
             $this->session->setSession($user[0]);
             return true;
         }
-        else if (!password_verify($password, $user[0]["heslo"])){
+        else if (count($user) > 0 && !password_verify($password, $user[0]["heslo"])){
             return false;
         }
         else{

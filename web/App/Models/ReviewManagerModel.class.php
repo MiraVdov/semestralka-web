@@ -21,19 +21,15 @@ class ReviewManagerModel
      * @param string $content
      * @param int $articleID
      * @param int $reviewerID
-     * @param int $reviewValue
-     * @param int $contentValue
-     * @param int $formalValue
-     * @param int $newestValue
-     * @param int $languageValue
      * @return bool
      */
-    function createReview(string $content, int $articleID, int $reviewerID, int $reviewValue, int $contentValue, int $formalValue, int $newestValue, int $languageValue){
+    function createReview(string $content, int $articleID, int $reviewerID): bool{
         $date = date('Y-m-d H:i:s');
-        $insertStatement = "datum, obsah, id_clanku, id_recenzenta, celkem, obsahBody, formalnost, novost, jazyk, zverejnena";
-        $insertValues = "'$date', '$content', '$articleID', '$reviewerID', '$reviewValue', '$contentValue', '$formalValue', '$newestValue', '$languageValue', '0'";
+        $content = htmlspecialchars($content);
+        $articleID = htmlspecialchars($articleID);
+        $reviewerID = htmlspecialchars($reviewerID);
 
-        return $this->databaseManager->insertIntoTable(TABLE_REVIEWS,$insertStatement, $insertValues);
+        return $this->databaseManager->createReview($date, $content, $articleID, $reviewerID);
     }
 
     /**
@@ -47,37 +43,34 @@ class ReviewManagerModel
      * @param int $userID
      * @return bool
      */
-    function updateReview(string $content, int $articleID, int $contentValue, int $formalValue, int $newestValue, int $languageValue, int $userID){
+    function updateReview(string $content, int $articleID, int $contentValue, int $formalValue, int $newestValue, int $languageValue, int $userID): bool{
         $date = date('Y-m-d H:i:s');
-        $reviewValue = ($contentValue + $formalValue + $newestValue + $languageValue)/4;
+        $content = htmlspecialchars($content);
+        $articleID = htmlspecialchars($articleID);
+        $contentValue = htmlspecialchars($contentValue);
+        $formalValue = htmlspecialchars($formalValue);
+        $newestValue = htmlspecialchars($newestValue);
+        $languageValue = htmlspecialchars($languageValue);
+        $userID = htmlspecialchars($userID);
+        $reviewValue = (intval($contentValue) + intval($formalValue) + intval($newestValue) + intval($languageValue))/4;
 
-        $insertStatementWithValues = "datum='$date', obsah='$content', celkem='$reviewValue', obsahBody='$contentValue', formalnost='$formalValue', novost='$newestValue', jazyk='$languageValue', zverejnena='1'";
-        $whereStatement = "id_clanku='$articleID' AND id_recenzenta = '$userID'";
-
-        $insertStatement = "id_stav = '3'";
-        $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatement, "id_clanku = '$articleID'");
-
-        return $this->databaseManager->updateInTable(TABLE_REVIEWS, $insertStatementWithValues, $whereStatement);
+        return $this->databaseManager->updateReview($content, $articleID, $contentValue, $formalValue, $newestValue, $languageValue, $userID, $date, $reviewValue);
     }
 
     /**
      * @param $articleID
      */
     function acceptArticle($articleID){
-        $insertStatementWithValue = "id_stav = '2'";
-        $whereStatement = "id_clanku = '$articleID'";
-
-        $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatementWithValue, $whereStatement);
+        $articleID = htmlspecialchars($articleID);
+        $this->databaseManager->updateArticleStatus($articleID, 2);
     }
 
     /**
      * @param $articleID
      */
     function rejectArticle($articleID){
-        $insertStatementWithValue = "id_stav = '1'";
-        $whereStatement = "id_clanku = '$articleID'";
-
-        $this->databaseManager->updateInTable(TABLE_ARTICLES, $insertStatementWithValue, $whereStatement);
+        $articleID = htmlspecialchars($articleID);
+        $this->databaseManager->updateArticleStatus($articleID, 1);
     }
 
     /**
@@ -85,7 +78,7 @@ class ReviewManagerModel
      * @return array
      */
     function getAllArticleReviews(int $articleID): array{
-        $whereStatement = "id_clanku = '$articleID'";
-        return  $this->databaseManager->selectFromTable(TABLE_REVIEWS, $whereStatement, "id_recenzenta ASC");
+        $articleID = htmlspecialchars($articleID);
+        return $this->databaseManager->getAllArticleReviews($articleID);
     }
 }
