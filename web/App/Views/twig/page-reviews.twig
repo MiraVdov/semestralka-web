@@ -55,9 +55,9 @@
                                     {% endfor %}
                                 </select>
                                 {% if (articleReviews[articleNumber] | length) < 3 %}
-                                    <button class="btn btn-success" type="submit" id="button-addon2" name="action" value="addReviewer">Přidat</button>
+                                    <button class="btn btn-success" type="submit" id="button-addon2" name="action" value="addReviewer" onclick="alert('Recenzent úspěšně přiřazen.')">Přidat</button>
                                 {% else %}
-                                    <button disabled class="btn btn-success" type="submit" id="button-addon2" name="action" value="addReviewer">Přidat</button>
+                                    <button disabled class="btn btn-success" type="submit" id="button-addon2" name="action" value="addReviewer" onclick="alert('Recenzent úspěšně přiřazen.')">Přidat</button>
                                 {% endif %}
 
                                 <input type="hidden" name="articleID" value="{{ article.id_clanku }}">

@@ -6,7 +6,7 @@ function banUnbanUser(userID, action, index) {
 
     if (result == true) {
         $.post(
-            "App/models/banUnbanUser-ajax.php",
+            "App/models/phpScripts/banUnbanUser-ajax.php",
 
             {
                 "userID": userID,
@@ -59,7 +59,7 @@ function changeRight(index, userID){
     var result = confirm("Jste si jisti, že chcete danému uživateli změnit roli?");
     if (result == true){
         $.post(
-            "App/models/rightChange-ajax.php",
+            "App/models/phpScripts/rightChange-ajax.php",
 
             {
                 "userID" : userID,

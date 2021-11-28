@@ -85,16 +85,8 @@ class UserManagerModel
      * @return bool - podarilo se zabanovat uzivatele true/false
      */
     public function banUser($userID):bool{
-        $user = $this->databaseManager->selectFromTable(TABLE_USER, "id_uzivatel = '$userID'");
-        if ($user[0]["id_pravo"] == 3){
-            $articles = $this->databaseManager->selectFromTable(TABLE_REVIEWS, "id_recenzenta = '$userID'");
-            foreach ($articles as $article){
-                $articleID = $article["id_clanku"];
-                $this->databaseManager->updateInTable(TABLE_ARTICLES, "id_stav = 3", "id_clanku= '$articleID'");
-            }
-        }else if ($user[0]["id_pravo"] == 4){
-            $this->databaseManager->deleteFromTable(TABLE_ARTICLES, "id_uzivatel = '$userID'");
-        }
+        $this->deleteAllUsersOccurence($userID);
+
         return $this->databaseManager->updateInTable(TABLE_USER, "isBanned=1", "id_uzivatel=$userID");
     }
 
@@ -220,6 +212,30 @@ class UserManagerModel
     function changeUserRole(int $userID, $rightID): bool{
         $updateStatementWithValues = "id_pravo = '$rightID'";
         $whereStatement = "id_uzivatel = '$userID'";
+
+        $this->deleteAllUsersOccurence($userID);
+
         return $this->databaseManager->updateInTable(TABLE_USER, $updateStatementWithValues, $whereStatement);
+    }
+
+    /**
+     * If user right was reviewer - method will delete all his reviews and their article status will be set to 3
+     * If user right was author - method will delete all his articles
+     * @param $userID - id uzivatele
+     */
+    private function deleteAllUsersOccurence($userID){
+        $user = $this->databaseManager->selectFromTable(TABLE_USER, "id_uzivatel = '$userID'");
+        if ($user[0]["id_pravo"] == 3){
+
+            $articles = $this->databaseManager->selectFromTable(TABLE_REVIEWS, "id_recenzenta = '$userID'");
+            foreach ($articles as $article){
+                $articleID = $article["id_clanku"];
+                $this->databaseManager->updateInTable(TABLE_ARTICLES, "id_stav = 3", "id_clanku= '$articleID'");
+            }
+            $this->databaseManager->deleteFromTable(TABLE_REVIEWS, "id_recenzenta = '$userID'");
+
+        }else if ($user[0]["id_pravo"] == 4){
+            $this->databaseManager->deleteFromTable(TABLE_ARTICLES, "id_uzivatel = '$userID'");
+        }
     }
 }

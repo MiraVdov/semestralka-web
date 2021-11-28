@@ -45,7 +45,7 @@ function deleteArticle(articleID) {
 
     if (result){
         $.post(
-            "App/models/deleteArticle-ajax.php",
+            "App/models/phpScripts/deleteArticle-ajax.php",
 
             {
                 "articleID" : articleID
