@@ -311,7 +311,36 @@ h4{
     text-decoration: line-through;
 }
 
+#message{
+    background-color: #f0f8f8;
+    border: solid 1px silver;
+    border-radius: 8px;
+    padding: 2%;
+    color: red;
+}
 
+#message h5{
+    margin-bottom: 2%;
+    color: black;
+}
+
+.valid {
+    color: green;
+}
+
+.valid:before {
+    margin-right: 2%;
+    content: "✔";
+}
+
+.invalid {
+    color: red;
+}
+
+.invalid:before {
+    content: "❌";
+    margin-right: 2%;
+}
 
 @media only screen and (max-width: 993px) {
     .statusAlerts{

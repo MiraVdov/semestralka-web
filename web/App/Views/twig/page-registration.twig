@@ -6,7 +6,7 @@
     {# user isnt logged - show him registration #}
     {% if user == null %}
 
-        <form action="" method="POST">
+        <form action="" method="POST" autocomplete="on">
             <!--Username-->
             <div class="row">
                 <div class="col-md-6 col-sm-12">
@@ -14,11 +14,9 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-username"><i class="fa fa-user"></i></span>
                         <input type="text" class="form-control" name="username" id="username" aria-describedby="username"
-                               placeholder="přezdívka" required>
+                               placeholder="přezdívka" onkeyup="compareLoginName(this);" required>
                     </div>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
+                    <div id="text-login"></div>
                     <!--Full name-->
                     <label for="fullName" class="form-label">Celé jméno:</label>
                     <div class="input-group mb-3">
@@ -31,26 +29,28 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-telephone"><i class="fa fa-phone"></i></span>
                         <input type="tel" class="form-control" name="telephone" id="telephone" aria-describedby="telephone"
-                               placeholder="123 456 789" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" required>
+                               placeholder="123 456 789" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" onkeyup="numberHelp(this)" required>
                     </div>
                     <p id="phoneHelp">Formát: 123 456 789</p>
-                </div>
-                <div class="col-md-6 col-sm-12">
+
                     <!--Email-->
                     <label for="email" class="form-label">Emailová adresa:</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-email">@</span>
                         <input type="email" class="form-control" name="email" id="email" aria-describedby="email"
-                               placeholder="e-mail">
+                               placeholder="e-mail" required>
                     </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+
                     <!--password-->
                     <label for="password" class="form-label">Heslo:</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-password"><i class="fa fa-lock"></i></span>
                         <input name="password" type="password" value="" class="input form-control" id="passwordRegistration"
                                placeholder="password" aria-label="password"
-                               aria-describedby="basic-addon1" required/>
-                        <span class="input-group-text" onmousedown="password_show_hide2();" onmouseup="password_show_hide2();">
+                               aria-describedby="basic-addon1" onkeyup="comparePasswords()" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Heslo Musí obsahovat alespoň jedno číslo, jedno malé písmeno, jedno velké písmeno a musí být 8 znaků dlouhé!" required/>
+                        <span class="input-group-text" onmousedown="password_show_hide2();" onmouseup="password_show_hide2();" >
                               <i class="fa fa-eye-slash" id="show_eye2"></i>
                               <i class="fa fa-eye d-none" id="hide_eye2"></i>
                             </span>
@@ -59,8 +59,17 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-password2"><i class="fa fa-lock"></i></span>
                         <input type="password" name="password2" class="form-control" id="password2" aria-describedby="password2"
-                               placeholder="password" required>
+                               placeholder="password" onkeyup="comparePasswords()" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Heslo usí obsahovat alespoň jedno číslo, jedno malé písmeno, jedno velké písmeno a musí být 8 znaků dlouhé!" required>
                     </div>
+                    <div id="message">
+                        <h5>Heslo musí obsahovat:</h5>
+                        <p id="letter" class="invalid"><b>Malé</b> písmeno</p>
+                        <p id="capital" class="invalid"><b>Velké </b>písmeno</p>
+                        <p id="number" class="invalid"><b>Číslo</b></p>
+                        <p id="length" class="invalid">Minimálně <b>8 znaků</b></p>
+                        <div id="password-text" class="invalid">Hesla se neshodují!</div>
+                    </div>
+
                 </div>
             </div>
             <div class="row">
@@ -69,7 +78,7 @@
             </div>
             <div class="row mx-auto" id="formSubmit">
                 <!--Submit-->
-                <button type="submit" class="btn btn-primary" name="action" value="registration">Registrovat</button>
+                <button type="submit" class="btn btn-primary" name="action" value="registration" id="registrationID">Registrovat</button>
             </div>
         </form>
     {# user is logged -> he cant register - dont show him#}
@@ -83,4 +92,5 @@
 {# my scripts #}
 {% block myJS %}
     <script src="app/Views/js/login-registration.js"></script>
+    <script src="app/Views/js/registration.js"></script>
 {% endblock %}
