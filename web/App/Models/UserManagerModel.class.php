@@ -2,6 +2,7 @@
 
 namespace app\Models;
 
+use app\Utils\MyCookies;
 use app\Utils\MySessions;
 
 /**
@@ -270,7 +271,33 @@ class UserManagerModel
         return $this->databaseManager->selectUserByEmail($mail);
     }
 
-    function sendMail(){
+    function sendMail($mail, $userID): bool{
+        $to = htmlspecialchars($mail);
+        $userID = htmlspecialchars($userID);
+        $subject = "Změna hesla";
+        $header = "From: Konference internet věcí";
+        $ran1 = rand(0,9);
+        $ran2 = rand(0,9);
+        $ran3 = rand(0,9);
+        $ran4 = rand(0,9);
+
+        $this->session->addNewSessionValue("ranData", array($ran1, $ran2, $ran3, $ran4));
+        $this->session->addNewSessionValue("userID", $userID);
+
+        $msg = "Kód:\n".$ran1." ".$ran2." ".$ran3." ".$ran4." ";
+        $msg = wordwrap($msg,70);
+
+        return mail($to, $subject, $msg,  $header);
+    }
+
+    function resetPassword($userID, $password){
+        $userID = htmlspecialchars($userID);
+        $password = htmlspecialchars($password);
+        $password = password_hash($password, PASSWORD_BCRYPT);
+        echo $userID;
+        echo $password;
+
+        return $this->databaseManager->updatePassword($userID, $password);
 
     }
 }

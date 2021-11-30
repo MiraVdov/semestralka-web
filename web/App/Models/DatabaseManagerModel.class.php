@@ -472,4 +472,18 @@
             if ($result->execute())return $result->fetchAll();
             return [];
         }
+
+
+        function updatePassword(int $userID, string $password): bool{
+            $updateStatementWithValues = "heslo = :password";
+            $whereStatement = "id_uzivatel = :userID";
+            $query = "UPDATE ". TABLE_USER . " SET $updateStatementWithValues WHERE $whereStatement";
+
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":password", $password);
+            $result->bindValue(":userID", $userID);
+
+            if ($result->execute()) return true;
+            return false;
+        }
     }

@@ -31,11 +31,19 @@ class ForgotPasswordController implements IController
 
         if ($tplData["user"]== null){
             if (isset($_POST["action"]) && $_POST["action"] == "sendMail"){
-                if ($this->um->getUserByEmail($_POST["mail"]) == []){
+                $user = null;
+                if (($user = $this->um->getUserByEmail($_POST["mail"])) == []){
                     echo "<script>setTimeout(() => {alert('Uživatel se zadaným emailem u nás není registrován!') }, 200)</script>";
                 }
                 else {
-                    echo "<script>setTimeout(() => {alert('Odesláno!') }, 200)</script>";
+                    if ($this->um->sendMail($_POST["mail"], $user[0]["id_uzivatel"])){
+                        echo "<script>setTimeout(() => {alert('Odesláno!') }, 200)</script>";
+                        header("Refresh:1; URL=index.php?page=resetPassword");
+                    }
+                    else{
+                        echo "<script>setTimeout(() => {alert('Zadaná email neexistuje!') }, 200)</script>";
+                    }
+
                 }
             }
         }

@@ -46,4 +46,8 @@ class MySessions
     public function removeSession(){
         unset($_SESSION[self::SESSION_ID]);
     }
+
+    public function addNewSessionValue(string $key, $data){
+        $_SESSION[$key] = $data;
+    }
 }

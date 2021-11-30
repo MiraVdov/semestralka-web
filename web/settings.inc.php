@@ -94,4 +94,11 @@ const WEB_PAGES = array(
         "controller_class_name" => app\Controllers\ForgotPasswordController::class,
         "view_name" => "page-forgotPassword.twig",
     ),
+
+    ///stranka resetovani hesla//////
+    "resetPassword" => array(
+        "title" => "resetování hesla",
+        "controller_class_name" => app\Controllers\ResetPasswordController::class,
+        "view_name" => "page-resetPassword.twig",
+    ),
 );
