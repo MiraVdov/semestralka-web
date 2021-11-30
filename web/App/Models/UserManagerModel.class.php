@@ -290,7 +290,13 @@ class UserManagerModel
         return mail($to, $subject, $msg,  $header);
     }
 
-    function resetPassword($userID, $password){
+    /**
+     * Metoda zmeni uzivatelovo heslo
+     * @param $userID
+     * @param $password
+     * @return bool
+     */
+    function resetPassword($userID, $password): bool {
         $userID = htmlspecialchars($userID);
         $password = htmlspecialchars($password);
         $password = password_hash($password, PASSWORD_BCRYPT);

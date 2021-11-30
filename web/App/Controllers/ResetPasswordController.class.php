@@ -29,7 +29,7 @@ class ResetPasswordController implements IController
         $tplData["userRight"] = $this->um->getUserRightInfo();
 
         if ($tplData["user"] == null){
-            if (isset($_SESSION["ranData"]) && isset($_SESSION["userID"])){
+            if (!isset($_SESSION["ranData"]) && isset($_SESSION["userID"])){
                 if (isset($_POST["action"]) &&  $_POST["action"] == "createNewPassword"){
                     if ($this->um->resetPassword($_SESSION["userID"], $_POST["password"])){
                         echo "<script>setTimeout(() => {alert('Heslo úspěšně změněno!') }, 200)</script>";
