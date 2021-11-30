@@ -4,11 +4,50 @@ let num = false;
 let len = false;
 let samePass = false;
 let uniqueLogin = false;
+let fullName = false;
+let email = false;
+let phone = false;
 let registrationBtn;
 
 function checkAllConditions(){
-    if (lc && uc && num && len && samePass && uniqueLogin)registrationBtn.removeAttr("disabled");
+    if (lc && uc && num && len && samePass && uniqueLogin && phone && fullName && email)registrationBtn.removeAttr("disabled");
     else registrationBtn.attr('disabled','disabled');
+}
+
+$(document).ready(function () {
+    $("#fullName").keyup(function(){
+        fullNameCheck(this);
+    });
+
+    $("#email").keyup(function(){
+        emailCheck(this);
+    });
+})
+
+function fullNameCheck(input){
+    if (input.value.trim() == "" || input.value.trim() == " ")fullName = false;
+    else fullName = true;
+    checkAllConditions();
+}
+
+function emailCheck(input){
+    var mailformat = /[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-z]{2,4}/;
+    var mailText = $("#email-text");
+    mailText.empty();
+    mailText.css("margin-top", "-2%");
+
+    if (mailformat.test(input.value)) {
+        email = true;
+        mailText.css("color", "green");
+        mailText.append("Email je vpořádku!");
+    }
+    else{
+        email = false;
+        mailText.css("color", "red");
+        mailText.append("Email nemá správný formát!");
+    }
+
+    checkAllConditions();
 }
 
 let backspace = false;
@@ -23,7 +62,11 @@ function numberHelp(number){
         else backspace = false;
     });
 
-    if (backspace) return;
+    if (backspace){
+        phone = false;
+        checkAllConditions();
+        return;
+    }
 
     for (let i = 0; i < numArray.length; i++) {
         for (let j = 0; j < numArray[i].length; j++) {
@@ -32,14 +75,20 @@ function numberHelp(number){
         }
     }
 
-    if (result.length >= 12)result = result.substring(0,11);
+    if (result.length >= 12){
+        result = result.substring(0,11);
+        phone = true;
+    }else phone = false;
     numInput.val(result);
+
+    checkAllConditions();
 }
 
 function comparePasswords(){
     let password1 = $("#passwordRegistration");
     let password2 = $("#password2");
     let outputEl = $("#password-text");
+
 
     outputEl.empty();
 
@@ -121,6 +170,8 @@ $(document).ready(function () {
     let length = document.getElementById("length");
 
     myInput.onkeyup = function() {
+        comparePasswords();
+
         let lowerCaseLetters = /[a-z]/g;
         if(myInput.value.match(lowerCaseLetters)) {
             letter.classList.remove("invalid");
