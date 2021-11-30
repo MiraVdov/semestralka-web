@@ -18,6 +18,12 @@
 </head>
 
 <body>
+
+{# login form #}
+{% block login %}
+    {% include("login.twig") %}
+{% endblock %}
+<div id="tmpBody">
 <!--Title-->
 <div class="container-fluid text-center align-self-center" id="title">
     <h1>Konference internet věcí</h1>
@@ -26,11 +32,6 @@
 {# menu #}
 {% block menu %}
     {% include("menu.twig") %}
-{% endblock %}
-
-{# login form #}
-{% block login %}
-    {% include("login.twig") %}
 {% endblock %}
 
 {# alerts #}
@@ -98,6 +99,6 @@
 {# my scripts #}
 {% block myJS %}
 {% endblock %}
-
+</div>
 </body>
 </html>

@@ -1,12 +1,17 @@
 //funkce slouzi  zobrazeni loginu
 $(document).ready(function () {
+    let tmpBody = $("#tmpBody");
+    tmpBody.removeAttr("id");
+
     $("#btnLogin, #loginFade").click(function () {
         $("#loginForm").fadeIn();
+        tmpBody.attr("id", "tmpBody")
     });
 
     // funkce slouzi k zavreni loginu
     $("#closeButton").click(function () {
         $("#loginForm").fadeOut();
+        tmpBody.removeAttr("id");
     });
 });
 

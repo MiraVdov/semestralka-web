@@ -83,7 +83,7 @@ footer{
     width: 80%;
     margin:auto;
     margin-top: 1%;
-    z-index: 0;
+    z-index: -1;
 }
 
 h3{
@@ -136,6 +136,12 @@ h2{
     transform-origin:0 50%;
 }
 
+#tmpBody{
+    background: #d2eadb;
+    opacity: 50%;
+    transition-duration: 1s;
+}
+
 #loginForm{
     border: solid 2px silver;
     width: 25%;
@@ -143,11 +149,12 @@ h2{
     background-color: white;
     padding: 2%;
     border-radius: 15px;
+    top: 25%;
     left: 50%;
     right: 50%;
     transform: translate(-50%, 0%) ;
     display: none;
-    z-index: 1;
+    z-index: 2;
 }
 
 #closeButton{
