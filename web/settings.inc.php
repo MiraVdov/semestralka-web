@@ -87,4 +87,11 @@ const WEB_PAGES = array(
         "controller_class_name" => app\Controllers\ReviewsController::class,
         "view_name" => "page-reviews.twig",
     ),
+
+    ///stranka zapomenuti hesla//////
+    "forgotPassword" => array(
+        "title" => "zapomenuté heslo",
+        "controller_class_name" => app\Controllers\ForgotPasswordController::class,
+        "view_name" => "page-forgotPassword.twig",
+    ),
 );

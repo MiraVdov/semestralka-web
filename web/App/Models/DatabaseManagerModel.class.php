@@ -456,4 +456,20 @@
             if ($result->execute())return $result->fetchAll();
             return [];
         }
+
+        /**
+         * funkce vraci uzivtele podle emailu
+         * @param $mail
+         * @return array
+         */
+        function selectUserByEmail($mail): array{
+            $whereStatement = "email = :email";
+            $query = "SELECT * FROM ". TABLE_USER. " WHERE $whereStatement";
+
+            $result = $this->pdo->prepare($query);
+            $result->bindValue(":email", $mail);
+
+            if ($result->execute())return $result->fetchAll();
+            return [];
+        }
     }

@@ -210,7 +210,6 @@ $(document).ready(function () {
             length.classList.remove("valid");
             length.classList.add("invalid");
         }
-
         checkAllConditions();
     }
 })

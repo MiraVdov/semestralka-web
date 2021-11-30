@@ -257,4 +257,20 @@ class UserManagerModel
             $this->databaseManager->deleteUsersArticles($userID);
         }
     }
+
+    /**
+     * funkce vraci uzivtele podle emailu
+     * @param $mail
+     * @return array
+     */
+    function getUserByEmail($mail):array{
+        $mail = htmlspecialchars($mail);
+        if ($mail == "") return [];
+
+        return $this->databaseManager->selectUserByEmail($mail);
+    }
+
+    function sendMail(){
+
+    }
 }
